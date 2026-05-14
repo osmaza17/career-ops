@@ -83,7 +83,6 @@ const SYSTEM_PATHS = [
   'README.md',
   'LICENSE',
   'CITATION.cff',
-  '.github/',
   'package.json',
 ];
 
