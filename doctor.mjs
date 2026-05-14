@@ -5,7 +5,7 @@
  * Checks all prerequisites and prints a pass/fail checklist.
  */
 
-import { existsSync, mkdirSync, readdirSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -63,14 +63,14 @@ async function checkPlaywright() {
 }
 
 function checkCv() {
-  if (existsSync(join(projectRoot, 'cv.md'))) {
-    return { pass: true, label: 'cv.md found' };
+  if (existsSync(join(projectRoot, 'config', 'cv.md'))) {
+    return { pass: true, label: 'config/cv.md found' };
   }
   return {
     pass: false,
-    label: 'cv.md not found',
+    label: 'config/cv.md not found',
     fix: [
-      'Create cv.md in the project root with your CV in markdown',
+      'Create config/cv.md with your CV in markdown',
       'See examples/ for reference CVs',
     ],
   };
@@ -91,45 +91,17 @@ function checkProfile() {
 }
 
 function checkPortals() {
-  if (existsSync(join(projectRoot, 'portals.yml'))) {
-    return { pass: true, label: 'portals.yml found' };
+  if (existsSync(join(projectRoot, 'config', 'portals.yml'))) {
+    return { pass: true, label: 'config/portals.yml found' };
   }
   return {
     pass: false,
-    label: 'portals.yml not found',
+    label: 'config/portals.yml not found',
     fix: [
-      'Run: cp templates/portals.example.yml portals.yml',
+      'Run: cp templates/portals.example.yml config/portals.yml',
       'Then customize with your target companies',
     ],
   };
-}
-
-function checkFonts() {
-  const fontsDir = join(projectRoot, 'fonts');
-  if (!existsSync(fontsDir)) {
-    return {
-      pass: false,
-      label: 'fonts/ directory not found',
-      fix: 'The fonts/ directory is required for PDF generation',
-    };
-  }
-  try {
-    const files = readdirSync(fontsDir);
-    if (files.length === 0) {
-      return {
-        pass: false,
-        label: 'fonts/ directory is empty',
-        fix: 'The fonts/ directory must contain font files for PDF generation',
-      };
-    }
-  } catch {
-    return {
-      pass: false,
-      label: 'fonts/ directory not readable',
-      fix: 'Check permissions on the fonts/ directory',
-    };
-  }
-  return { pass: true, label: 'Fonts directory ready' };
 }
 
 function checkAutoDir(name) {
@@ -160,7 +132,6 @@ async function main() {
     checkCv(),
     checkProfile(),
     checkPortals(),
-    checkFonts(),
     checkAutoDir('data'),
     checkAutoDir('output'),
     checkAutoDir('reports'),

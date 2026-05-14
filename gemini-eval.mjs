@@ -44,7 +44,7 @@ const PATHS = {
   oferta:   join(ROOT, 'modes', 'oferta.md'),
   // Canonical skill path referenced in Issue #344
   evaluate: join(ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
-  cv:       join(ROOT, 'cv.md'),
+  cv:       join(ROOT, 'config', 'cv.md'),
   reports:  join(ROOT, 'reports'),
   tracker:  join(ROOT, 'data', 'applications.md'),
 };

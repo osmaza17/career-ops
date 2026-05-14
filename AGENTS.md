@@ -13,14 +13,14 @@ The portfolio that goes with this system is also open source: [cv-santiago](http
 There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 **User Layer (NEVER auto-updated, personalization goes HERE):**
-- `cv.md`, `config/profile.yml`, `modes/_profile.md`, `article-digest.md`, `portals.yml`
+- `config/cv.md`, `config/profile.yml`, `config/_profile.md`, `config/article-digest.md`, `config/portals.yml`
 - `data/*`, `reports/*`, `output/*`, `interview-prep/*`
 
 **System Layer (auto-updatable, DON'T put user data here):**
 - `modes/_shared.md`, `modes/oferta.md`, all other modes
 - `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `templates/*`, `batch/*`
 
-**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `modes/_profile.md` or `config/profile.yml`. NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
+**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/_profile.md` or `config/profile.yml`. NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
 
 ## Update Check
 
@@ -53,12 +53,10 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/applications.md` | Application tracker |
 | `data/pipeline.md` | Inbox of pending URLs |
 | `data/scan-history.tsv` | Scanner dedup history |
-| `portals.yml` | Query and company config |
-| `templates/cv-template.html` | HTML template for CVs |
+| `config/portals.yml` | Query and company config |
 | `templates/cv-template.tex` | LaTeX/Overleaf template for CVs |
-| `generate-pdf.mjs` | Playwright: HTML to PDF |
 | `generate-latex.mjs` | LaTeX CV validator + pdflatex compiler |
-| `article-digest.md` | Compact proof points from portfolio (optional) |
+| `config/article-digest.md` | Compact proof points from portfolio (optional) |
 | `interview-prep/story-bank.md` | Accumulated STAR+R stories across evaluations |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports |
 | `analyze-patterns.mjs` | Pattern analysis script (JSON output) |
@@ -73,17 +71,17 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 
 **Before doing ANYTHING else, check if the system is set up.** Run these checks silently every time a session starts:
 
-1. Does `cv.md` exist?
+1. Does `config/cv.md` exist?
 2. Does `config/profile.yml` exist (not just profile.example.yml)?
-3. Does `modes/_profile.md` exist (not just _profile.template.md)?
-4. Does `portals.yml` exist (not just templates/portals.example.yml)?
+3. Does `config/_profile.md` exist (not just config/_profile.template.md)?
+4. Does `config/portals.yml` exist (not just templates/portals.example.yml)?
 
-If `modes/_profile.md` is missing, copy from `modes/_profile.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
+If `config/_profile.md` is missing, copy from `config/_profile.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
 
 **If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Guide the user step by step:
 
 #### Step 1: CV (required)
-If `cv.md` is missing, ask:
+If `config/cv.md` is missing, ask:
 > "I don't have your CV yet. You can either:
 > 1. Paste your CV here and I'll convert it to markdown
 > 2. Paste your LinkedIn URL and I'll extract the key info
@@ -91,7 +89,7 @@ If `cv.md` is missing, ask:
 >
 > Which do you prefer?"
 
-Create `cv.md` from whatever they provide. Make it clean markdown with standard sections (Summary, Experience, Projects, Education, Skills).
+Create `config/cv.md` from whatever they provide. Make it clean markdown with standard sections (Summary, Experience, Projects, Education, Skills).
 
 #### Step 2: Profile (required)
 If `config/profile.yml` is missing, copy from `config/profile.example.yml` and then ask:
@@ -103,13 +101,13 @@ If `config/profile.yml` is missing, copy from `config/profile.example.yml` and t
 >
 > I'll set everything up for you."
 
-Fill in `config/profile.yml` with their answers. For archetypes and targeting narrative, store the user-specific mapping in `modes/_profile.md` or `config/profile.yml` rather than editing `modes/_shared.md`.
+Fill in `config/profile.yml` with their answers. For archetypes and targeting narrative, store the user-specific mapping in `config/_profile.md` or `config/profile.yml` rather than editing `modes/_shared.md`.
 
 #### Step 3: Portals (recommended)
-If `portals.yml` is missing:
+If `config/portals.yml` is missing:
 > "I'll set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles?"
 
-Copy `templates/portals.example.yml` → `portals.yml`. If they gave target roles in Step 2, update `title_filter.positive` to match.
+Copy `templates/portals.example.yml` → `config/portals.yml`. If they gave target roles in Step 2, update `title_filter.positive` to match.
 
 #### Step 4: Tracker
 If `data/applications.md` doesn't exist, create it:
@@ -133,9 +131,9 @@ After the basics are set up, proactively ask for more context. The more you know
 >
 > The more context you give me, the better I filter. Think of it as onboarding a recruiter — the first week I need to learn about you, then I become invaluable."
 
-Store any insights the user shares in `config/profile.yml` (under narrative), `modes/_profile.md`, or in `article-digest.md` if they share proof points. Do not put user-specific archetypes or framing into `modes/_shared.md`.
+Store any insights the user shares in `config/profile.yml` (under narrative), `config/_profile.md`, or in `config/article-digest.md` if they share proof points. Do not put user-specific archetypes or framing into `modes/_shared.md`.
 
-**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `modes/_profile.md`, `config/profile.yml`, or `article-digest.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
+**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/_profile.md`, `config/profile.yml`, or `config/article-digest.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
 
 #### Step 6: Ready
 Once all files exist, confirm:
@@ -158,12 +156,11 @@ If the user accepts, use the `/loop` or `/schedule` skill (if available) to set 
 This system is designed to be customized by YOU (AI Agent). When the user asks you to change archetypes, translate modes, adjust scoring, add companies, or modify negotiation scripts -- do it directly. You read the same files you use, so you know exactly what to edit.
 
 **Common customization requests:**
-- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `modes/_profile.md` or `config/profile.yml`
+- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/_profile.md` or `config/profile.yml`
 - "Translate the modes to English" → edit all files in `modes/`
-- "Add these companies to my portals" → edit `portals.yml`
+- "Add these companies to my portals" → edit `config/portals.yml`
 - "Update my profile" → edit `config/profile.yml`
-- "Change the CV template design" → edit `templates/cv-template.html`
-- "Adjust the scoring weights" → edit `modes/_profile.md` for user-specific weighting, or edit `modes/_shared.md` and `batch/batch-prompt.md` only when changing the shared system defaults for everyone
+- "Adjust the scoring weights" → edit `config/_profile.md` for user-specific weighting, or edit `modes/_shared.md` and `batch/batch-prompt.md` only when changing the shared system defaults for everyone
 
 ### Language Modes
 
@@ -213,8 +210,8 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 
 ### CV Source of Truth
 
-- `cv.md` in project root is the canonical CV
-- `article-digest.md` has detailed proof points (optional)
+- `config/cv.md` is the canonical CV
+- `config/article-digest.md` has detailed proof points (optional)
 - **NEVER hardcode metrics** -- read them from these files at evaluation time
 
 ---
@@ -271,7 +268,7 @@ When spawning headless workers for batch processing, use the appropriate command
 
 ## Stack and Conventions
 
-- Node.js (mjs modules), Playwright (PDF + scraping), YAML (config), HTML/CSS (template), Markdown (data), Canva MCP (optional visual CV)
+- Node.js (mjs modules), Playwright (scraping + offer verification), YAML (config), LaTeX (CV template), Markdown (data), Canva MCP (optional visual CV)
 - Scripts in `.mjs`, configuration in YAML
 - Output in `output/` (gitignored), Reports in `reports/`
 - JDs in `jds/` (referenced as `local:jds/{file}` in pipeline.md)

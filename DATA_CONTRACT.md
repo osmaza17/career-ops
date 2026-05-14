@@ -8,12 +8,12 @@ These files contain your personal data, customizations, and work product. Update
 
 | File | Purpose |
 |------|---------|
-| `cv.md` | Your CV in markdown |
+| `config/cv.md` | Your CV in markdown |
 | `config/profile.yml` | Your identity, targets, comp range |
-| `modes/_profile.md` | Your archetypes, narrative, negotiation scripts |
-| `article-digest.md` | Your proof points from portfolio |
+| `config/_profile.md` | Your archetypes, narrative, negotiation scripts |
+| `config/article-digest.md` | Your proof points from portfolio |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
-| `portals.yml` | Your customized company list |
+| `config/portals.yml` | Your customized company list |
 | `data/applications.md` | Your application tracker |
 | `data/pipeline.md` | Your URL inbox |
 | `data/scan-history.tsv` | Your scan history |
@@ -57,7 +57,6 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `batch/batch-runner.sh` | Batch orchestrator |
 | `dashboard/*` | Go TUI dashboard |
 | `templates/*` | Base templates |
-| `fonts/*` | Self-hosted fonts |
 | `.claude/skills/*` | Skill definitions |
 | `docs/*` | Documentation |
 | `VERSION` | Current version number |

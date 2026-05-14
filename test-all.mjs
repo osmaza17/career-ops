@@ -158,9 +158,9 @@ console.log('\n5. Data contract validation');
 // Check system files exist
 const systemFiles = [
   'CLAUDE.md', 'VERSION', 'DATA_CONTRACT.md',
-  'modes/_shared.md', 'modes/_profile.template.md',
+  'modes/_shared.md', 'config/_profile.template.md',
   'modes/oferta.md', 'modes/pdf.md', 'modes/scan.md',
-  'templates/states.yml', 'templates/cv-template.html',
+  'templates/states.yml',
   '.claude/skills/career-ops/SKILL.md',
 ];
 
@@ -174,7 +174,7 @@ for (const f of systemFiles) {
 
 // Check user files are NOT tracked (gitignored)
 const userFiles = [
-  'config/profile.yml', 'modes/_profile.md', 'portals.yml',
+  'config/profile.yml', 'config/_profile.md', 'config/portals.yml',
 ];
 for (const f of userFiles) {
   const tracked = run('git', ['ls-files', f]);
@@ -259,7 +259,7 @@ if (!absPathResult) {
 console.log('\n8. Mode file integrity');
 
 const expectedModes = [
-  '_shared.md', '_profile.template.md', 'oferta.md', 'pdf.md', 'scan.md',
+  '_shared.md', 'oferta.md', 'pdf.md', 'scan.md',
   'batch.md', 'apply.md', 'auto-pipeline.md', 'contacto.md', 'deep.md',
   'ofertas.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
 ];
@@ -272,12 +272,12 @@ for (const mode of expectedModes) {
   }
 }
 
-// Check _shared.md references _profile.md
+// Check _shared.md references config/_profile.md
 const shared = readFile('modes/_shared.md');
-if (shared.includes('_profile.md')) {
-  pass('_shared.md references _profile.md');
+if (shared.includes('config/_profile.md')) {
+  pass('_shared.md references config/_profile.md');
 } else {
-  fail('_shared.md does NOT reference _profile.md');
+  fail('_shared.md does NOT reference config/_profile.md');
 }
 
 // ── 9. AGENTS.md INTEGRITY ──────────────────────────────────────

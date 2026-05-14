@@ -18,19 +18,6 @@ import { resolve, basename, dirname, join } from 'path';
 import { execFileSync } from 'child_process';
 import { existsSync, mkdirSync } from 'fs';
 
-const REQUIRED_SECTIONS = [
-  '\\\\section{Education}',
-  '\\\\section{Work Experience}',
-  '\\\\section{Personal Projects}',
-  '\\\\section{Technical Skills}',
-];
-
-const REQUIRED_COMMANDS = [
-  '\\\\resumeSubheading',
-  '\\\\resumeItem',
-  '\\\\resumeProjectHeading',
-];
-
 async function main() {
   const inputPath = process.argv[2];
   const outputPath = process.argv[3]; // optional
@@ -50,47 +37,12 @@ async function main() {
 
   const issues = [];
 
-  // Check required sections
-  for (const pattern of REQUIRED_SECTIONS) {
-    if (!new RegExp(pattern).test(content)) {
-      issues.push(`Missing section matching: ${pattern}`);
-    }
-  }
-
-  // Check required commands are used
-  for (const cmd of REQUIRED_COMMANDS) {
-    if (!new RegExp(cmd).test(content)) {
-      issues.push(`Missing command: ${cmd}`);
-    }
-  }
-
-  // Check document structure
   if (!content.includes('\\begin{document}')) {
     issues.push('Missing \\begin{document}');
   }
   if (!content.includes('\\end{document}')) {
     issues.push('Missing \\end{document}');
   }
-
-  // Check for unresolved placeholders
-  const unresolvedMatch = content.match(/\{\{[A-Z_]+\}\}/g);
-  if (unresolvedMatch) {
-    issues.push(`Unresolved placeholders: ${[...new Set(unresolvedMatch)].join(', ')}`);
-  }
-
-  // Check for common unescaped special chars in text (heuristic)
-  const lines = content.split('\n');
-  let resumeItemCount = 0;
-  let subheadingCount = 0;
-  let projectHeadingCount = 0;
-
-  for (const line of lines) {
-    if (/\\resumeItem\{/.test(line)) resumeItemCount++;
-    if (/\\resumeSubheading[^C]/.test(line)) subheadingCount++;
-    if (/\\resumeProjectHeading/.test(line)) projectHeadingCount++;
-  }
-
-  // Check pdfgentounicode
   if (!content.includes('\\pdfgentounicode=1')) {
     issues.push('Missing \\pdfgentounicode=1 (ATS compatibility)');
   }
@@ -103,11 +55,6 @@ async function main() {
     file: basename(absPath),
     path: absPath,
     sizeKB: parseFloat(sizeKB),
-    counts: {
-      resumeItems: resumeItemCount,
-      subheadings: subheadingCount,
-      projectHeadings: projectHeadingCount,
-    },
     issues,
     valid: issues.length === 0,
   };

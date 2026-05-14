@@ -27,17 +27,17 @@ Edit `config/profile.yml` with your personal details: name, email, target roles,
 
 ### 3. Add your CV
 
-Create `cv.md` in the project root with your full CV in markdown format. This is the source of truth for all evaluations and PDFs.
+Create `config/cv.md` with your full CV in markdown format. This is the source of truth for all evaluations and PDFs.
 
-(Optional) Create `article-digest.md` with proof points from your portfolio projects/articles.
+(Optional) Create `config/article-digest.md` with proof points from your portfolio projects/articles.
 
 ### 4. Configure portals
 
 ```bash
-cp templates/portals.example.yml portals.yml
+cp templates/portals.example.yml config/portals.yml
 ```
 
-Edit `portals.yml`:
+Edit `config/portals.yml`:
 - Update `title_filter.positive` with keywords matching your target roles
 - Add companies you want to track in `tracked_companies`
 - Customize `search_queries` for your preferred job boards

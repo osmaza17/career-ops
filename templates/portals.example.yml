@@ -14,7 +14,7 @@
 #   Using raw ATS URLs when a branded page exists can cause false 410 errors (job ID mismatch).
 #
 # HOW TO CUSTOMIZE:
-#   1. Copy this file to portals.yml in the project root
+#   1. Copy this file to config/portals.yml
 #   2. Edit title_filter.positive with YOUR target role keywords
 #   3. Add/remove companies in tracked_companies
 #   4. Adjust search_queries for your preferred job boards

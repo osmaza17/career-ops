@@ -21,13 +21,13 @@ const warnings = [];
 const errors = [];
 
 // 1. Check cv.md exists
-const cvPath = join(projectRoot, 'cv.md');
+const cvPath = join(projectRoot, 'config', 'cv.md');
 if (!existsSync(cvPath)) {
-  errors.push('cv.md not found in project root. Create it with your CV in markdown format.');
+  errors.push('config/cv.md not found. Create it with your CV in markdown format.');
 } else {
   const cvContent = readFileSync(cvPath, 'utf-8');
   if (cvContent.trim().length < 100) {
-    warnings.push('cv.md seems too short. Make sure it contains your full CV.');
+    warnings.push('config/cv.md seems too short. Make sure it contains your full CV.');
   }
 }
 
@@ -72,12 +72,12 @@ for (const { path, name } of filesToCheck) {
 }
 
 // 4. Check article-digest.md freshness
-const digestPath = join(projectRoot, 'article-digest.md');
+const digestPath = join(projectRoot, 'config', 'article-digest.md');
 if (existsSync(digestPath)) {
   const stats = statSync(digestPath);
   const daysSinceModified = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60 * 24);
   if (daysSinceModified > 30) {
-    warnings.push(`article-digest.md is ${Math.round(daysSinceModified)} days old. Consider updating if your projects have new metrics.`);
+    warnings.push(`config/article-digest.md is ${Math.round(daysSinceModified)} days old. Consider updating if your projects have new metrics.`);
   }
 }
 

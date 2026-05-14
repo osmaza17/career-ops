@@ -4,7 +4,7 @@
  * update-system.mjs — Safe auto-updater for career-ops
  *
  * Updates ONLY system layer files (modes, scripts, dashboard, templates).
- * NEVER touches user data (cv.md, profile.yml, _profile.md, data/, reports/).
+ * NEVER touches user data (config/cv.md, config/profile.yml, config/_profile.md, data/, reports/).
  *
  * Usage:
  *   node update-system.mjs check      # Check if update available
@@ -30,7 +30,7 @@ const RELEASES_API = 'https://api.github.com/repos/santifer/career-ops/releases/
 // System layer paths — ONLY these files get updated
 const SYSTEM_PATHS = [
   'modes/_shared.md',
-  'modes/_profile.template.md',
+  'config/_profile.template.md',
   'modes/oferta.md',
   'modes/pdf.md',
   'modes/scan.md',
@@ -53,7 +53,6 @@ const SYSTEM_PATHS = [
   'CLAUDE.md',
   'AGENTS.md',
   'GEMINI.md',
-  'generate-pdf.mjs',
   'generate-latex.mjs',
   'merge-tracker.mjs',
   'verify-pipeline.mjs',
@@ -73,7 +72,6 @@ const SYSTEM_PATHS = [
   'batch/batch-runner.sh',
   'dashboard/',
   'templates/',
-  'fonts/',
   '.agents/',
   '.claude/skills/',
   '.gemini/commands/',
@@ -91,11 +89,11 @@ const SYSTEM_PATHS = [
 
 // User layer paths — NEVER touch these (safety check)
 const USER_PATHS = [
-  'cv.md',
+  'config/cv.md',
   'config/profile.yml',
-  'modes/_profile.md',
-  'portals.yml',
-  'article-digest.md',
+  'config/_profile.md',
+  'config/portals.yml',
+  'config/article-digest.md',
   'interview-prep/story-bank.md',
   'data/',
   'reports/',
