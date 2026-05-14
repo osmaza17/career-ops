@@ -126,7 +126,7 @@ After detecting archetype, read `config/_profile.md` for the user's specific fra
 | Write | applications.md, reports .md |
 | Edit | Update tracker |
 | Canva MCP | Optional visual CV generation. Duplicate base design, edit text, export PDF. Requires `cv.canva_resume_design_id` in profile.yml. |
-| Bash | `node generate-latex.mjs` |
+| Bash | `node generate-pdf.mjs` |
 
 ### Time-to-offer priority
 - Working demo + metrics > perfection

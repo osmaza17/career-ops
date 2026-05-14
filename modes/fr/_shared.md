@@ -202,4 +202,4 @@ Dans les offres et negociations francophones, certains termes n'existent pas sur
 | Read | config/cv.md, config/article-digest.md |
 | Write | applications.md, reports .md |
 | Edit | Mettre a jour le tracker |
-| Bash | `node generate-latex.mjs` |
+| Bash | `node generate-pdf.mjs` |

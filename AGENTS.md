@@ -42,24 +42,24 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 
 ### Main Files
 
-| File | Function |
-|------|----------|
-| `data/applications.md` | Application tracker |
-| `data/pipeline.md` | Inbox of pending URLs |
-| `data/scan-history.tsv` | Scanner dedup history |
-| `config/portals.yml` | Query and company config |
-| `templates/cv-template.tex` | LaTeX/Overleaf template for CVs |
-| `generate-latex.mjs` | LaTeX CV validator + pdflatex compiler |
-| `config/article-digest.md` | Compact proof points from portfolio (optional) |
-| `interview-prep/story-bank.md` | Accumulated STAR+R stories across evaluations |
-| `interview-prep/{company}-{role}.md` | Company-specific interview intel reports |
-| `analyze-patterns.mjs` | Pattern analysis script (JSON output) |
-| `followup-cadence.mjs` | Follow-up cadence calculator (JSON output) |
-| `data/follow-ups.md` | Follow-up history tracker |
-| `scan.mjs` | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost |
-| `check-liveness.mjs` | Job posting liveness checker |
-| `liveness-core.mjs` | Shared liveness logic (expired signals win over generic Apply text) |
-| `reports/` | Evaluation reports (format: `{###}-{company-slug}-{YYYY-MM-DD}.md`). Blocks A-F + G (Posting Legitimacy). Header includes `**Legitimacy:** {tier}`. |
+| File                                 | Function                                                                                                                                            |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data/applications.md`               | Application tracker                                                                                                                                 |
+| `data/pipeline.md`                   | Inbox of pending URLs                                                                                                                               |
+| `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
+| `config/portals.yml`                 | Query and company config                                                                                                                            |
+| `templates/cv-template.tex`          | LaTeX/Overleaf template for CVs                                                                                                                     |
+| `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
+| `config/article-digest.md`           | Compact proof points from portfolio (optional)                                                                                                      |
+| `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
+| `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
+| `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
+| `followup-cadence.mjs`               | Follow-up cadence calculator (JSON output)                                                                                                          |
+| `data/follow-ups.md`                 | Follow-up history tracker                                                                                                                           |
+| `scan.mjs`                           | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost                                                                |
+| `check-liveness.mjs`                 | Job posting liveness checker                                                                                                                        |
+| `liveness-core.mjs`                  | Shared liveness logic (expired signals win over generic Apply text)                                                                                 |
+| `reports/`                           | Evaluation reports (format: `{###}-{company-slug}-{YYYY-MM-DD}.md`). Blocks A-F + G (Posting Legitimacy). Header includes `**Legitimacy:** {tier}`. |
 
 ### First Run — Onboarding (IMPORTANT)
 
@@ -108,8 +108,8 @@ If `data/applications.md` doesn't exist, create it:
 ```markdown
 # Applications Tracker
 
-| # | Date | Company | Role | Score | Status | PDF | Report | Notes |
-|---|------|---------|------|-------|--------|-----|--------|-------|
+| #   | Date | Company | Role | Score | Status | PDF | Report | Notes |
+| --- | ---- | ------- | ---- | ----- | ------ | --- | ------ | ----- |
 ```
 
 #### Step 5: Get to know the user (important for quality)
@@ -183,24 +183,24 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 
 ### Skill Modes
 
-| If the user... | Mode |
-|----------------|------|
-| Pastes JD or URL | auto-pipeline (evaluate + report + PDF + tracker) |
-| Asks to evaluate offer | `oferta` |
-| Asks to compare offers | `ofertas` |
-| Wants LinkedIn outreach | `contacto` |
-| Asks for company research | `deep` |
-| Preps for interview at specific company | `interview-prep` |
-| Wants to generate CV/PDF | `pdf` |
-| Evaluates a course/cert | `training` |
-| Evaluates portfolio project | `project` |
-| Asks about application status | `tracker` |
-| Fills out application form | `apply` |
-| Searches for new offers | `scan` |
-| Processes pending URLs | `pipeline` |
-| Batch processes offers | `batch` |
-| Asks about rejection patterns or wants to improve targeting | `patterns` |
-| Asks about follow-ups or application cadence | `followup` |
+| If the user...                                              | Mode                                              |
+| ----------------------------------------------------------- | ------------------------------------------------- |
+| Pastes JD or URL                                            | auto-pipeline (evaluate + report + PDF + tracker) |
+| Asks to evaluate offer                                      | `oferta`                                          |
+| Asks to compare offers                                      | `ofertas`                                         |
+| Wants LinkedIn outreach                                     | `contacto`                                        |
+| Asks for company research                                   | `deep`                                            |
+| Preps for interview at specific company                     | `interview-prep`                                  |
+| Wants to generate CV/PDF                                    | `pdf`                                             |
+| Evaluates a course/cert                                     | `training`                                        |
+| Evaluates portfolio project                                 | `project`                                         |
+| Asks about application status                               | `tracker`                                         |
+| Fills out application form                                  | `apply`                                           |
+| Searches for new offers                                     | `scan`                                            |
+| Processes pending URLs                                      | `pipeline`                                        |
+| Batch processes offers                                      | `batch`                                           |
+| Asks about rejection patterns or wants to improve targeting | `patterns`                                        |
+| Asks about follow-ups or application cadence                | `followup`                                        |
 
 ### CV Source of Truth
 
@@ -236,14 +236,14 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 
 When spawning headless workers for batch processing, use the appropriate command for your CLI:
 
-| CLI | Command |
-|-----|---------|
-| Claude Code | `claude -p "prompt"` |
-| Gemini CLI | `gemini -p "prompt"` |
-| Copilot CLI | `copilot -p "prompt"` |
-| Codex | `codex exec "prompt"` |
-| OpenCode | `opencode run "prompt"` |
-| Qwen | `qwen -p "prompt"` |
+| CLI         | Command                 |
+| ----------- | ----------------------- |
+| Claude Code | `claude -p "prompt"`    |
+| Gemini CLI  | `gemini -p "prompt"`    |
+| Copilot CLI | `copilot -p "prompt"`   |
+| Codex       | `codex exec "prompt"`   |
+| OpenCode    | `opencode run "prompt"` |
+| Qwen        | `qwen -p "prompt"`      |
 
 ## Stack and Conventions
 
@@ -291,16 +291,16 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 
 **Source of truth:** `templates/states.yml`
 
-| State | When to use |
-|-------|-------------|
-| `Evaluated` | Report completed, pending decision |
-| `Applied` | Application sent |
-| `Responded` | Company responded |
-| `Interview` | In interview process |
-| `Offer` | Offer received |
-| `Rejected` | Rejected by company |
+| State       | When to use                            |
+| ----------- | -------------------------------------- |
+| `Evaluated` | Report completed, pending decision     |
+| `Applied`   | Application sent                       |
+| `Responded` | Company responded                      |
+| `Interview` | In interview process                   |
+| `Offer`     | Offer received                         |
+| `Rejected`  | Rejected by company                    |
 | `Discarded` | Discarded by candidate or offer closed |
-| `SKIP` | Doesn't fit, don't apply |
+| `SKIP`      | Doesn't fit, don't apply               |
 
 **RULES:**
 - No markdown bold (`**`) in status field

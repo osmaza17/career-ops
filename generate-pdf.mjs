@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * generate-latex.mjs — Validate and compile a generated .tex CV file to PDF
+ * generate-pdf.mjs — Validate and compile a generated .tex CV file to PDF
  *
  * Usage:
- *   node generate-latex.mjs <input.tex> [output.pdf]
+ *   node generate-pdf.mjs <input.tex> [output.pdf]
  *
  * Reads the .tex file, validates structure, compiles to PDF via tectonic or pdflatex.
  * If output.pdf is omitted, writes to the same directory as input with .pdf extension.
@@ -22,7 +22,7 @@ async function main() {
   const inputPath = process.argv[2];
   const outputPath = process.argv[3]; // optional
   if (!inputPath) {
-    console.error('Usage: node generate-latex.mjs <input.tex> [output.pdf]');
+    console.error('Usage: node generate-pdf.mjs <input.tex> [output.pdf]');
     process.exit(1);
   }
 

@@ -53,7 +53,7 @@ const SYSTEM_PATHS = [
   'CLAUDE.md',
   'AGENTS.md',
   'GEMINI.md',
-  'generate-latex.mjs',
+  'generate-pdf.mjs',
   'merge-tracker.mjs',
   'verify-pipeline.mjs',
   'dedup-tracker.mjs',

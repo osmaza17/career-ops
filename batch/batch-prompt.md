@@ -230,7 +230,7 @@ Donde `{company-slug}` es el nombre de empresa en lowercase, sin espacios, con g
 12. Escribe a `output/cv-candidate-{company-slug}-{{DATE}}.tex`
 13. Ejecuta:
 ```bash
-node generate-latex.mjs \
+node generate-pdf.mjs \
   output/cv-candidate-{company-slug}-{{DATE}}.tex \
   output/cv-candidate-{company-slug}-{{DATE}}.pdf
 ```

@@ -35,9 +35,9 @@ Copy from `templates/portals.example.yml` and customize:
 
 ## CV Template (templates/cv-template.tex)
 
-The LaTeX template is compiled via `generate-latex.mjs` (requires `pdflatex` installed). To customize:
+The LaTeX template is compiled via `generate-pdf.mjs` (requires `pdflatex` installed). To customize:
 - Edit `templates/cv-template.tex` directly
-- Run `node generate-latex.mjs` to validate and compile
+- Run `node generate-pdf.mjs` to validate and compile
 
 ## Negotiation Scripts (modes/_shared.md)
 
