@@ -78,7 +78,7 @@ config/article-digest.md →  Proof points for matching
 config/profile.yml       →  Candidate identity
 config/portals.yml       →  Scanner configuration
 templates/states.yml     →  Canonical status values
-templates/cv-template.tex  → LaTeX PDF generation template
+modes/latex.md             → LaTeX PDF generation instructions + template
 ```
 
 ## File Naming Conventions

@@ -28,7 +28,6 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/pipeline.md`                   | Inbox of pending URLs                                                                                                                               |
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
-| `templates/cv-template.tex`          | LaTeX/Overleaf template for CVs                                                                                                                     |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
 | `config/article-digest.md`           | Compact proof points from portfolio (optional)                                                                                                      |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |

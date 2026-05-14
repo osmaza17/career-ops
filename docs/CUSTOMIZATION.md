@@ -33,11 +33,9 @@ Copy from `templates/portals.example.yml` and customize:
 3. **search_queries**: WebSearch queries for job boards (Ashby, Greenhouse, Lever)
 4. **tracked_companies**: Companies to check directly
 
-## CV Template (templates/cv-template.tex)
+## CV Template (modes/latex.md)
 
-The LaTeX template is compiled via `generate-pdf.mjs` (requires `pdflatex` installed). To customize:
-- Edit `templates/cv-template.tex` directly
-- Run `node generate-pdf.mjs` to validate and compile
+The LaTeX template is embedded in `modes/latex.md` under the **Base LaTeX Template** section, and compiled via `generate-pdf.mjs` (requires `tectonic` or `pdflatex` installed). To customize the template structure, edit the base template block in `modes/latex.md` directly.
 
 ## Negotiation Scripts (modes/_shared.md)
 
