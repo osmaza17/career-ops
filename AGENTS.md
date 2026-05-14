@@ -245,13 +245,6 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 - **Dependabot** monitors npm, Go modules, and GitHub Actions for security updates
 - **Contributing process**: issue first → discussion → PR with linked issue → CI passes → maintainer review → merge
 
-## Community and Governance
-
-- **Code of Conduct**: Contributor Covenant 2.1 with enforcement actions (see `CODE_OF_CONDUCT.md`)
-- **Governance**: BDFL model with contributor ladder — Participant → Contributor → Triager → Reviewer → Maintainer (see `GOVERNANCE.md`)
-- **Security**: private vulnerability reporting via email (see `SECURITY.md`)
-- **Support**: help questions go to Discord/Discussions, not issues (see `SUPPORT.md`)
-- **Discord**: https://discord.gg/8pRpHETxa4
 
 ## Headless / Batch Mode
 

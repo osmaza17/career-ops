@@ -23,8 +23,8 @@
      ┌──────▼──────────────────────────────────────────▼──────┐
      │                    Output Pipeline                      │
      │  ┌──────────┐  ┌────────────┐  ┌───────────────────┐  │
-     │  │ Report.md│  │  PDF (HTML  │  │ Tracker TSV       │  │
-     │  │ (A-F eval)│  │  → Puppeteer)│  │ (merge-tracker)  │  │
+     │  │ Report.md│  │  PDF (LaTeX  │  │ Tracker TSV       │  │
+     │  │ (A-F eval)│  │  → pdflatex)│  │ (merge-tracker)  │  │
      │  └──────────┘  └────────────┘  └───────────────────┘  │
      └────────────────────────────────────────────────────────┘
                                │
@@ -48,7 +48,7 @@
    - F: Interview prep (STAR stories)
 5. **Score**: Weighted average across 10 dimensions (1-5)
 6. **Report**: Save as `reports/{num}-{company}-{date}.md`
-7. **PDF**: Generate ATS-optimized CV (`generate-pdf.mjs`)
+7. **PDF**: Generate ATS-optimized CV (`generate-latex.mjs`)
 8. **Track**: Write TSV to `batch/tracker-additions/`, auto-merged
 
 ## Batch Processing
@@ -78,7 +78,7 @@ config/article-digest.md →  Proof points for matching
 config/profile.yml       →  Candidate identity
 config/portals.yml       →  Scanner configuration
 templates/states.yml     →  Canonical status values
-templates/cv-template.html → PDF generation template
+templates/cv-template.tex  → LaTeX PDF generation template
 ```
 
 ## File Naming Conventions

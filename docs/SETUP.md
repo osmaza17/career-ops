@@ -11,10 +11,10 @@
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/santifer/career-ops.git
+git clone https://github.com/osmaza17/career-ops.git
 cd career-ops
 npm install
-npx playwright install chromium   # Required for PDF generation
+npx playwright install chromium   # Required for job liveness checking
 ```
 
 ### 2. Configure your profile

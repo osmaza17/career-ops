@@ -4,8 +4,8 @@
     "description": "AI job search command center — evaluate offers, generate CVs, scan portals, track applications"
   },
   "owner": {
-    "name": "santifer",
-    "url": "https://santifer.io"
+    "name": "osmaza17",
+    "url": "https://github.com/osmaza17/career-ops"
   },
   "plugins": [
     {

@@ -192,21 +192,13 @@ for (const f of userFiles) {
 console.log('\n6. Personal data leak check');
 
 const leakPatterns = [
-  'Santiago', 'santifer.io', 'Santifer iRepair', 'Zinkee', 'ALMAS',
-  'hi@santifer.io', '688921377', '/Users/santifer/',
+  'oscarmz1217@gmail.com',
 ];
 
-const scanExtensions = ['md', 'yml', 'html', 'mjs', 'sh', 'go', 'json'];
+const scanExtensions = ['md', 'yml', 'mjs', 'sh', 'go', 'json'];
 const allowedFiles = [
-  // English README + localized translations (all legitimately credit Santiago)
-  'README.md', 'README.es.md', 'README.ja.md', 'README.ko-KR.md',
-  'README.pt-BR.md', 'README.ru.md',
-  // Standard project files
-  'LICENSE', 'CITATION.cff', 'CONTRIBUTING.md',
-  'package.json', '.github/FUNDING.yml', 'CLAUDE.md', 'AGENTS.md', 'go.mod', 'test-all.mjs',
-  // Community / governance files (added in v1.3.0, all legitimately reference the maintainer)
-  'CODE_OF_CONDUCT.md', 'GOVERNANCE.md', 'SECURITY.md', 'SUPPORT.md',
-  '.github/SECURITY.md',
+  // Project files that legitimately contain owner identifiers
+  'package.json', 'CLAUDE.md', 'AGENTS.md', 'go.mod', 'test-all.mjs',
   // Dashboard credit string
   'dashboard/internal/ui/screens/pipeline.go',
 ];

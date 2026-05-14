@@ -23,11 +23,11 @@
     "career",
     "automation"
   ],
-  "author": "Santiago Fernández de Valderrama <hi@santifer.io> (https://santifer.io)",
-  "homepage": "https://santifer.io",
+  "author": "osmaza17 <oscarmz1217@gmail.com>",
+  "homepage": "https://github.com/osmaza17/career-ops",
   "repository": {
     "type": "git",
-    "url": "https://github.com/santifer/career-ops"
+    "url": "https://github.com/osmaza17/career-ops"
   },
   "license": "MIT",
   "dependencies": {

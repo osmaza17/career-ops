@@ -123,7 +123,7 @@ After detecting archetype, read `config/_profile.md` for the user's specific fra
 | WebFetch | Fallback for extracting JDs from static pages |
 | Playwright | Verify offers (browser_navigate + browser_snapshot). **NEVER 2+ agents with Playwright in parallel.** |
 | Read | config/cv.md, config/_profile.md, config/article-digest.md |
-| Write | Temporary HTML for PDF, applications.md, reports .md |
+| Write | applications.md, reports .md |
 | Edit | Update tracker |
 | Canva MCP | Optional visual CV generation. Duplicate base design, edit text, export PDF. Requires `cv.canva_resume_design_id` in profile.yml. |
 | Bash | `node generate-latex.mjs` |

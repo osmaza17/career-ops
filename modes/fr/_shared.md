@@ -188,7 +188,7 @@ Dans les offres et negociations francophones, certains termes n'existent pas sur
 6. Generer le contenu dans la langue de l'offre (francais si l'offre est en francais, anglais sinon)
 7. Etre direct et concret -- pas de blabla
 8. Francais tech naturel pour les textes generes. Phrases courtes, verbes d'action, eviter le passif. Ne pas traduire de force les termes techniques (stack, pipeline, deployment, embedding)
-8b. **URLs de case studies dans le Professional Summary du PDF :** Si le PDF mentionne des case studies ou demos, les URLs DOIVENT apparaitre dans le premier paragraphe (Professional Summary). Les recruteurs ne lisent souvent que le summary. Toutes les URLs en HTML avec `white-space: nowrap`
+8b. **URLs de case studies dans le Professional Summary du PDF :** Si le PDF mentionne des case studies ou demos, les URLs DOIVENT apparaitre dans le premier paragraphe (Professional Summary). Les recruteurs ne lisent souvent que le summary.
 9. **Entrees tracker en TSV** -- NE JAMAIS editer applications.md directement pour de nouveaux ajouts. Ecrire le TSV dans `batch/tracker-additions/`, `merge-tracker.mjs` gere la fusion
 10. **`**URL:**` dans chaque en-tete de report** -- entre Score et PDF
 

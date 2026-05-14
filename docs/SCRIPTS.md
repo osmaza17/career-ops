@@ -11,7 +11,6 @@ All scripts live in the project root as `.mjs` modules and are exposed via `npm 
 | `npm run normalize` | `normalize-statuses.mjs` | Fix non-canonical statuses |
 | `npm run dedup` | `dedup-tracker.mjs` | Remove duplicate tracker entries |
 | `npm run merge` | `merge-tracker.mjs` | Merge batch TSVs into applications.md |
-| `npm run pdf` | `generate-pdf.mjs` | Convert HTML to ATS-optimized PDF |
 | `npm run sync-check` | `cv-sync-check.mjs` | Validate CV/profile consistency |
 | `npm run update:check` | `update-system.mjs check` | Check for upstream updates |
 | `npm run update` | `update-system.mjs apply` | Apply upstream update |
@@ -88,20 +87,6 @@ npm run merge -- --verify     # merge then run verify-pipeline
 Processed TSVs are moved to `batch/tracker-additions/merged/`.
 
 **Exit codes:** `0` success, `1` verification errors (with `--verify`).
-
----
-
-## pdf
-
-Renders an HTML file to a print-quality, ATS-parseable PDF via headless Chromium. Resolves font paths from `fonts/`, normalizes Unicode for ATS compatibility (em-dashes, smart quotes, zero-width characters), and reports page count and file size.
-
-```bash
-npm run pdf -- input.html output.pdf
-npm run pdf -- input.html output.pdf --format=letter   # US letter
-npm run pdf -- input.html output.pdf --format=a4        # A4 (default)
-```
-
-**Exit codes:** `0` PDF generated, `1` missing arguments or generation failure.
 
 ---
 
