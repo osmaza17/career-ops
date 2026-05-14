@@ -9,10 +9,7 @@
     "dedup": "node dedup-tracker.mjs",
     "merge": "node merge-tracker.mjs",
     "sync-check": "node cv-sync-check.mjs",
-    "update:check": "node update-system.mjs check",
-    "update": "node update-system.mjs apply",
-    "rollback": "node update-system.mjs rollback",
-    "liveness": "node check-liveness.mjs",
+"liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "gemini:eval": "node gemini-eval.mjs"
   },

@@ -22,7 +22,7 @@ writing-samples/*
 # User config and customization (never auto-updated)
 config/profile.yml
 config/portals.yml
-config/_profile.md
+config/strategy.md
 config/article-digest.md
 config/cv.md
 .update-dismissed

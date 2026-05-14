@@ -11,9 +11,9 @@ Key sections:
 - **compensation**: Target range, minimum, currency
 - **location**: Country, timezone, visa status, on-site availability
 
-## Target Roles (config/_profile.md)
+## Target Roles (config/strategy.md)
 
-The archetype table in `config/_profile.md` determines how offers are scored and CVs are framed. Edit the table to match YOUR career targets:
+The archetype table in `config/strategy.md` determines how offers are scored and CVs are framed. Edit the table to match YOUR career targets:
 
 ```markdown
 | Archetype | Thematic axes | What they buy |

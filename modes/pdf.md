@@ -1,4 +1,4 @@
-# Modo: pdf — Generación de CV en PDF
+# Mode: pdf — CV PDF Generation
 
 PDF generation uses LaTeX. Execute the full pipeline from `modes/latex.md`.
 
@@ -84,6 +84,6 @@ d. Report: PDF path, file size, Canva design URL (for manual tweaking)
 - If `find_and_replace_text` finds no matches → try broader substring matching
 - Always provide the Canva design URL so the user can edit manually if auto-edit fails
 
-## Post-generación
+## Post-generation
 
-Actualizar tracker si la oferta ya está registrada: cambiar PDF de ❌ a ✅.
+Update tracker if the offer is already registered: change PDF from ❌ to ✅.

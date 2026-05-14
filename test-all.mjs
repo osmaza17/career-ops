@@ -68,7 +68,6 @@ const scripts = [
   { name: 'normalize-statuses.mjs', expectExit: 0 },
   { name: 'dedup-tracker.mjs', expectExit: 0 },
   { name: 'merge-tracker.mjs', expectExit: 0 },
-  { name: 'update-system.mjs check', expectExit: 0 },
 ];
 
 for (const { name, allowFail } of scripts) {
@@ -158,8 +157,8 @@ console.log('\n5. Data contract validation');
 // Check system files exist
 const systemFiles = [
   'CLAUDE.md', 'VERSION', 'DATA_CONTRACT.md',
-  'modes/_shared.md', 'config/_profile.template.md',
-  'modes/oferta.md', 'modes/pdf.md', 'modes/scan.md',
+  'modes/_shared.md', 'config/strategy.template.md',
+  'modes/offer-analysis.md', 'modes/pdf.md', 'modes/scan.md',
   'templates/states.yml',
   '.claude/skills/career-ops/SKILL.md',
 ];
@@ -174,7 +173,7 @@ for (const f of systemFiles) {
 
 // Check user files are NOT tracked (gitignored)
 const userFiles = [
-  'config/profile.yml', 'config/_profile.md', 'config/portals.yml',
+  'config/profile.yml', 'config/strategy.md', 'config/portals.yml',
 ];
 for (const f of userFiles) {
   const tracked = run('git', ['ls-files', f]);
@@ -251,9 +250,9 @@ if (!absPathResult) {
 console.log('\n8. Mode file integrity');
 
 const expectedModes = [
-  '_shared.md', 'oferta.md', 'pdf.md', 'scan.md',
-  'batch.md', 'apply.md', 'auto-pipeline.md', 'contacto.md', 'deep.md',
-  'ofertas.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
+  '_shared.md', 'offer-analysis.md', 'pdf.md', 'scan.md',
+  'batch.md', 'apply.md', 'auto-pipeline.md', 'contact.md', 'deep.md',
+  'offers-comparison.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
 ];
 
 for (const mode of expectedModes) {
@@ -264,12 +263,12 @@ for (const mode of expectedModes) {
   }
 }
 
-// Check _shared.md references config/_profile.md
+// Check _shared.md references config/strategy.md
 const shared = readFile('modes/_shared.md');
-if (shared.includes('config/_profile.md')) {
-  pass('_shared.md references config/_profile.md');
+if (shared.includes('config/strategy.md')) {
+  pass('_shared.md references config/strategy.md');
 } else {
-  fail('_shared.md does NOT reference config/_profile.md');
+  fail('_shared.md does NOT reference config/strategy.md');
 }
 
 // ── 9. AGENTS.md INTEGRITY ──────────────────────────────────────
@@ -278,7 +277,7 @@ console.log('\n9. AGENTS.md integrity');
 
 const agents = readFile('AGENTS.md');
 const requiredSections = [
-  'Data Contract', 'Update Check', 'Ethical Use',
+  'Data Contract', 'Ethical Use',
   'Offer Verification', 'Canonical States', 'TSV Format',
   'First Run', 'Onboarding',
 ];
