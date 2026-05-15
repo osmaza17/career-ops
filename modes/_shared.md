@@ -72,16 +72,16 @@ Block G assesses whether a posting is likely a real, active opening. It does NOT
 
 ## Archetype Detection
 
-Classify every offer into one of these types (or hybrid of 2):
+Classify every offer into one of these types (or hybrid of 2). Read `config/strategy.md` for the user's specific archetypes — these defaults apply only when strategy.md has no override.
 
 | Archetype | Key signals in JD |
 |-----------|-------------------|
-| AI Platform / LLMOps | "observability", "evals", "pipelines", "monitoring", "reliability" |
-| Agentic / Automation | "agent", "HITL", "orchestration", "workflow", "multi-agent" |
-| Technical AI PM | "PRD", "roadmap", "discovery", "stakeholder", "product manager" |
-| AI Solutions Architect | "architecture", "enterprise", "integration", "design", "systems" |
-| AI Forward Deployed | "client-facing", "deploy", "prototype", "fast delivery", "field" |
-| AI Transformation | "change management", "adoption", "enablement", "transformation" |
+| Management Consultant | "strategy", "case study", "client", "recommendation", "framework", "problem-solving", "structured analysis", "deliverable" |
+| Operations Research / Optimisation | "optimisation", "OR", "MILP", "simulation", "modelling", "solver", "heuristic", "quantitative methods", "algorithm" |
+| Supply Chain / Logistics | "supply chain", "logistics", "inventory", "demand planning", "S&OP", "procurement", "distribution", "warehouse", "network design" |
+| Process / Industrial Engineer | "Lean", "Six Sigma", "continuous improvement", "process mapping", "Kaizen", "capacity planning", "manufacturing", "plant operations" |
+| Data / Quantitative Analyst | "analytics", "data", "Power BI", "SQL", "Python", "KPIs", "reporting", "forecasting", "dashboards", "business intelligence" |
+| Project / Programme Manager | "project management", "PMO", "milestones", "stakeholders", "budget", "programme", "risk management", "planning", "coordination" |
 
 After detecting archetype, read `config/strategy.md` for the user's specific framing and proof points for that archetype.
 
@@ -109,8 +109,8 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 5. Register in tracker after evaluating
 6. Generate content in the language of the JD (EN default)
 7. Be direct and actionable -- no fluff
-8. Native tech English for generated text. Short sentences, action verbs, no passive voice.
-8b. Case study URLs in PDF Professional Summary (recruiter may only read this).
+8. Concise professional English. Short sentences, action verbs, no passive voice.
+8b. Key proof points and metrics in PDF Professional Summary — recruiters may only read this section.
 9. **Tracker additions as TSV** -- NEVER edit applications.md directly. Write TSV in `batch/tracker-additions/`.
 10. **Include `**URL:**` in every report header.**
 
@@ -233,6 +233,6 @@ Avoid generating em-dashes, smart quotes, and zero-width characters in the first
 - Don't always use "X, Y, and Z" — sometimes two items, sometimes four
 
 ### Prefer specifics over abstractions
-- "Cut p95 latency from 2.1s to 380ms" beats "improved performance"
-- "Postgres + pgvector for retrieval over 12k docs" beats "designed scalable RAG architecture"
-- Name tools, projects, and customers when allowed
+- "Reduced lead time from 45 to 28 days (−38%)" beats "improved supply chain performance"
+- "MILP model for fleet sizing across 5 H₂ refuelling stations — zero-stockout configuration" beats "built an optimisation model"
+- Name tools, projects, clients, and quantified outcomes when allowed

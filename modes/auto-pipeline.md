@@ -50,7 +50,7 @@ If the final score is >= 4.5, generate draft answers for the application form:
 **Position: "I'm choosing you."** The candidate has options and is choosing this company for specific reasons.
 
 **Tone rules:**
-- **Confident without arrogance**: "I've spent the past year building production AI agent systems — your role is where I want to apply that experience next"
+- **Confident without arrogance**: "I've spent the past year building optimisation models and running consulting projects with real industrial clients — your role is where I want to apply that experience next"
 - **Selective without condescension**: "I've been intentional about finding a team where I can contribute meaningfully from day one"
 - **Specific and concrete**: Always reference something REAL from the JD or the company, and something REAL from the candidate's experience
 - **Direct, no fluff**: 2-4 sentences per answer. No "I'm passionate about..." or "I would love the opportunity to..."

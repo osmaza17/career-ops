@@ -37,11 +37,11 @@ Parse the JSON output. It contains:
 | `funnel` | Count per status stage (evaluated, applied, interview, offer, etc.) |
 | `scoreComparison` | Avg/min/max score per outcome group (positive, negative, self_filtered, pending) |
 | `archetypeBreakdown` | Per-archetype: total, positive, negative, self_filtered, conversion rate |
-| `blockerAnalysis` | Most frequent hard blockers: geo-restriction, stack-mismatch, seniority, onsite |
+| `blockerAnalysis` | Most frequent hard blockers: geo-restriction, skills-mismatch, seniority gap, onsite requirement, sector-mismatch |
 | `remotePolicy` | Per-policy bucket: total, positive, negative, conversion rate |
 | `companySizeBreakdown` | Per-size bucket: startup, scaleup, enterprise |
 | `scoreThreshold` | Recommended minimum score + reasoning |
-| `techStackGaps` | Most frequent tech gaps in negative outcomes |
+| `techStackGaps` | Most frequent skills or tool gaps in negative outcomes |
 | `recommendations` | Top 5 actionable items with reasoning and impact level |
 
 If the script returns `error`, display the error message and exit.
@@ -87,16 +87,16 @@ Highlight the best-performing archetype and the worst.
 
 ## Top Blockers
 
-Frequency table of recurring hard blockers (geo-restriction, stack-mismatch, etc.).
+Frequency table of recurring hard blockers (geo-restriction, sector-mismatch, seniority gap, onsite requirement, language requirement, required certification or diploma).
 Note the percentage of all applications affected by each.
 
 ## Remote Policy Patterns
 
 Table showing conversion rate by remote policy bucket (global, regional, geo-restricted, hybrid/onsite).
 
-## Tech Stack Gaps
+## Skills and Domain Gaps
 
-List of most common missing skills in negative/self-filtered outcomes with frequency.
+List of most common missing skills, tools, or domain knowledge in negative/self-filtered outcomes with frequency.
 
 ## Recommended Score Threshold
 

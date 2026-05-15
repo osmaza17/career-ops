@@ -18,8 +18,8 @@ Run these WebSearch queries. Extract structured data, not summaries. Cite source
 |-------|-----------------|
 | `"{company} {role} interview questions site:glassdoor.com"` | Actual questions asked, difficulty rating, experience rating, process timeline, number of rounds, offer/reject ratio |
 | `"{company} interview process site:teamblind.com"` | Candid process descriptions, recent data points, comp negotiation details, hiring bar |
-| `"{company} {role} interview site:leetcode.com/discuss"` | Specific coding/technical problems, system design topics, round structure |
-| `"{company} engineering blog"` | Tech stack, values, what they publish about, technical priorities |
+| `"{company} {role} interview process"` | Case study or problem-solving format, round structure, typical questions, prep advice |
+| `"{company} culture values" OR "{company} annual report"` | Strategic priorities, stated values, what they publish about |
 | `"{company} interview process {role}"` (general) | Fills gaps from above — blog posts, YouTube, prep guides, candidate write-ups |
 
 If the company is small or obscure and yields few results, broaden: search for the role archetype at similar-stage companies, and note that intel is sparse.
@@ -34,7 +34,7 @@ If the company is small or obscure and yields few results, broaden: search for t
 - **Format:** {e.g., recruiter screen → technical phone → take-home → onsite (4 rounds) → hiring manager}
 - **Difficulty:** {X}/5 (Glassdoor avg, N reviews)
 - **Positive experience rate:** {X}%
-- **Known quirks:** {e.g., "pair programming instead of whiteboard", "no LeetCode, all practical", "take-home is 4 hours"}
+- **Known quirks:** {e.g., "case study in first round", "take-home analysis exercise", "group assessment centre", "presentation to panel"}
 - **Sources:** {links}
 ```
 

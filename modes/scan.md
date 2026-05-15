@@ -154,9 +154,9 @@ Levels are additive — all run, results are merged and deduplicated.
 WebSearch results come in format: `"Job Title @ Company"` or `"Job Title | Company"` or `"Job Title — Company"`.
 
 Extraction patterns by portal:
-- **Ashby**: `"Senior AI PM (Remote) @ EverAI"` → title: `Senior AI PM`, company: `EverAI`
-- **Greenhouse**: `"AI Engineer at Anthropic"` → title: `AI Engineer`, company: `Anthropic`
-- **Lever**: `"Product Manager - AI @ Temporal"` → title: `Product Manager - AI`, company: `Temporal`
+- **Ashby**: `"Supply Chain Analyst (Remote) @ Kuehne+Nagel"` → title: `Supply Chain Analyst`, company: `Kuehne+Nagel`
+- **Greenhouse**: `"Operations Research Engineer at Air Liquide"` → title: `Operations Research Engineer`, company: `Air Liquide`
+- **Lever**: `"Management Consultant - Operations @ BCG"` → title: `Management Consultant - Operations`, company: `BCG`
 
 Generic regex: `(.+?)(?:\s*[@|—–-]\s*|\s+at\s+)(.+?)$`
 
@@ -172,10 +172,10 @@ If a non-publicly accessible URL is found:
 
 ```
 url	first_seen	portal	title	company	status
-https://...	2026-02-10	Ashby — AI PM	PM AI	Acme	added
-https://...	2026-02-10	Greenhouse — SA	Junior Dev	BigCo	skipped_title
-https://...	2026-02-10	Ashby — AI PM	SA AI	OldCo	skipped_dup
-https://...	2026-02-10	WebSearch — AI PM	PM AI	ClosedCo	skipped_expired
+https://...	2026-02-10	Ashby	Supply Chain Analyst	Acme Logistics	added
+https://...	2026-02-10	Greenhouse	Junior Dev	BigCo	skipped_title
+https://...	2026-02-10	Ashby	OR Engineer	OldCo	skipped_dup
+https://...	2026-02-10	WebSearch	Consultant Ops	ClosedCo	skipped_expired
 ```
 
 ## Output Summary

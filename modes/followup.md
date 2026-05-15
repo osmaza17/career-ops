@@ -75,13 +75,13 @@ Generate a 3-4 sentence email:
 - Use the candidate's name from `config/profile.md`
 
 **Example tone:**
-> Subject: Re: Senior PHP/Laravel Developer — IxDF
+> Subject: Re: Supply Chain Analyst — Acme Logistics
 >
 > Hi [contact name or "team"],
 >
-> I submitted my application for the Senior PHP/Laravel Developer role on April 7th. I wanted to share that my production Laravel app (Barbeiro.app — 120 models, 315 API endpoints, full test suite) closely mirrors the TDD-driven culture described in the posting.
+> I submitted my application for the Supply Chain Analyst role on April 7th. I wanted to share that my recent discrete-event simulation project — delivering a zero-stockout fleet configuration for a real industrial client — closely mirrors the operational rigour described in the posting.
 >
-> I'd love to discuss how my 15 years of PHP experience and hands-on AI tooling workflow could contribute to IxDF's platform. Would any time this week work for a brief conversation?
+> I'd welcome the chance to discuss how my background in optimisation and quantitative operations could contribute to your team. Would any time this week work for a brief conversation?
 >
 > Best,
 > [Name]
@@ -143,7 +143,7 @@ After the user reviews and says they've sent a follow-up, record it:
    - `Role` = role title
    - `Channel` = Email / LinkedIn / Other
    - `Contact` = who it was sent to
-   - `Notes` = brief note (e.g., "First follow-up, referenced Barbeiro.app")
+   - `Notes` = brief note (e.g., "First follow-up, referenced H₂ supply chain project")
 
 3. Optionally update the Notes column in `data/applications.md` with "Follow-up {N} sent {YYYY-MM-DD}"
 

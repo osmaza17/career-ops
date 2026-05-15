@@ -13,7 +13,7 @@ Classify the offer into one of the 6 archetypes (see `_shared.md`). If hybrid, i
 
 Table with:
 - Detected archetype
-- Domain (platform/agentic/LLMOps/ML/enterprise)
+- Domain (consulting / supply chain / operations research / industrial / data analytics / project management / other)
 - Function (build/consult/manage/deploy)
 - Seniority
 - Remote (full/hybrid/onsite)
@@ -25,12 +25,12 @@ Table with:
 Read `config/cv.md`. Create a table mapping each JD requirement to exact lines from the CV.
 
 **Adapted to archetype:**
-- If FDE → prioritize fast delivery and client-facing proof points
-- If SA → prioritize system design and integrations
-- If PM → prioritize product discovery and metrics
-- If LLMOps → prioritize evals, observability, pipelines
-- If Agentic → prioritize multi-agent, HITL, orchestration
-- If Transformation → prioritize change management, adoption, scaling
+- If Consultant → prioritize client-facing proof points, structured recommendations, project leadership
+- If OR / Optimisation → prioritize quantitative models, MILP/simulation results, solver proficiency (Gurobi, Simul8)
+- If Supply Chain → prioritize logistics/inventory metrics, cost savings, fulfilment rates, network design
+- If Process Engineer → prioritize waste reduction, throughput gains, productivity improvement, certification
+- If Data Analyst → prioritize analytical methods, dashboards built, KPI design, business decisions enabled
+- If Project Manager → prioritize on-time delivery, budget management, stakeholder coordination, risk mitigation
 
 **Gaps** section with mitigation strategy for each one. For each gap:
 1. Is it a hard blocker or a nice-to-have?
@@ -74,12 +74,12 @@ The **Reflection** column captures what was learned or what would be done differ
 **Story Bank:** If `interview-prep/story-bank.md` exists, check if any of these stories are already there. If not, append new ones. Over time this builds a reusable bank of 5-10 master stories that can be adapted to any interview question.
 
 **Selected and framed by archetype:**
-- FDE → emphasize delivery speed and client-facing
-- SA → emphasize architecture decisions
-- PM → emphasize discovery and trade-offs
-- LLMOps → emphasize metrics, evals, production hardening
-- Agentic → emphasize orchestration, error handling, HITL
-- Transformation → emphasize adoption, organizational change
+- Consultant → emphasize structured problem-solving, client interaction, recommendation implementation
+- OR / Optimisation → emphasize quantitative rigour, model design decisions, real-client results
+- Supply Chain → emphasize impact on cost and service level, cross-functional coordination
+- Process Engineer → emphasize efficiency gains, before/after metrics, change management
+- Data Analyst → emphasize analytical methodology, business decisions enabled, tool depth
+- Project Manager → emphasize delivery, stakeholder management, risk and budget handling
 
 Also include:
 - 1 recommended case study (which of their projects to present and how)

@@ -19,9 +19,10 @@ For each course/cert the candidate asks about, evaluate 6 dimensions:
 
 ## Priority
 
-Training that improves credibility in "production-grade AI":
-1. LLM evals and testing
-2. Observability and monitoring
-3. Cost/reliability trade-offs
-4. AI governance and safety
-5. Enterprise AI architecture
+Training that improves credibility in quantitative operations and consulting:
+1. Advanced optimisation and OR (MILP, stochastic programming, metaheuristics)
+2. Discrete-event simulation (AnyLogic, Simul8, Plant Simulation, Arena)
+3. Supply chain and logistics analytics (network design, S&OP, inventory models)
+4. Data analysis and BI (Python/pandas, Power BI, SQL, statistical modelling)
+5. Project and programme management (PMP, PRINCE2, or agile methodologies)
+6. Domain certifications with recruiter signal (Lean Six Sigma Green/Black Belt, APICS CPIM/CSCP, PMI)
