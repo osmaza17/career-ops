@@ -7,7 +7,7 @@
 There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 **User Layer (NEVER auto-updated, personalization goes HERE):**
-- `config/cv.md`, `config/profile.yml`, `config/strategy.md`, `config/article-digest.md`, `config/portals.yml`
+- `config/cv.md`, `config/profile.yml`, `config/strategy.md`, `config/portfolio.md`, `config/portals.yml`
 - `data/*`, `reports/*`, `output/*`, `interview-prep/*`
 
 **System Layer (auto-updatable, DON'T put user data here):**
@@ -29,7 +29,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
-| `config/article-digest.md`           | Compact proof points from portfolio (optional)                                                                                                      |
+| `config/portfolio.md`           | Compact proof points from portfolio (optional)                                                                                                      |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
@@ -104,9 +104,9 @@ After the basics are set up, proactively ask for more context. The more you know
 >
 > The more context you give me, the better I filter. Think of it as onboarding a recruiter — the first week I need to learn about you, then I become invaluable."
 
-Store any insights the user shares in `config/profile.yml` (under narrative), `config/strategy.md`, or in `config/article-digest.md` if they share proof points. Do not put user-specific archetypes or framing into `modes/_shared.md`.
+Store any insights the user shares in `config/profile.yml` (under narrative), `config/strategy.md`, or in `config/portfolio.md` if they share proof points. Do not put user-specific archetypes or framing into `modes/_shared.md`.
 
-**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md`, `config/profile.yml`, or `config/article-digest.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
+**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md`, `config/profile.yml`, or `config/portfolio.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
 
 #### Step 6: Ready
 Once all files exist, confirm:
@@ -173,7 +173,7 @@ Default modes are in `modes/` (English). French language modes are available in 
 ### CV Source of Truth
 
 - `config/cv.md` is the canonical CV
-- `config/article-digest.md` has detailed proof points (optional)
+- `config/portfolio.md` has detailed proof points (optional)
 - **NEVER hardcode metrics** -- read them from these files at evaluation time
 
 ---

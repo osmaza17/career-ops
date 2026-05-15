@@ -13,13 +13,13 @@
 | File | Path | When |
 |------|------|------|
 | cv.md | `config/cv.md` | ALWAYS |
-| article-digest.md | `config/article-digest.md` (if exists) | ALWAYS (detailed proof points) |
+| portfolio.md | `config/portfolio.md` (if exists) | ALWAYS (detailed proof points) |
 | profile.yml | `config/profile.yml` | ALWAYS (candidate identity and targets) |
 | strategy.md | `config/strategy.md` | ALWAYS (user archetypes, narrative, negotiation) |
 | writing-samples/ | `writing-samples/` | When generating candidate-facing text — check `config/strategy.md` for cached `## Writing Style` first; only scan files if absent |
 
-**RULE: NEVER hardcode metrics from proof points.** Read them from config/cv.md + config/article-digest.md at evaluation time.
-**RULE: For article/project metrics, config/article-digest.md takes precedence over config/cv.md.**
+**RULE: NEVER hardcode metrics from proof points.** Read them from config/cv.md + config/portfolio.md at evaluation time.
+**RULE: For article/project metrics, config/portfolio.md takes precedence over config/cv.md.**
 **RULE: Read config/strategy.md AFTER this file. User customizations in config/strategy.md override defaults here.**
 
 ---
@@ -102,7 +102,7 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 ### ALWAYS
 
 0. **Cover letter:** If the form allows it, ALWAYS include one. Same visual design as CV. JD quotes mapped to proof points. 1 page max.
-1. Read config/cv.md, config/strategy.md, and config/article-digest.md (if exists) before evaluating
+1. Read config/cv.md, config/strategy.md, and config/portfolio.md (if exists) before evaluating
 1b. **First evaluation of each session:** Run `node cv-sync-check.mjs`. If warnings, notify user.
 2. Detect the role archetype and adapt framing per config/strategy.md
 3. Cite exact lines from CV when matching
@@ -122,7 +122,7 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 | WebSearch | Comp research, trends, company culture, LinkedIn contacts, fallback for JDs |
 | WebFetch | Fallback for extracting JDs from static pages |
 | Playwright | Verify offers (browser_navigate + browser_snapshot). **NEVER 2+ agents with Playwright in parallel.** |
-| Read | config/cv.md, config/strategy.md, config/article-digest.md |
+| Read | config/cv.md, config/strategy.md, config/portfolio.md |
 | Write | applications.md, reports .md |
 | Edit | Update tracker |
 | Canva MCP | Optional visual CV generation. Duplicate base design, edit text, export PDF. Requires `cv.canva_resume_design_id` in profile.yml. |

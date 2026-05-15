@@ -4,33 +4,33 @@
 
 ```
                     ┌─────────────────────────────────┐
-                    │         AI Coding CLI Agent      │
-                    │   (reads AGENTS.md + modes/*.md) │
+                    │         AI Coding CLI Agent     │
+                    │   (reads AGENTS.md + modes/*.md)│
                     └──────────┬──────────────────────┘
                                │
-            ┌──────────────────┼──────────────────────┐
+            ┌──────────────────┼───────────────────────┐
             │                  │                       │
-     ┌──────▼──────┐   ┌──────▼──────┐   ┌───────────▼────────┐
-     │ Single Eval  │   │ Portal Scan │   │   Batch Process    │
-     │ (auto-pipe)  │   │  (scan.md)  │   │   (batch-runner)   │
-     └──────┬──────┘   └──────┬──────┘   └───────────┬────────┘
+     ┌──────▼──────┐    ┌──────▼──────┐    ┌───────────▼────────┐
+     │ Single Eval │    │ Portal Scan │    │   Batch Process    │
+     │ (auto-pipe) │    │  (scan.md)  │    │   (batch-runner)   │
+     └──────┬──────┘    └──────┬──────┘    └───────────┬────────┘
             │                  │                       │
-            │           ┌──────▼──────┐          ┌────▼─────┐
-            │           │ pipeline.md │          │ N workers│
-            │           │ (URL inbox) │          │ (headless)
-            │           └─────────────┘          └────┬─────┘
+            │           ┌──────▼──────┐           ┌────▼───────┐
+            │           │ pipeline.md │           │ N workers  │
+            │           │ (URL inbox) │           │ (headless) │  
+            │           └─────────────┘           └────┬───────┘
             │                                          │
      ┌──────▼──────────────────────────────────────────▼──────┐
-     │                    Output Pipeline                      │
-     │  ┌──────────┐  ┌────────────┐  ┌───────────────────┐  │
-     │  │ Report.md│  │  PDF (LaTeX  │  │ Tracker TSV       │  │
-     │  │ (A-F eval)│  │  → pdflatex)│  │ (merge-tracker)  │  │
-     │  └──────────┘  └────────────┘  └───────────────────┘  │
+     │                    Output Pipeline                     │
+     │  ┌──────────┐  ┌────────────┐  ┌───────────────────┐   │
+     │  │ Report.md│  │  PDF (LaTeX  │  │ Tracker TSV     │   │
+     │  │ (A-F eval)│  │  → pdflatex)│  │ (merge-tracker) │   │
+     │  └──────────┘  └────────────┘  └───────────────────┘   │
      └────────────────────────────────────────────────────────┘
                                │
-                    ┌──────────▼──────────┐
-                    │  data/applications.md │
-                    │  (canonical tracker)  │
+                    ┌──────────▼───────────┐
+                    │ data/applications.md │
+                    │ (canonical tracker)  │
                     └──────────────────────┘
 ```
 
@@ -74,7 +74,7 @@ The orchestrator manages parallelism, state, retries, and resume.
 
 ```
 config/cv.md             →  Evaluation context
-config/article-digest.md →  Proof points for matching
+config/portfolio.md →  Proof points for matching
 config/profile.yml       →  Candidate identity
 config/portals.yml       →  Scanner configuration
 templates/states.yml     →  Canonical status values

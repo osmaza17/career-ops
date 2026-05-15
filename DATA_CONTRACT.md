@@ -11,7 +11,7 @@ These files contain your personal data, customizations, and work product. Update
 | `config/cv.md` | Your CV in markdown |
 | `config/profile.yml` | Your identity, targets, comp range |
 | `config/strategy.md` | Your archetypes, narrative, negotiation scripts |
-| `config/article-digest.md` | Your proof points from portfolio |
+| `config/portfolio.md` | Your proof points from portfolio |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
 | `config/portals.yml` | Your customized company list |
 | `data/applications.md` | Your application tracker |

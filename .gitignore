@@ -23,7 +23,7 @@ writing-samples/*
 config/profile.yml
 config/portals.yml
 config/strategy.md
-config/article-digest.md
+config/portfolio.md
 config/cv.md
 .update-dismissed
 .update-lock

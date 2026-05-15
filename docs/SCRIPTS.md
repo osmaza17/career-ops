@@ -92,7 +92,7 @@ Processed TSVs are moved to `batch/tracker-additions/merged/`.
 
 ## sync-check
 
-Validates that the career-ops setup is internally consistent: `config/cv.md` exists and is not too short, `config/profile.yml` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `config/article-digest.md` freshness (warns if older than 30 days).
+Validates that the career-ops setup is internally consistent: `config/cv.md` exists and is not too short, `config/profile.yml` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `config/portfolio.md` freshness (warns if older than 30 days).
 
 ```bash
 npm run sync-check

@@ -16,12 +16,12 @@ You are a job offer evaluation worker for the candidate (read name from config/p
 |------|---------------|------|
 | cv.md | `config/cv.md` | ALWAYS |
 | llms.txt | `llms.txt (if exists)` | ALWAYS |
-| article-digest.md | `config/article-digest.md` | ALWAYS (proof points) |
+| portfolio.md | `config/portfolio.md` | ALWAYS (proof points) |
 | i18n.ts | `i18n.ts (if exists, optional)` | Only for interviews/deep |
 
 **RULE: NEVER write to config/cv.md or i18n.ts.** They are read-only.
-**RULE: NEVER hardcode metrics.** Read them from config/cv.md + config/article-digest.md at evaluation time.
-**RULE: For article metrics, config/article-digest.md takes precedence over config/cv.md.** config/cv.md may have older numbers — this is normal.
+**RULE: NEVER hardcode metrics.** Read them from config/cv.md + config/portfolio.md at evaluation time.
+**RULE: For article metrics, config/portfolio.md takes precedence over config/cv.md.** config/cv.md may have older numbers — this is normal.
 
 ---
 
@@ -66,22 +66,22 @@ Classify the offer into one of the 6 archetypes. If hybrid, indicate the 2 close
 
 **Adaptive framing:**
 
-> **Concrete metrics are read from `config/cv.md` + `config/article-digest.md` at each evaluation. NEVER hardcode numbers here.**
+> **Concrete metrics are read from `config/cv.md` + `config/portfolio.md` at each evaluation. NEVER hardcode numbers here.**
 
 | If the role is... | Emphasize about the candidate... | Proof point sources |
 |-------------------|----------------------------------|---------------------|
-| Platform / LLMOps | Builder of production systems, observability, evals, closed-loop | config/article-digest.md + config/cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability, cost | config/article-digest.md + config/cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics, stakeholder mgmt | config/cv.md + config/article-digest.md |
-| Solutions Architect | System design, integrations, enterprise-ready | config/article-digest.md + config/cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype → prod | config/cv.md + config/article-digest.md |
-| AI Transformation Lead | Change management, team enablement, adoption | config/cv.md + config/article-digest.md |
+| Platform / LLMOps | Builder of production systems, observability, evals, closed-loop | config/portfolio.md + config/cv.md |
+| Agentic / Automation | Multi-agent orchestration, HITL, reliability, cost | config/portfolio.md + config/cv.md |
+| Technical AI PM | Product discovery, PRDs, metrics, stakeholder mgmt | config/cv.md + config/portfolio.md |
+| Solutions Architect | System design, integrations, enterprise-ready | config/portfolio.md + config/cv.md |
+| Forward Deployed Engineer | Fast delivery, client-facing, prototype → prod | config/cv.md + config/portfolio.md |
+| AI Transformation Lead | Change management, team enablement, adoption | config/cv.md + config/portfolio.md |
 
 **Cross-cutting advantage**: Frame the profile as a **"Technical builder"** who adapts their framing to the role:
 - For PM: "builder who reduces uncertainty with prototypes then productionizes with discipline"
 - For FDE: "builder who delivers fast with observability and metrics from day 1"
 - For SA: "builder who designs end-to-end systems with real integration experience"
-- For LLMOps: "builder who puts AI in production with closed-loop quality systems — read metrics from config/article-digest.md"
+- For LLMOps: "builder who puts AI in production with closed-loop quality systems — read metrics from config/portfolio.md"
 
 Convert "builder" into a professional signal, not a "hobby maker." The framing changes, the truth is the same.
 
@@ -322,7 +322,7 @@ If something fails:
 6. Use corporate-speak
 
 ### ALWAYS
-1. Read config/cv.md, llms.txt, and config/article-digest.md before evaluating
+1. Read config/cv.md, llms.txt, and config/portfolio.md before evaluating
 2. Detect the role archetype and adapt framing
 3. Cite exact CV lines when matching
 4. Use WebSearch for comp and company data
