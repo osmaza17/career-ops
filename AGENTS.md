@@ -7,14 +7,14 @@
 There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 **User Layer (NEVER auto-updated, personalization goes HERE):**
-- `config/cv.md`, `config/profile.yml`, `config/strategy.md`, `config/portfolio.md`, `config/portals.yml`
+- `config/cv.md`, `config/profile.md`, `config/strategy.md`, `config/portals.yml`
 - `data/*`, `reports/*`, `output/*`, `interview-prep/*`
 
 **System Layer (auto-updatable, DON'T put user data here):**
 - `modes/_shared.md`, `modes/offer-analysis.md`, all other modes
 - `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `templates/*`, `batch/*`
 
-**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/strategy.md` or `config/profile.yml`. NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
+**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/strategy.md` or `config/profile.md`. NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
 
 ## What is career-ops
 
@@ -29,7 +29,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
-| `config/portfolio.md`           | Compact proof points from portfolio (optional)                                                                                                      |
+| `config/profile.md`           | Compact proof points from portfolio (optional)                                                                                                      |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
@@ -45,11 +45,11 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 **Before doing ANYTHING else, check if the system is set up.** Run these checks silently every time a session starts:
 
 1. Does `config/cv.md` exist?
-2. Does `config/profile.yml` exist (not just profile.example.yml)?
-3. Does `config/strategy.md` exist (not just config/strategy.template.md)?
+2. Does `config/profile.md` exist?
+3. Does `config/strategy.md` exist (not just templates/strategy.template.md)?
 4. Does `config/portals.yml` exist (not just templates/portals.example.yml)?
 
-If `config/strategy.md` is missing, copy from `config/strategy.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
+If `config/strategy.md` is missing, copy from `templates/strategy.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
 
 **If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Guide the user step by step:
 
@@ -65,16 +65,44 @@ If `config/cv.md` is missing, ask:
 Create `config/cv.md` from whatever they provide. Make it clean markdown with standard sections (Summary, Experience, Projects, Education, Skills).
 
 #### Step 2: Profile (required)
-If `config/profile.yml` is missing, copy from `config/profile.example.yml` and then ask:
-> "I need a few details to personalize the system:
-> - Your full name and email
-> - Your location and timezone
-> - What roles are you targeting? (e.g., 'Senior Backend Engineer', 'AI Product Manager')
-> - Your salary target range
->
-> I'll set everything up for you."
+If `config/profile.md` is missing, copy `templates/profile.template.md` → `config/profile.md`, then run the guided interview below to fill in the YAML frontmatter. Work through the groups in order — ask each group as a single message, wait for the answer, then move to the next.
 
-Fill in `config/profile.yml` with their answers. For archetypes and targeting narrative, store the user-specific mapping in `config/strategy.md` or `config/profile.yml` rather than editing `modes/_shared.md`.
+**Group 1 — Identity**
+> "Let's set up your profile. First, the basics:
+> - Full name (as it should appear on your CV)
+> - Primary email
+> - Phone number(s) — if you have separate numbers for different countries, tell me both
+> - LinkedIn URL
+> - University or institutional email (if you have one and want it on your CV)
+> - Current city and country"
+
+**Group 2 — Target roles**
+> "What roles are you targeting? Give me:
+> - Your top 2–3 target job titles (e.g. 'Operations Research Analyst', 'Strategy Consultant')
+> - For each, is it a dream role, a strong fit, or a stretch? (I'll set the archetype fit accordingly)
+> - What level are you targeting? (e.g. Junior, Mid, Senior)"
+
+**Group 3 — Narrative**
+> "Now the most important part — your story:
+> - In one line, how would you describe yourself professionally? (e.g. 'Industrial engineer from X — specializing in Y')
+> - What makes you stand out from other candidates at your level? What can you do that most can't?
+> - What's your strongest achievement so far — the one you'd lead with in any interview?
+> - Any other top achievements worth capturing? (I'll build your proof-points list)"
+
+**Group 4 — Compensation**
+> "Compensation:
+> - What's your target salary range?
+> - What's your walk-away minimum? (this stays private — only used by the negotiation mode)
+> - Are you open to relocating or working remotely? Any restrictions?"
+
+**Group 5 — Languages and awards**
+> "Two final things:
+> - What languages do you speak? For each: name, level, and certificate if you have one (e.g. 'English — C1 Advanced, Cambridge certificate')
+> - Any prizes or ranked competitive results? (e.g. '1st prize at X competition, 80 teams') — skip if none"
+
+After all five groups are answered, fill in every key in the YAML frontmatter of `config/profile.md` from the collected answers. Show the completed YAML to the user for review before saving — iterate if they want changes. Only write to the file once they confirm.
+
+For archetypes and targeting narrative, store the user-specific mapping in `config/strategy.md` or `config/profile.md` rather than editing `modes/_shared.md`.
 
 #### Step 3: Portals (recommended)
 If `config/portals.yml` is missing:
@@ -104,9 +132,9 @@ After the basics are set up, proactively ask for more context. The more you know
 >
 > The more context you give me, the better I filter. Think of it as onboarding a recruiter — the first week I need to learn about you, then I become invaluable."
 
-Store any insights the user shares in `config/profile.yml` (under narrative), `config/strategy.md`, or in `config/portfolio.md` if they share proof points. Do not put user-specific archetypes or framing into `modes/_shared.md`.
+Store any insights the user shares in `config/profile.md` (narrative, proof points) or `config/strategy.md` (archetypes, negotiation scripts). Do not put user-specific content into `modes/_shared.md`.
 
-**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md`, `config/profile.yml`, or `config/portfolio.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
+**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md` or `config/profile.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
 
 #### Step 6: Ready
 Once all files exist, confirm:
@@ -129,10 +157,10 @@ If the user accepts, use the `/loop` or `/schedule` skill (if available) to set 
 This system is designed to be customized by YOU (AI Agent). When the user asks you to change archetypes, translate modes, adjust scoring, add companies, or modify negotiation scripts -- do it directly. You read the same files you use, so you know exactly what to edit.
 
 **Common customization requests:**
-- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/strategy.md` or `config/profile.yml`
+- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/strategy.md` or `config/profile.md`
 - "Translate the modes to English" → edit all files in `modes/`
 - "Add these companies to my portals" → edit `config/portals.yml`
-- "Update my profile" → edit `config/profile.yml`
+- "Update my profile" → edit `config/profile.md`
 - "Adjust the scoring weights" → edit `config/strategy.md` for user-specific weighting, or edit `modes/_shared.md` and `batch/batch-prompt.md` only when changing the shared system defaults for everyone
 
 ### Language Modes
@@ -143,7 +171,7 @@ Default modes are in `modes/` (English). French language modes are available in 
 
 **When to use French modes:** If the user is targeting French-language job postings, lives in France/Belgium/Switzerland/Luxembourg/Quebec, or asks for French output. Either:
 1. User says "use French modes" → read from `modes/fr/` instead of `modes/`
-2. User sets `language.modes_dir: modes/fr` in `config/profile.yml` → always use French modes
+2. User sets `language.modes_dir: modes/fr` in `config/profile.md` → always use French modes
 3. You detect a French JD → suggest switching to French modes
 
 **When NOT to:** If the user applies to English-language roles, even at French companies, use the default English modes.
@@ -168,13 +196,25 @@ Default modes are in `modes/` (English). French language modes are available in 
 | Batch processes offers                                      | `batch`                                           |
 | Asks about rejection patterns or wants to improve targeting | `patterns`                                        |
 | Asks about follow-ups or application cadence                | `followup`                                        |
-| Wants to rebuild cv.md from portfolio.md                   | `ingest`                                          |
+| Wants to rebuild cv.md from profile.md                    | `ingest`                                          |
+| Has raw academic documents to digest (project reports, internship descriptions, association activity files) | `analyze-sources` |
 
 ### CV Source of Truth
 
 - `config/cv.md` is the canonical CV
-- `config/portfolio.md` has detailed proof points (optional)
+- `config/profile.md` has detailed proof points (optional)
+- `sources/` holds raw academic documents — **only `modes/analyze-sources.md` reads from this folder**
 - **NEVER hardcode metrics** -- read them from these files at evaluation time
+
+### Full pipeline (raw documents → CV)
+
+```
+sources/          →  analyze-sources  →  config/profile.md
+config/profile.md  →  ingest           →  config/cv.md
+config/cv.md         →  pdf / latex      →  output/*.pdf
+```
+
+**Access rule:** `sources/` is exclusively accessed by `analyze-sources`. No other mode, agent, or script reads files from that folder.
 
 ---
 

@@ -157,7 +157,7 @@ console.log('\n5. Data contract validation');
 // Check system files exist
 const systemFiles = [
   'CLAUDE.md', 'VERSION', 'DATA_CONTRACT.md',
-  'modes/_shared.md', 'config/strategy.template.md',
+  'modes/_shared.md', 'templates/strategy.template.md',
   'modes/offer-analysis.md', 'modes/pdf.md', 'modes/scan.md',
   'templates/states.yml',
   '.claude/skills/career-ops/SKILL.md',
@@ -173,7 +173,7 @@ for (const f of systemFiles) {
 
 // Check user files are NOT tracked (gitignored)
 const userFiles = [
-  'config/profile.yml', 'config/strategy.md', 'config/portals.yml',
+  'config/profile.md', 'config/strategy.md', 'config/portals.yml',
 ];
 for (const f of userFiles) {
   const tracked = run('git', ['ls-files', f]);
@@ -253,6 +253,7 @@ const expectedModes = [
   '_shared.md', 'offer-analysis.md', 'pdf.md', 'scan.md',
   'batch.md', 'apply.md', 'auto-pipeline.md', 'contact.md', 'deep.md',
   'offers-comparison.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
+  'patterns.md', 'followup.md', 'ingest.md', 'latex.md', 'interview-prep.md', 'analyze-sources.md',
 ];
 
 for (const mode of expectedModes) {

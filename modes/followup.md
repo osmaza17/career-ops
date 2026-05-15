@@ -9,7 +9,7 @@ Track follow-up cadence for active applications. Flag overdue follow-ups, extrac
 - `data/applications.md` — Application tracker
 - `data/follow-ups.md` — Follow-up history (created on first use)
 - `reports/` — Evaluation reports (for context in drafts)
-- `config/profile.yml` — User profile (name, identity)
+- `config/profile.md` — User profile (name, identity)
 - `config/cv.md` — CV for proof points in drafts
 
 ## Step 1 — Run Cadence Script
@@ -54,7 +54,7 @@ For each **overdue** or **urgent** entry only:
 
 1. Read the linked report (`reportPath` from JSON) for company context
 2. Read `config/cv.md` for proof points
-3. Read `config/profile.yml` for candidate name and identity
+3. Read `config/profile.md` for candidate name and identity
 
 ### Email Follow-up Framework (first follow-up, followupCount == 0)
 
@@ -72,7 +72,7 @@ Generate a 3-4 sentence email:
 - Reference something specific to THAT company (from report Block A)
 - Keep under 150 words
 - Include a subject line
-- Use the candidate's name from `config/profile.yml`
+- Use the candidate's name from `config/profile.md`
 
 **Example tone:**
 > Subject: Re: Senior PHP/Laravel Developer — IxDF

@@ -1,8 +1,8 @@
 # Customization Guide
 
-## Profile (config/profile.yml)
+## Profile (config/profile.md)
 
-This is the single source of truth for your identity. All modes read from here.
+This is the single source of truth for career-ops. It has two layers: a YAML frontmatter block (identity, targets, narrative, compensation, languages) and a markdown body (your full trajectory corpus). All modes read from here.
 
 Key sections:
 - **candidate**: Name, email, phone, location, LinkedIn, portfolio

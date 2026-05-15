@@ -31,25 +31,25 @@
 ## Your Adaptive Framing
 
 <!-- Map YOUR projects to each archetype. Example:
-     | Platform / LLMOps | My monitoring dashboard project | portfolio.md |
+     | Platform / LLMOps | My monitoring dashboard project | config/profile.md |
      | Agentic | My chatbot with HITL escalation | cv.md section 3 | -->
 
 | If the role is... | Emphasize about you... | Proof point sources |
 |-------------------|------------------------|---------------------|
-| Platform / LLMOps | Production systems builder, observability, evals | portfolio.md + cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability | portfolio.md + cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics | cv.md + portfolio.md |
-| Solutions Architect | System design, integrations, enterprise-ready | portfolio.md + cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md + portfolio.md |
-| AI Transformation Lead | Change management, team enablement, adoption | cv.md + portfolio.md |
+| Platform / LLMOps | Production systems builder, observability, evals | config/profile.md + cv.md |
+| Agentic / Automation | Multi-agent orchestration, HITL, reliability | config/profile.md + cv.md |
+| Technical AI PM | Product discovery, PRDs, metrics | cv.md + config/profile.md |
+| Solutions Architect | System design, integrations, enterprise-ready | config/profile.md + cv.md |
+| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md + config/profile.md |
+| AI Transformation Lead | Change management, team enablement, adoption | cv.md + config/profile.md |
 
 ## Your Exit Narrative
 
 <!-- Replace with YOUR story. This frames everything. -->
 
-Use the candidate's exit story from `config/profile.yml` to frame ALL content:
+Use the candidate's exit story from `config/profile.md` to frame ALL content:
 - **In PDF Summaries:** Bridge from past to future
-- **In STAR stories:** Reference proof points from portfolio.md
+- **In STAR stories:** Reference proof points from config/profile.md
 - **In Draft Answers:** The transition narrative appears in the first response
 
 ## Your Cross-cutting Advantage
@@ -65,7 +65,7 @@ Frame profile as **"Technical builder with real-world proof"** that adapts frami
      password: demo-2026
      when_to_share: "LLMOps, AI Platform roles" -->
 
-If you have a live demo/dashboard (check profile.yml), offer access in applications for relevant roles.
+If you have a live demo/dashboard (check config/profile.md), offer access in applications for relevant roles.
 
 ## Your Comp Targets
 
@@ -81,7 +81,7 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 <!-- Adapt to YOUR situation, currency, location -->
 
 **Salary expectations:**
-> "Based on market data for this role, I'm targeting [RANGE from profile.yml]. I'm flexible on structure -- what matters is the total package and the opportunity."
+> "Based on market data for this role, I'm targeting [RANGE from config/profile.md]. I'm flexible on structure -- what matters is the total package and the opportunity."
 
 **Geographic discount pushback:**
 > "The roles I'm competitive for are output-based, not location-based. My track record doesn't change based on postal code."
@@ -94,7 +94,7 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 <!-- Adapt to YOUR situation -->
 
 **In forms:**
-- Follow your actual availability from profile.yml
+- Follow your actual availability from config/profile.md
 - Specify timezone overlap in free-text fields
 
 **In evaluations (scoring):**

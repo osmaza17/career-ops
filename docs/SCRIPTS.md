@@ -22,7 +22,7 @@ All scripts live in the project root as `.mjs` modules and are exposed via `npm 
 
 ## doctor
 
-Validates that all prerequisites are in place: Node.js >= 18, dependencies installed, Playwright chromium, required files (`config/cv.md`, `config/profile.yml`, `config/portals.yml`), fonts directory, and auto-creates `data/`, `output/`, `reports/` if missing.
+Validates that all prerequisites are in place: Node.js >= 18, dependencies installed, Playwright chromium, required files (`config/cv.md`, `config/profile.md`, `config/portals.yml`), fonts directory, and auto-creates `data/`, `output/`, `reports/` if missing.
 
 ```bash
 npm run doctor
@@ -92,7 +92,7 @@ Processed TSVs are moved to `batch/tracker-additions/merged/`.
 
 ## sync-check
 
-Validates that the career-ops setup is internally consistent: `config/cv.md` exists and is not too short, `config/profile.yml` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `config/portfolio.md` freshness (warns if older than 30 days).
+Validates that the career-ops setup is internally consistent: `config/cv.md` exists and is not too short, `config/profile.md` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `config/profile.md` freshness (warns if older than 30 days).
 
 ```bash
 npm run sync-check
@@ -125,7 +125,7 @@ Possible JSON responses:
 
 ## update
 
-Applies the upstream update. Creates a backup branch (`backup-pre-update-{version}`), fetches from the canonical repo, checks out only system-layer files, runs `npm install`, and commits. User-layer files (`config/cv.md`, `config/profile.yml`, `data/`, etc.) are never touched.
+Applies the upstream update. Creates a backup branch (`backup-pre-update-{version}`), fetches from the canonical repo, checks out only system-layer files, runs `npm install`, and commits. User-layer files (`config/cv.md`, `config/profile.md`, `data/`, etc.) are never touched.
 
 ```bash
 npm run update

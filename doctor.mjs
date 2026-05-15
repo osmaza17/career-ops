@@ -71,21 +71,21 @@ function checkCv() {
     label: 'config/cv.md not found',
     fix: [
       'Create config/cv.md with your CV in markdown',
-      'See examples/ for reference CVs',
+      'Run /career-ops ingest to generate cv.md from config/profile.md, or see templates/sample-report.md for format reference',
     ],
   };
 }
 
 function checkProfile() {
-  if (existsSync(join(projectRoot, 'config', 'profile.yml'))) {
-    return { pass: true, label: 'config/profile.yml found' };
+  if (existsSync(join(projectRoot, 'config', 'profile.md'))) {
+    return { pass: true, label: 'config/profile.md found' };
   }
   return {
     pass: false,
-    label: 'config/profile.yml not found',
+    label: 'config/profile.md not found',
     fix: [
-      'Run: cp config/profile.example.yml config/profile.yml',
-      'Then edit it with your details',
+      'Run: cp templates/profile.template.md config/profile.md',
+      'Then fill in the YAML frontmatter, or start a session and the agent will guide you through it',
     ],
   };
 }

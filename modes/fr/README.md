@@ -25,7 +25,7 @@ Claude lira alors les fichiers de ce dossier au lieu de `modes/`.
 
 ### Option 2 -- En permanence
 
-Ajoute dans `config/profile.yml` :
+Ajoute dans `config/profile.md` :
 
 ```yaml
 language:
@@ -33,7 +33,7 @@ language:
   modes_dir: modes/fr
 ```
 
-Rappelle-le a Claude lors de ta premiere session ("Regarde dans `profile.yml`, j'ai configure `language.modes_dir`"). Claude utilisera automatiquement les modes francais.
+Rappelle-le a Claude lors de ta premiere session ("Regarde dans `config/profile.md`, j'ai configure `language.modes_dir`"). Claude utilisera automatiquement les modes francais.
 
 ## Quels modes sont traduits ?
 

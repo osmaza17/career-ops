@@ -4,7 +4,7 @@ PDF generation uses LaTeX. Execute the full pipeline from `modes/latex.md`.
 
 ## Canva CV Generation (optional)
 
-If `config/profile.yml` has `cv.canva_resume_design_id` set, offer the user a choice before generating:
+If `config/profile.md` has `cv.canva_resume_design_id` set, offer the user a choice before generating:
 - **"LaTeX/PDF (fast, ATS-optimized)"** — default flow above
 - **"Canva CV (visual, design-preserving)"** — flow below
 

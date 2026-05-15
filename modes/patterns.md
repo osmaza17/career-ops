@@ -8,7 +8,7 @@ Analyze all tracked applications to find patterns in outcomes and surface action
 
 - `data/applications.md` — Application tracker
 - `reports/` — Individual evaluation reports
-- `config/profile.yml` — User profile (for recommendation context)
+- `config/profile.md` — User profile (for recommendation context)
 - `config/strategy.md` — User archetypes and framing
 - `config/portals.yml` — Portal config (for filter update recommendations)
 
@@ -140,7 +140,7 @@ Ask the user if they want to act on any recommendations:
 If the user agrees:
 - For portal filter changes: edit `config/portals.yml`
 - For profile/archetype changes: edit `config/strategy.md` (NEVER `_shared.md`)
-- For score threshold: add to `config/profile.yml` under a `patterns` key
+- For score threshold: add to `config/profile.md` under a `patterns` key
 
 ## Outcome Classification
 

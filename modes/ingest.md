@@ -1,8 +1,8 @@
-# Mode — Ingest: portfolio.md → cv.md
+# Mode — Ingest: profile.md → cv.md
 
 ## Purpose
 
-Transform `config/portfolio.md` (raw professional corpus) into `config/cv.md` (polished, LaTeX-ready markdown). Every element produced here is consumed directly by `modes/latex.md` to generate `.tex` CVs — bullets must be job-ready without rewriting at generation time.
+Transform `config/profile.md` (YAML frontmatter + trajectory corpus) into `config/cv.md` (polished, LaTeX-ready markdown). Every element produced here is consumed directly by `modes/latex.md` to generate `.tex` CVs — bullets must be job-ready without rewriting at generation time.
 
 ---
 
@@ -10,19 +10,26 @@ Transform `config/portfolio.md` (raw professional corpus) into `config/cv.md` (p
 
 | | Path |
 |---|---|
-| Source | `config/portfolio.md` |
+| Source | `config/profile.md` |
 | Output | `config/cv.md` (overwrite) |
 
 **Language:** cv.md is written in the **language of the job offer or description**. If no JD is provided, default to English. Spanish and English follow the verb-first bullet structure. French follows the deverbal noun structure — see Bullet Rules below.
 
 ---
 
-## Step 1 — Parse portfolio.md
+## Step 1 — Parse profile.md
 
-Read the full file. Separate two types of content:
+Read the full file. Separate three types of content:
 
-1. **Trajectory content** — factual data: education, experience, projects, skills, languages, contact.
-2. **`[META-INSTRUCCIÓN]` blocks** — read and internalize as behavioral directives. Never reproduce them in cv.md. They inform what to prioritize, what to pair together, and how to frame entries.
+1. **YAML frontmatter** (between the `---` delimiters at the top) — structured data. Read these keys directly:
+   - Identity and contact: `candidate.*` and `location.*` → used for the cv.md header
+   - Languages: `languages` array → used for the Languages section in cv.md
+   - Target roles and narrative: `target_roles.*`, `narrative.*` → context for framing
+   - SECCIÓN 0 and SECCIÓN 2 in the markdown body are placeholders that redirect here — do not look for content there.
+
+2. **Trajectory content** — factual data in the markdown body: education (SECCIÓN 1), skills (SECCIÓN 3), experience (SECCIÓN 4), student life (SECCIÓN 5), projects (SECCIÓN 6), competitions (SECCIÓN 7), training (SECCIÓN 8).
+
+3. **`[META-INSTRUCCIÓN]` blocks** — read and internalize as behavioral directives. Never reproduce them in cv.md. They inform what to prioritize, what to pair together, and how to frame entries.
 
 ---
 
@@ -30,7 +37,7 @@ Read the full file. Separate two types of content:
 
 Before writing any section, apply these filters:
 
-| Section in portfolio.md | Default behaviour |
+| Section in profile.md body | Default behaviour |
 |---|---|
 | SECCIÓN 0–6 | Include (apply per-entry rules below) |
 | SECCIÓN 7 (Formación Complementaria) | Include only if it adds a differentiating signal not covered by the main education, and space allows |
@@ -106,7 +113,7 @@ Before writing any section, apply these filters:
 Exactly 3 sentences:
 
 1. Who you are + institution + graduation year (or expected).
-2. 1–2 hard differentiators — use real figures, rankings, or unique facts from portfolio.md.
+2. 1–2 hard differentiators — use real figures, rankings, or unique facts from profile.md.
 3. Type of role sought + area or contract type.
 
 Rules: no first-person singular · no "passionate about" or equivalents · no em-dashes · do not list projects or experiences.

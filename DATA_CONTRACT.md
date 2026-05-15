@@ -9,15 +9,15 @@ These files contain your personal data, customizations, and work product. Update
 | File | Purpose |
 |------|---------|
 | `config/cv.md` | Your CV in markdown |
-| `config/profile.yml` | Your identity, targets, comp range |
+| `config/profile.md` | Your single source of truth: YAML frontmatter (identity, targets, languages, comp) + markdown body (full trajectory corpus, proof points). Updated by `analyze-sources`. |
 | `config/strategy.md` | Your archetypes, narrative, negotiation scripts |
-| `config/portfolio.md` | Your proof points from portfolio |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
 | `config/portals.yml` | Your customized company list |
 | `data/applications.md` | Your application tracker |
 | `data/pipeline.md` | Your URL inbox |
 | `data/scan-history.tsv` | Your scan history |
 | `data/follow-ups.md` | Your follow-up history |
+| `sources/*` | Your raw academic documents. Exclusively read by `modes/analyze-sources.md`, which appends entries to `config/profile.md`. |
 | `writing-samples/*` | Your personal writing samples for style calibration (except `writing-samples/README.md`, which is system-owned documentation delivered by updates) |
 | `reports/*` | Your evaluation reports |
 | `output/*` | Your generated PDFs |
@@ -45,6 +45,10 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `modes/training.md` | Training evaluation instructions |
 | `modes/patterns.md` | Pattern analysis instructions |
 | `modes/followup.md` | Follow-up cadence instructions |
+| `modes/ingest.md` | Profile-to-CV ingestion instructions (reads `config/profile.md`, writes `config/cv.md`) |
+| `modes/latex.md` | LaTeX CV formatting and PDF generation |
+| `modes/interview-prep.md` | Company-specific interview intelligence |
+| `modes/analyze-sources.md` | Academic document digest instructions (sole reader of `sources/`, appends to and updates `config/profile.md`) |
 | `modes/fr/*` | French language modes |
 | `CLAUDE.md` | Agent instructions |
 | `AGENTS.md` | Codex instructions |
@@ -52,7 +56,7 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `batch/batch-prompt.md` | Batch worker prompt |
 | `batch/batch-runner.sh` | Batch orchestrator |
 | `dashboard/*` | Go TUI dashboard |
-| `templates/*` | Base templates |
+| `templates/*` | Copy-and-fill templates, canonical schemas (`states.yml`), and read-only reference examples |
 | `.claude/skills/*` | Skill definitions |
 | `docs/*` | Documentation |
 | `VERSION` | Current version number |

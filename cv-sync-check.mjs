@@ -5,9 +5,9 @@
  *
  * Checks:
  * 1. cv.md exists
- * 2. config/profile.yml exists and has required fields
+ * 2. config/profile.md exists and has required fields
  * 3. No hardcoded metrics in _shared.md or batch/batch-prompt.md
- * 4. portfolio.md freshness (if exists)
+ * 4. profile.md freshness (if exists)
  */
 
 import { readFileSync, existsSync, statSync } from 'fs';
@@ -31,16 +31,16 @@ if (!existsSync(cvPath)) {
   }
 }
 
-// 2. Check profile.yml exists
-const profilePath = join(projectRoot, 'config', 'profile.yml');
+// 2. Check profile.md exists
+const profilePath = join(projectRoot, 'config', 'profile.md');
 if (!existsSync(profilePath)) {
-  errors.push('config/profile.yml not found. Copy from config/profile.example.yml and fill in your details.');
+  errors.push('config/profile.md not found. Copy from templates/profile.template.md and fill in your details, or run the onboarding flow.');
 } else {
   const profileContent = readFileSync(profilePath, 'utf-8');
   const requiredFields = ['full_name', 'email', 'location'];
   for (const field of requiredFields) {
     if (!profileContent.includes(field) || profileContent.includes(`"Jane Smith"`)) {
-      warnings.push(`config/profile.yml may still have example data. Check field: ${field}`);
+      warnings.push(`config/profile.md may still have template placeholder data. Check field: ${field}`);
       break;
     }
   }
@@ -66,18 +66,18 @@ for (const { path, name } of filesToCheck) {
     if (line.includes('NEVER hardcode') || line.startsWith('#') || line.startsWith('<!--')) continue;
     const matches = line.match(metricPattern);
     if (matches) {
-      warnings.push(`${name}:${i + 1} — Possible hardcoded metric: "${matches[0]}". Should this be read from cv.md/portfolio.md?`);
+      warnings.push(`${name}:${i + 1} — Possible hardcoded metric: "${matches[0]}". Should this be read from config/cv.md or config/profile.md?`);
     }
   }
 }
 
-// 4. Check portfolio.md freshness
-const digestPath = join(projectRoot, 'config', 'portfolio.md');
+// 4. Check profile.md freshness
+const digestPath = join(projectRoot, 'config', 'profile.md');
 if (existsSync(digestPath)) {
   const stats = statSync(digestPath);
   const daysSinceModified = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60 * 24);
   if (daysSinceModified > 30) {
-    warnings.push(`config/portfolio.md is ${Math.round(daysSinceModified)} days old. Consider updating if your projects have new metrics.`);
+    warnings.push(`config/profile.md is ${Math.round(daysSinceModified)} days old. Consider running analyze-sources if you have new experiences to add.`);
   }
 }
 

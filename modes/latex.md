@@ -7,7 +7,7 @@
 ## Pipeline
 
 1. Read `config/cv.md` as source of truth
-2. Read `config/profile.yml` for candidate identity and contact info
+2. Read the YAML frontmatter of `config/profile.md` (`candidate.*` and `location.*` keys) for candidate identity and contact info
 3. Ask the user for the JD if not already in context (text or URL)
 4. Extract 15-20 keywords from the JD
 5. Detect JD language → CV language (EN default, FR is usual also)

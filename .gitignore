@@ -15,15 +15,18 @@ batch/tracker-additions/**/*.tsv
 jds/*
 !jds/.gitkeep
 
+# Source documents (raw academic files — personal, never committed)
+sources/*
+!sources/README.md
+
 # Writing samples (user's personal files — never committed)
 writing-samples/*
 !writing-samples/README.md
 
 # User config and customization (never auto-updated)
-config/profile.yml
+config/profile.md
 config/portals.yml
 config/strategy.md
-config/portfolio.md
 config/cv.md
 .update-dismissed
 .update-lock

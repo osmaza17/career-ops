@@ -20,16 +20,16 @@ npx playwright install chromium   # Required for job liveness checking
 ### 2. Configure your profile
 
 ```bash
-cp config/profile.example.yml config/profile.yml
+cp templates/profile.template.md config/profile.md
 ```
 
-Edit `config/profile.yml` with your personal details: name, email, target roles, narrative, proof points.
+Fill in the YAML frontmatter of `config/profile.md` with your personal details: name, email, target roles, narrative, compensation, languages. The markdown body below the frontmatter is where your trajectory corpus lives — built up over time using `analyze-sources`. Alternatively, start a session and the agent will guide you through the full setup interactively.
 
 ### 3. Add your CV
 
 Create `config/cv.md` with your full CV in markdown format. This is the source of truth for all evaluations and PDFs.
 
-(Optional) Create `config/portfolio.md` with proof points from your portfolio projects/articles.
+(Optional) Drop raw academic documents (project reports, internship descriptions) into `sources/` and run `analyze-sources` to build up the trajectory corpus in `config/profile.md`.
 
 ### 4. Configure portals
 

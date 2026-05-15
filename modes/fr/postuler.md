@@ -69,7 +69,7 @@ Pour chaque question, construire la reponse selon ce schema :
 5. **career-ops proof point** : inclure dans "Informations complementaires" si un tel champ existe
 
 **Champs specifiques aux formulaires francais courants :**
-- **Pretentions salariales (brut annuel)** -> Fourchette depuis `profile.yml`, en EUR, avec mention "negociable selon le package global"
+- **Pretentions salariales (brut annuel)** -> Fourchette depuis le frontmatter YAML de `config/profile.md` (cle `compensation.target_range`), en EUR, avec mention "negociable selon le package global"
 - **Date de disponibilite** -> Date realiste tenant compte du preavis (souvent 1-3 mois)
 - **Autorisation de travail / Nationalite** -> Honnete et concis ; pour les citoyens UE : "Aucun titre de sejour requis (citoyen UE)"
 - **Langues** -> Niveaux selon le CECRL (A1-C2)

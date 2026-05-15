@@ -74,8 +74,7 @@ The orchestrator manages parallelism, state, retries, and resume.
 
 ```
 config/cv.md             →  Evaluation context
-config/portfolio.md →  Proof points for matching
-config/profile.yml       →  Candidate identity
+config/profile.md        →  Candidate identity + full trajectory corpus (YAML frontmatter + markdown body)
 config/portals.yml       →  Scanner configuration
 templates/states.yml     →  Canonical status values
 modes/latex.md             → LaTeX PDF generation instructions + template
