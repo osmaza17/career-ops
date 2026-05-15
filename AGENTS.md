@@ -168,6 +168,7 @@ Default modes are in `modes/` (English). French language modes are available in 
 | Batch processes offers                                      | `batch`                                           |
 | Asks about rejection patterns or wants to improve targeting | `patterns`                                        |
 | Asks about follow-ups or application cadence                | `followup`                                        |
+| Wants to rebuild cv.md from portfolio.md                   | `ingest`                                          |
 
 ### CV Source of Truth
 

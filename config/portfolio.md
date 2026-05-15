@@ -27,6 +27,7 @@ ___
 ### Diplôme d'Ingénieur Généraliste — CentraleSupélec, Université Paris-Saclay
 
 **Tipo:** Formación académica — título de ingeniería de Grande École
+**Institución:** CentraleSupélec, Université Paris-Saclay
 **Período:** septiembre 2025 – abril 2027
 **Ubicación:** Gif-sur-Yvette (campus), París, Francia
 
@@ -93,7 +94,7 @@ ___
 
 **Gestión de proyectos:** Notion, MS Project
 
-**Automatización y workflows asistidos por IA:** n8n, Claude Code, AI-assisted software development (generación y refactorización de código por LLM)
+**Automatización y workflows asistidos por IA:** n8n, Claude Code, AI-assisted software development
 
 ---
 
@@ -104,7 +105,7 @@ ___
 ### Prácticas en ingeniería civil — Estudio de Ingeniería Bucarest 54
 
 **Tipo:** Experiencia profesional — prácticas en empresa
-**Período:** junio 2023 – agosto 2023
+**Período:** junio 2025 – agosto 2025
 **Ubicación:** Murcia, España
 **Empresa:** Bucarest 54
 **Sector:** Ingeniería civil / despacho de ingeniería
@@ -168,14 +169,14 @@ Gestión de las alianzas corporativas del BDI con tres partners de primer nivel:
 #### Resultados cuantificados
 
 - Asociación de 35 miembros activos coordinada operativamente de forma transversal
-- 3 alianzas corporativas activas con firmas Tier-1 (McKinsey París, McKinsey Casablanca, Société Générale)
+- 3 alianzas corporativas activas (McKinsey París, McKinsey Casablanca, Société Générale)
 - Eventos coordinados con hasta 200 participantes (semaine d'intégration, World Week)
 - Operación logística IKEA ejecutada anualmente
 - Documentación institucional completa: CRs semanales, PVs de CA, gestión estatutaria
 
 #### Competencias demostradas
 
-Stakeholder management multinivel (miembros, Bureau, clubes nacionales, asociaciones, dirección escuela —DRI y DPIET—, partners corporativos) · Project management y operaciones de eventos a escala (+200 participantes) · B2B partnership management con firmas Tier-1 · Negociación y representación institucional · Gestión de equipos multiculturales · Crisis management y resolución de conflictos · Compliance y gobernanza asociativa (Loi 1901, statuts, RI, CA, procès-verbaux) · Supply chain básica y vendor management · Comunicación escrita rigurosa en francés · Liderazgo transversal sin autoridad jerárquica directa · Diplomacia · Escucha activa
+Stakeholder management multinivel (miembros, Bureau, clubes nacionales, asociaciones, dirección escuela —DRI y DPIET—, partners corporativos) · Project management y operaciones de eventos a escala (+200 participantes) · B2B partnership management · Negociación y representación institucional · Gestión de equipos multiculturales · Crisis management y resolución de conflictos · Compliance y gobernanza asociativa (Loi 1901, statuts, RI, CA, procès-verbaux) · Supply chain básica y vendor management · Comunicación escrita rigurosa en francés · Liderazgo transversal sin autoridad jerárquica directa · Diplomacia · Escucha activa
 
 > **[META-INSTRUCCIÓN]** Esta entrada debe aparecer siempre junto al rol de Tesorero del Club Español, y viceversa: juntos justifican la dimensión asociativa completa del perfil. En documentos donde se mencione la gestión del clima del equipo, los términos equivalentes en lenguaje de mercado son people management y team engagement.
 
@@ -297,7 +298,7 @@ _Ejecución y autonomía:_ Iniciativa propia (proyecto autogenerado, no asignado
 
 **Tipo:** Proyecto — consultoría de operaciones con cliente industrial real
 **Período:** abril 2026
-**Cliente / Contexto:** Air Liquide (CAC 40, líder mundial en gases industriales). Marco: asignatura ST7 de CentraleSupélec con interlocución directa con el cliente. Dominio: mobilité hydrogène / cadena de suministro de hidrógeno en modo swap.
+**Cliente / Contexto:** Air Liquide (líder mundial en gases industriales). Marco: asignatura ST7 de CentraleSupélec con interlocución directa con el cliente. Dominio: mobilité hydrogène / cadena de suministro de hidrógeno en modo swap.
 **Equipo:** internacional multicultural (Brasil, China, Portugal, España)
 **Rol individual:** Líder técnico del proyecto. Responsable del desarrollo de la heurística de despacho (componente algorítmico más diferenciado) y de la construcción del fichero base de simulación en Simul8. Contribución transversal a: diseño de experimentos, razonamiento económico de recomendaciones, redacción del informe, preparación y entrega de la presentación final ante Air Liquide.
 
@@ -342,70 +343,7 @@ _Técnica y cuantitativa:_ Simulación de eventos discretos · Diseño de heurí
 
 _Operaciones y consultoría:_ Fleet dimensioning · Optimización de cadenas de suministro logísticas · Gestión de restricciones operativas complejas (turnos, ventanas temporales, restricciones regulatorias) · Análisis coste-beneficio de configuraciones alternativas · Formulación de KPIs operativos acordados con cliente · Bottleneck dynamics · Recomendaciones accionables con justificación económica explícita
 
-_Cliente y soft:_ Interacción directa con cliente industrial CAC 40 (Air Liquide) en dominio estratégico (transición energética / H₂) · Reuniones intermedias de alineación · Presentación final de resultados al cliente · Liderazgo técnico individualizable dentro del equipo · Redacción de informe técnico orientado a decisor industrial · Trabajo en equipo internacional multicultural
-
----
-
-### 1.er Premio — Hackathon Estudio de Caso, Programa Akademia — Fundación Innovación Bankinter (GENAQ)
-
-**Tipo:** Proyecto — consultoría estratégica en formato hackathon nacional competitivo
-**Período:** septiembre 2024 – febrero 2025
-**Cliente / Contexto:** GENAQ (fabricante del grupo Keyter, especializado en generación de agua atmosférica). Empresa pivotando de B2B consolidado (Departamento de Defensa de EE.UU., Acciona, Meliá) a mercado doméstico B2C/B2B con nuevo producto residencial (PVP 2.500 €, 10–12 L/día, vida útil 20 años).
-**Marco competitivo:** Hackathon nacional del programa Akademia (Fundación Innovación Bankinter/UPV). 80 equipos competidores. Jurado ejecutivo externo.
-**Equipo:** 6 personas
-**Rol individual:** Líder del equipo. Responsable de la concepción del sistema de parámetros (arquitectura de la función multicriterio, selección y ponderación de los 7 criterios, lógica de normalización). Responsable de la presentación final ante el jurado (narrativa estratégica completa: del buyer persona a la recomendación de canal, pasando por el roadmap de producto). Coordinación de contribuciones individuales en torno a una tesis única. Trazabilidad entre input (datos públicos), modelo (función ponderada) y output (50 secciones priorizadas + recomendación accionable).
-
-**Validación externa:** 🏆 1.er Premio entre 80 equipos · Jurado ejecutivo de la Fundación Bankinter
-
-#### Problema de negocio
-
-GENAQ disponía de tecnología validada en segmento industrial pero carecía de estrategia de entrada para su nuevo producto residencial. Pregunta: "¿cómo lanzamos este MVP en España?" — formulación ambigua que requería traducción a problema operacionalizable.
-
-**Entregables requeridos:** (1) Identificación geográfica del mercado piloto al máximo nivel de granularidad (sección censal, ~36.000 unidades en España) + (2) formulación de la estrategia comercial asociada.
-
-#### Metodología
-
-**Modelo MCDA (Multi-Criteria Decision Analysis):** 7 dimensiones ponderadas para scoring de secciones censales:
-
-1. Pirámide poblacional — 30%
-2. Renta y consumo del hogar en categoría COICOP de electrodomésticos — 20%
-3. Gasto en agua embotellada — 20%
-4. Rendimiento y coste de generación según temperatura y humedad relativa (curvas propietarias del cliente) — 10%
-5. Coste unitario del agua corriente — 10%
-6. Densidad de población — 5%
-7. Pluviometría — 5%
-
-Pesos calibrados a partir del buyer persona definido previamente (30–50 años, ingreso medio-alto, entorno urbano/suburbano, sensibilidad ambiental).
-
-**Fuentes de datos:**
-
-- INE: renta media por hogar, encuesta de presupuestos familiares, suministro y saneamiento del agua
-- AEMET: precipitación provincial
-- Datos propietarios del cliente: curvas de generación-coste según condiciones ambientales
-
-**Normalización:** 0-100 para combinar variables heterogéneas. Geo-visualización a nivel de sección censal sobre todo el territorio nacional.
-
-**Capa adicional — Algoritmo K-Means no supervisado:** 5 clusters sobre las dos variables de mayor peso (renta y pirámide poblacional), diseñado como evolución del modelo para segmentar el mercado más allá del top-50 y soportar futuras iteraciones de marketing.
-
-**Decisión de canal:** Análisis comparativo cualitativo con 5 criterios (experimentación previa a la compra, redes de distribución existentes, presencia online, cobertura nacional, servicio al cliente) sobre 3 alternativas: e-commerce propio, tienda física propia, grandes superficies. Resultado: distribuidores mayoristas en grandes superficies, con Leroy Merlin como partner prioritario por capacidad técnica de instalación.
-
-**Herramienta entregable:** Modelo Excel automatizado y reutilizable con pesos editables por el cliente para regenerar resultados bajo distintos escenarios estratégicos.
-
-#### Resultados
-
-- Lista priorizada de 50 secciones censales óptimas, top 10 identificado; concentración en el arco mediterráneo (Cataluña, Comunidad Valenciana) con nichos en Madrid, Aragón y zonas pirenaicas
-- Recomendación de canal: grandes superficies, Leroy Merlin como partner prioritario
-- Roadmap de mejoras de producto: IoT, agua caliente, agua con gas, integración fotovoltaica, rediseño estético
-- Modelo paramétrico reutilizable entregado al cliente como herramienta operativa, no como informe estático
-- 🏆 1.er Premio entre 80 equipos
-
-#### Competencias demostradas
-
-_Analítica y técnica:_ Estructuración de problemas de negocio ambiguos · Modelado cuantitativo aplicado a decisiones estratégicas · Análisis multicriterio (MCDA) · Normalización y consolidación de fuentes heterogéneas · Geospatial analytics · Clustering no supervisado (K-Means) · Construcción de herramientas de decisión reutilizables en Excel
-
-_Consultoría y negocio:_ Market entry strategy · Customer segmentation · Buyer persona · Go-to-market design · Análisis de canales con trade-off matrix · Roadmap de producto · Comunicación ejecutiva y data storytelling
-
-_Liderazgo:_ Dirección de equipo multidisciplinar de 6 personas · Integración de contribuciones técnicas en narrativa única · Pitch ante jurado externo bajo presión competitiva · Gestión de plazos en formato hackathon
+_Cliente y soft:_ Interacción directa con Air Liquide en dominio estratégico (transición energética / H₂) · Reuniones intermedias de alineación · Presentación final de resultados al cliente · Liderazgo técnico individualizable dentro del equipo · Redacción de informe técnico orientado a decisor industrial · Trabajo en equipo internacional multicultural
 
 ---
 
@@ -480,16 +418,12 @@ _Transversal:_ Account management con cliente real · Alineación con marco de s
 **Tipo:** Proyecto — estudio de viabilidad multidisciplinar (consultoría de política pública / sostenibilidad)
 **Período:** septiembre 2025 – febrero 2026
 **Cliente / Contexto:** Pôle Projet S7 de CentraleSupélec. Contexto regulatorio: ley francesa AGEC (Anti-Gaspillage pour une Économie Circulaire) vigente desde 1 de enero de 2024, que obliga a separación en origen de biorresiduos para todos los productores.
-**Equipo:** 5 personas (5 nacionalidades distintas)
-**Rol individual:** Contribución transversal al diseño del scope, la estructuración del análisis multicriterio y la elaboración del informe final (42 páginas). Aportaciones específicas: diseño del marco de identificación de barreras (risk mapping en 6 dimensiones); conducción y síntesis de la entrevista con RECUP' Occitanie (Toulouse); experimentación de campo de 2 meses con sistema Bokashi doméstico; análisis comparativo con la alternativa de metanización metropolitana en Toulouse.
-
-#### Contexto regulatorio
-
-Desde el 1 de enero de 2024, la ley AGEC obliga a la separación en origen de biorresiduos para todos los productores (hogares, empresas, ERP). A mediados de 2024, solo el 47% de la población tenía acceso real a una solución de recogida selectiva. Bokashi (fermentación anaerobia con microorganismos eficaces) se presentaba como posible solución descentralizada para entornos urbanos densos.
-
-**Pregunta del estudio:** ¿Puede Bokashi actuar como solución de gestión de biorresiduos a escala nacional en Francia?
+**Equipo:** 5 personas
+**Rol individual:** Contribución transversal al diseño del scope, la estructuración del análisis multicriterio y la elaboración del informe final. Aportaciones específicas: diseño del marco de identificación de barreras (risk mapping en 6 dimensiones); conducción y síntesis de la entrevista con RECUP' Occitanie (Toulouse); experimentación de campo de 2 meses con sistema Bokashi doméstico; análisis comparativo con la alternativa de metanización metropolitana en Toulouse.
 
 #### Metodología (5 bloques)
+
+**Pregunta del estudio:** ¿Puede Bokashi actuar como solución de gestión de biorresiduos a escala nacional en Francia?
 
 1. **Análisis legal y regulatorio:** Código de Medio Ambiente francés (artículos L541-21-1 a L541-21-5) + comparación con la regulación alemana (BioAbfV) para el caso de contaminación de residuos
 2. **Modelo cuantitativo de viabilidad económica a nivel hogar:** Inversión inicial (3 contenedores, 120–160€) + costes recurrentes (activador comercial vs. casero, con desglose de ingredientes y proporcionalidad mensual basada en datos ADEME e INSEE)
@@ -516,7 +450,7 @@ _Técnico-analítico:_ Feasibility study multicriterio sobre problema abierto ·
 
 _Consultoría:_ Definición de scope · Identificación temprana de hipótesis a validar · Integración de fuentes primarias y secundarias · Recomendación accionable con argumentación estructurada
 
-_Soft y transversal:_ Trabajo en equipo multicultural (5 nacionalidades) · Comunicación con stakeholders externos (entrevista a RECUP' Occitanie) · Redacción técnica en inglés · Comprensión de transformación regulatoria con impacto cross-sectorial (residuos, agricultura, energía, política pública, comportamiento del consumidor)
+_Soft y transversal:_ Trabajo en equipo · Comunicación con stakeholders externos (entrevista a RECUP' Occitanie) · Redacción técnica en inglés · Comprensión de transformación regulatoria con impacto cross-sectorial (residuos, agricultura, energía, política pública, comportamiento del consumidor)
 
 > **[META-INSTRUCCIÓN]** El origen de este proyecto es un marcador de criterio proactivo: Óscar negoció con el profesor redirigir el Pôle Électronique (asignado por defecto) hacia un estudio de viabilidad de consultoría, al considerar que el ángulo pertinente era cuestionar si los esfuerzos de implementación electrónica merecían la pena. Esta historia puede explotarse en entrevistas como demostración de pensamiento crítico y autonomía. La story condensada para entrevistas es: "Estudiamos si Bokashi podía ser solución nacional, terminamos recomendando lo contrario y reorientando hacia metanización" — demuestra criterio analítico, no solo capacidad de ejecución.
 
@@ -604,7 +538,98 @@ Lectura crítica de literatura económica de máximo nivel (QJE, CNRS 1e) · Com
 
 ---
 
-## SECCIÓN 7 — FORMACIÓN COMPLEMENTARIA
+## SECCIÓN 7 — CONCURSOS Y HACKATHONES
+
+---
+
+### 1.er Premio — Hackathon Estudio de Caso, Programa Akademia — Fundación Innovación Bankinter (GENAQ)
+
+**Tipo:** Concurso — consultoría estratégica en formato hackathon nacional competitivo
+**Período:** septiembre 2024 – febrero 2025
+**Cliente / Contexto:** GENAQ (fabricante del grupo Keyter, especializado en generación de agua atmosférica). Empresa pivotando de B2B consolidado (Departamento de Defensa de EE.UU., Acciona, Meliá) a mercado doméstico B2C/B2B con nuevo producto residencial (PVP 2.500 €, 10–12 L/día, vida útil 20 años).
+**Marco competitivo:** Hackathon nacional del programa Akademia (Fundación Innovación Bankinter/UPV). 80 equipos competidores. Jurado ejecutivo externo.
+**Equipo:** 6 personas
+**Rol individual:** Líder del equipo. Responsable de la concepción del sistema de parámetros (arquitectura de la función multicriterio, selección y ponderación de los 7 criterios, lógica de normalización). Responsable de la presentación final ante el jurado (narrativa estratégica completa: del buyer persona a la recomendación de canal, pasando por el roadmap de producto). Coordinación de contribuciones individuales en torno a una tesis única. Trazabilidad entre input (datos públicos), modelo (función ponderada) y output (50 secciones priorizadas + recomendación accionable).
+
+**Validación externa:** 🏆 1.er Premio entre 80 equipos · Jurado ejecutivo de la Fundación Bankinter
+
+#### Problema de negocio
+
+GENAQ disponía de tecnología validada en segmento industrial pero carecía de estrategia de entrada para su nuevo producto residencial. Pregunta: "¿cómo lanzamos este MVP en España?" — formulación ambigua que requería traducción a problema operacionalizable.
+
+**Entregables requeridos:** (1) Identificación geográfica del mercado piloto al máximo nivel de granularidad (sección censal, ~36.000 unidades en España) + (2) formulación de la estrategia comercial asociada.
+
+#### Metodología
+
+**Modelo MCDA (Multi-Criteria Decision Analysis):** 7 dimensiones ponderadas para scoring de secciones censales:
+
+1. Pirámide poblacional — 30%
+2. Renta y consumo del hogar en categoría COICOP de electrodomésticos — 20%
+3. Gasto en agua embotellada — 20%
+4. Rendimiento y coste de generación según temperatura y humedad relativa (curvas propietarias del cliente) — 10%
+5. Coste unitario del agua corriente — 10%
+6. Densidad de población — 5%
+7. Pluviometría — 5%
+
+Pesos calibrados a partir del buyer persona definido previamente (30–50 años, ingreso medio-alto, entorno urbano/suburbano, sensibilidad ambiental).
+
+**Fuentes de datos:**
+
+- INE: renta media por hogar, encuesta de presupuestos familiares, suministro y saneamiento del agua
+- AEMET: precipitación provincial
+- Datos propietarios del cliente: curvas de generación-coste según condiciones ambientales
+
+**Normalización:** 0-100 para combinar variables heterogéneas. Geo-visualización a nivel de sección censal sobre todo el territorio nacional.
+
+**Capa adicional — Algoritmo K-Means no supervisado:** 5 clusters sobre las dos variables de mayor peso (renta y pirámide poblacional), diseñado como evolución del modelo para segmentar el mercado más allá del top-50 y soportar futuras iteraciones de marketing.
+
+**Decisión de canal:** Análisis comparativo cualitativo con 5 criterios (experimentación previa a la compra, redes de distribución existentes, presencia online, cobertura nacional, servicio al cliente) sobre 3 alternativas: e-commerce propio, tienda física propia, grandes superficies. Resultado: distribuidores mayoristas en grandes superficies, con Leroy Merlin como partner prioritario por capacidad técnica de instalación.
+
+**Herramienta entregable:** Modelo Excel automatizado y reutilizable con pesos editables por el cliente para regenerar resultados bajo distintos escenarios estratégicos.
+
+#### Resultados
+
+- Lista priorizada de 50 secciones censales óptimas, top 10 identificado; concentración en el arco mediterráneo (Cataluña, Comunidad Valenciana) con nichos en Madrid, Aragón y zonas pirenaicas
+- Recomendación de canal: grandes superficies, Leroy Merlin como partner prioritario
+- Roadmap de mejoras de producto: IoT, agua caliente, agua con gas, integración fotovoltaica, rediseño estético
+- Modelo paramétrico reutilizable entregado al cliente como herramienta operativa, no como informe estático
+- 🏆 1.er Premio entre 80 equipos
+
+#### Competencias demostradas
+
+_Analítica y técnica:_ Estructuración de problemas de negocio ambiguos · Modelado cuantitativo aplicado a decisiones estratégicas · Análisis multicriterio (MCDA) · Normalización y consolidación de fuentes heterogéneas · Geospatial analytics · Clustering no supervisado (K-Means) · Construcción de herramientas de decisión reutilizables en Excel
+
+_Consultoría y negocio:_ Market entry strategy · Customer segmentation · Buyer persona · Go-to-market design · Análisis de canales con trade-off matrix · Roadmap de producto · Comunicación ejecutiva y data storytelling
+
+_Liderazgo:_ Dirección de equipo multidisciplinar de 6 personas · Integración de contribuciones técnicas en narrativa única · Pitch ante jurado externo bajo presión competitiva · Gestión de plazos en formato hackathon
+
+---
+
+### Mención Honorífica — Concurso Nacional "Jóvenes Investigadores"
+
+**Tipo:** Concurso — investigación al inicio de la trayectoria universitaria
+**Período:** septiembre 2020
+**Referencia oficial:** NIPO 130-21-006-0
+
+#### Descripción
+
+Concurso nacional de investigación dirigido a estudiantes de últimos cursos de bachillerato y primeros de universidad. Presentación pública ante jurado.
+
+**Resultado:** Mención Honorífica — top 10% entre 40 equipos competidores. Premio de 1.000 €.
+
+#### Rol
+
+Líder del equipo de 4 personas. Coordinación del cronograma del trabajo de investigación, delegación de tareas, integración de las contribuciones individuales y exposición final ante el jurado.
+
+#### Competencias demostradas
+
+Liderazgo temprano de equipo · Coordinación y delegación · Comunicación oral ante tribunal externo · Gestión de proyecto con plazo y entregable · Primera experiencia formal de liderazgo y exposición competitiva ante tribunal externo
+
+> **[META-INSTRUCCIÓN]** El Premio Akademia hackathon (1.er Premio entre 80 equipos, jurado ejecutivo, feb 2025) compite directamente con esta entrada y lo supera en todos los parámetros. Incluir solo si hay espacio y el formato lo permite.
+
+---
+
+## SECCIÓN 8 — FORMACIÓN COMPLEMENTARIA
 
 ---
 
@@ -648,7 +673,7 @@ Technology landscape analysis (contextualización de tecnologías emergentes en 
 
 ---
 
-## SECCIÓN 8 — MISCELÁNEA (activos de archivo)
+## SECCIÓN 9 — MISCELÁNEA (activos de archivo)
 
 > **[META-INSTRUCCIÓN DE SECCIÓN]** Los proyectos de esta sección tienen veredicto de importancia muy baja en el análisis del corpus. Se documentan por completitud y como reserva narrativa para entrevistas. Su uso en CV está sujeto a las meta-instrucciones indicadas en cada entrada.
 
@@ -682,26 +707,3 @@ Capacidad técnica electromecánica aplicada · Coordinación logística interna
 
 > **[META-INSTRUCCIÓN]** La narrativa correcta para usar esta experiencia si se incluye NO es el logro competitivo (el equipo compitió para participar, no para ganar). La narrativa es la pasión por la ingeniería más allá del currículum académico: "lo hicimos por amor al arte, por el placer puro de construir algo con las manos."
 
----
-
-### Mención Honorífica — Concurso Nacional "Jóvenes Investigadores"
-
-**Tipo:** Miscelánea — concurso de investigación al inicio de la trayectoria universitaria
-**Período:** septiembre 2020
-**Referencia oficial:** NIPO 130-21-006-0
-
-#### Descripción
-
-Concurso nacional de investigación dirigido a estudiantes de últimos cursos de bachillerato y primeros de universidad. Presentación pública ante jurado.
-
-**Resultado:** Mención Honorífica — top 10% entre 40 equipos competidores. Premio de 1.000 €.
-
-#### Rol
-
-Líder del equipo de 4 personas. Coordinación del cronograma del trabajo de investigación, delegación de tareas, integración de las contribuciones individuales y exposición final ante el jurado.
-
-#### Competencias demostradas
-
-Liderazgo temprano de equipo · Coordinación y delegación · Comunicación oral ante tribunal externo · Gestión de proyecto con plazo y entregable · Primera experiencia formal de liderazgo y exposición competitiva ante tribunal externo
-
-> **[META-INSTRUCCIÓN]** El Premio Akademia hackathon (1.er Premio entre 80 equipos, jurado ejecutivo, feb 2025) compite directamente con esta entrada y lo supera en todos los parámetros. Incluir solo si hay espacio y el formato lo permite.
