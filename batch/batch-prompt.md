@@ -49,39 +49,22 @@ Read `config/cv.md`. Execute ALL blocks:
 
 #### Step 0 — Archetype Detection
 
-Classify the offer into one of the 6 archetypes. If hybrid, indicate the 2 closest.
+Read `target_roles.archetypes` from the YAML frontmatter of `config/profile.md`. This is the authoritative list of archetypes for this candidate — do not infer or invent others.
 
-**The 6 archetypes (all equally valid):**
+For each archetype entry:
+- `name` — the role type (e.g. "Operations Research Analyst", "Strategy Consultant")
+- `fit` — `primary` (dream role), `secondary` (strong fit), or `adjacent` (stretch)
+- `level` — seniority level
 
-| Archetype | Thematic axes | What they buy |
-|-----------|---------------|---------------|
-| **AI Platform / LLMOps Engineer** | Evaluation, observability, reliability, pipelines | Someone to put AI in production with metrics |
-| **Agentic Workflows / Automation** | HITL, tooling, orchestration, multi-agent | Someone to build reliable agent systems |
-| **Technical AI Product Manager** | GenAI/Agents, PRDs, discovery, delivery | Someone to translate business → AI product |
-| **AI Solutions Architect** | Hyperautomation, enterprise, integrations | Someone to design end-to-end AI architectures |
-| **AI Forward Deployed Engineer** | Client-facing, fast delivery, prototyping | Someone to deliver AI solutions to clients fast |
-| **AI Transformation Lead** | Change management, adoption, org enablement | Someone to lead AI change in an organization |
+Classify the offer against these archetypes. If it matches multiple, indicate the 2 closest. If it matches none, flag it as `adjacent` and explain the gap.
 
 **Adaptive framing:**
 
-> **Concrete metrics are read from `config/cv.md` + `config/profile.md` at each evaluation. NEVER hardcode numbers here.**
+> **Concrete metrics and proof points are read from `config/cv.md` + `config/profile.md` at each evaluation. NEVER hardcode numbers here.**
 
-| If the role is... | Emphasize about the candidate... | Proof point sources |
-|-------------------|----------------------------------|---------------------|
-| Platform / LLMOps | Builder of production systems, observability, evals, closed-loop | config/profile.md + config/cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability, cost | config/profile.md + config/cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics, stakeholder mgmt | config/cv.md + config/profile.md |
-| Solutions Architect | System design, integrations, enterprise-ready | config/profile.md + config/cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype → prod | config/cv.md + config/profile.md |
-| AI Transformation Lead | Change management, team enablement, adoption | config/cv.md + config/profile.md |
+For each archetype match, emphasize the candidate's experience, skills, and proof points that are most relevant to that role type. Read `narrative.superpowers` and `narrative.proof_points` from `config/profile.md` to identify the strongest signals to lead with.
 
-**Cross-cutting advantage**: Frame the profile as a **"Technical builder"** who adapts their framing to the role:
-- For PM: "builder who reduces uncertainty with prototypes then productionizes with discipline"
-- For FDE: "builder who delivers fast with observability and metrics from day 1"
-- For SA: "builder who designs end-to-end systems with real integration experience"
-- For LLMOps: "builder who puts AI in production with closed-loop quality systems — read metrics from config/profile.md"
-
-Convert "builder" into a professional signal, not a "hobby maker." The framing changes, the truth is the same.
+The framing changes per archetype — the underlying truth stays the same. Never invent capabilities the candidate doesn't have.
 
 #### Block A — Role Summary
 
@@ -179,6 +162,7 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 **Archetype:** {detected}
 **Score:** {X/5}
 **Legitimacy:** {High Confidence | Proceed with Caution | Suspicious}
+**Verification:** unconfirmed (batch mode)
 **URL:** {original offer URL}
 **PDF:** career-ops/output/cv-candidate-{company-slug}-{{DATE}}.pdf
 **Batch ID:** {{ID}}
@@ -234,12 +218,7 @@ node generate-pdf.mjs \
 ```
 14. Report: PDF path, size, keyword coverage %
 
-**ATS Rules:**
-- Single-column (no sidebars)
-- Standard headers: "Work Experience", "Education", "Personal Projects", "Technical Skills"
-- No images or graphics
-- UTF-8, selectable text via `\pdfgentounicode=1`
-- Keywords distributed: first bullet of each role, Skills section
+**ATS Rules:** Follow `modes/latex.md` exactly — two-column layout via `paracol`, standard section headers in the language of the posting, no images or graphics, UTF-8 with `\pdfgentounicode=1`, keywords distributed in first bullet of each entry and Skills section.
 
 ### Step 5 — Tracker Line
 
@@ -260,7 +239,7 @@ TSV format (single line, no header, 9 tab-separated columns):
 | 1 | num | int | `647` | Sequential, max existing + 1 |
 | 2 | date | YYYY-MM-DD | `2026-03-14` | Evaluation date |
 | 3 | company | string | `Datadog` | Short company name |
-| 4 | role | string | `Staff AI Engineer` | Role title |
+| 4 | role | string | `Staff Industrial Engineer` | Role title |
 | 5 | status | canonical | `Evaluated` | MUST be canonical (see states.yml) |
 | 6 | score | X.XX/5 | `4.55/5` | Or `N/A` if not evaluable |
 | 7 | pdf | emoji | `✅` or `❌` | Whether PDF was generated |

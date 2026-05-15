@@ -7,7 +7,7 @@ All base files for career-ops: copy-and-fill templates, canonical data schemas, 
 | File | Purpose |
 |------|---------|
 | `profile.template.md` | Base for `config/profile.md` — YAML frontmatter + empty trajectory corpus sections. Copy here to start onboarding. |
-| `portals.example.yml` | Base for `config/portals.yml` — 45+ pre-configured company and job board queries. Copy and customise for your target roles. |
+| `portals.template.yml` | Base for `config/portals.yml` — 45+ pre-configured company and job board queries. Copy and customise for your target roles. |
 | `strategy.template.md` | Base for `config/strategy.md` — archetypes, narrative framing, negotiation scripts. Copy and fill with your specific targets. |
 
 ## Schemas (read-only, used by scripts)
@@ -20,5 +20,4 @@ All base files for career-ops: copy-and-fill templates, canonical data schemas, 
 
 | File | Demonstrates |
 |------|-------------|
-| `portfolio-analyze-sources-example.md` | What a completed `config/profile.md` looks like after using `analyze-sources` — YAML frontmatter + full trajectory corpus with `Fuente` fields, META-INSTRUCCIONs, and entries across all sections. |
 | `sample-report.md` | The A–F evaluation report format produced by the pipeline, with all six blocks (Role Summary through Interview Plan). |

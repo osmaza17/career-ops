@@ -66,6 +66,20 @@ If the final score is >= 4.5, generate draft answers for the application form:
 **Language**: Always in the language of the JD (EN default). Apply `/tech-translate`.
 
 ## Step 5 — Update Tracker
-Register in `data/applications.md` with all columns including Report and PDF as ✅.
 
-**If any step fails**, continue with the remaining steps and mark the failed step as pending in the tracker.
+**NEVER write directly to `data/applications.md`.** Use the TSV → merge pipeline:
+
+1. Write one TSV line to `batch/tracker-additions/{num}-{company-slug}.tsv`:
+
+```
+{num}\t{YYYY-MM-DD}\t{company}\t{role}\tEvaluated\t{X.X}/5\t✅\t[{num}](reports/{num}-{slug}-{date}.md)\t{one-line note}
+```
+
+Set PDF to ✅ if the PDF was generated in Step 3, ❌ if it failed or was skipped.
+
+2. Immediately run:
+```bash
+node merge-tracker.mjs
+```
+
+**If any step fails**, continue with the remaining steps and note the failure in the TSV notes column.

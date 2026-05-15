@@ -53,7 +53,7 @@ batch/
    f. Log to `logs/{report_num}-{id}.log`
    g. Chrome: go back → next job
 5. **Pagination**: If no more jobs → click "Next" → repeat
-6. **End**: Merge `tracker-additions/` → `applications.md` + summary
+6. **End**: Run `node merge-tracker.mjs` to merge all tracker additions into `applications.md`. Then output a summary (jobs processed, scores, reports written).
 
 ## Mode B: Standalone script
 
@@ -76,6 +76,16 @@ id	url	status	started_at	completed_at	report_num	score	error	retries
 2	https://...	failed	2026-...	2026-...	-	-	Error msg	1
 3	https://...	pending	-	-	-	-	-	0
 ```
+
+## End of batch (both modes)
+
+Always run as the final step:
+
+```bash
+node merge-tracker.mjs
+```
+
+This merges all `batch/tracker-additions/*.tsv` files into `applications.md`. If skipped, tracker additions are orphaned and `applications.md` will be out of date. For Mode A the conductor runs this; for Mode B the user runs it after `batch-runner.sh` completes.
 
 ## Resumability
 

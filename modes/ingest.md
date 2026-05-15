@@ -25,9 +25,9 @@ Read the full file. Separate three types of content:
    - Identity and contact: `candidate.*` and `location.*` → used for the cv.md header
    - Languages: `languages` array → used for the Languages section in cv.md
    - Target roles and narrative: `target_roles.*`, `narrative.*` → context for framing
-   - SECCIÓN 0 and SECCIÓN 2 in the markdown body are placeholders that redirect here — do not look for content there.
+   - Section 0 and Section 2 in the markdown body are placeholders that redirect here — do not look for content there.
 
-2. **Trajectory content** — factual data in the markdown body: education (SECCIÓN 1), skills (SECCIÓN 3), experience (SECCIÓN 4), student life (SECCIÓN 5), projects (SECCIÓN 6), competitions (SECCIÓN 7), training (SECCIÓN 8).
+2. **Trajectory content** — factual data in the markdown body: education (Section 1), skills (Section 3), experience (Section 4), student life (Section 5), projects (Section 6), competitions (Section 7), training (Section 8). Section 9 is excluded by default — see selection rules.
 
 3. **`[META-INSTRUCCIÓN]` blocks** — read and internalize as behavioral directives. Never reproduce them in cv.md. They inform what to prioritize, what to pair together, and how to frame entries.
 
@@ -39,11 +39,12 @@ Before writing any section, apply these filters:
 
 | Section in profile.md body | Default behaviour |
 |---|---|
-| SECCIÓN 0–6 | Include (apply per-entry rules below) |
-| SECCIÓN 7 (Formación Complementaria) | Include only if it adds a differentiating signal not covered by the main education, and space allows |
-| SECCIÓN 8 (Miscelánea) | Exclude by default. Include only if the META-INSTRUCCIÓN permits it or the user explicitly requests it |
+| Section 0–6 | Include (apply per-entry rules below) |
+| Section 7 — Competitions and Hackathons | Include only if the result is externally verifiable (ranking, jury, prize) and not already fully covered by a Projects entry |
+| Section 8 — Additional Training | Include only if it adds a differentiating signal not covered by the main education, and space allows |
+| Section 9 — Miscellaneous (archive) | Exclude by default. Include only if the META-INSTRUCCIÓN permits it or the user explicitly requests it |
 
-**Paired entries:** Respect META-INSTRUCCIÓN pairings. BDI Secretary General and Spanish Club Treasurer must always appear together as adjacent entries.
+**Paired entries:** Respect any pairing directives defined in `[META-INSTRUCCIÓN]` blocks within `config/profile.md`. Never infer or hardcode pairings — read them from the file.
 
 ---
 
@@ -460,6 +461,6 @@ Any failure → rewrite before moving on.
 
 Report to the user:
 - Sections written and entry count per section.
-- Any trajectory content excluded and why (e.g., SECCIÓN 8 entries held back per META-INSTRUCCIÓN).
+- Any trajectory content excluded and why (e.g., Section 9 — Miscellaneous entries held back per META-INSTRUCCIÓN).
 - Any pairing or framing constraint applied from a META-INSTRUCCIÓN.
 - Next step: "Run `/career-ops pdf` with a job description to generate a tailored LaTeX CV."

@@ -8,9 +8,9 @@ This mode applies a **recruiter/manager lens** throughout: it extracts what a no
 
 ---
 
-## Exclusive Access
+## Access to `sources/`
 
-**This is the only mode that reads from `sources/`.** No other mode, agent, or script accesses that folder.
+`modes/onboard.md`, `modes/analyze-sources.md`, and `modes/parallel-sources.md` are the only three modes that read from `sources/`. `onboard` handles initial profile setup; `analyze-sources` processes single documents interactively; `parallel-sources` handles batch processing of multiple new files in parallel. No other mode, agent, or script accesses that folder.
 
 ---
 
@@ -112,7 +112,7 @@ Prioritize in order: mission letter (defines scope), end-of-internship report or
 
 ### Multi-language documents
 
-Source documents may be in French, English, or Spanish. **Read in the source language. Write the profile.md entry in Spanish**, matching the language of `config/profile.md`. Do not mix languages within an entry. Technical terms without a clean Spanish equivalent can remain in the original language in parentheses.
+Source documents may be in French, English, or Spanish. **Read in the source language. Write the profile.md entry in the language of `config/profile.md`.** Do not mix languages within an entry. Technical terms without a clean equivalent in the target language can remain in the original language in parentheses.
 
 ### Poorly formatted or corrupted PDFs
 
@@ -276,7 +276,7 @@ Ask blocking questions first. If none are blocking, ask up to 2 enhancing questi
 
 ## Step 6 — Draft Entries
 
-Write entries in **Spanish**, matching the language of `config/profile.md`. Use the templates below.
+Write entries in **the language of `config/profile.md`**. Use the templates below.
 
 All entries end with a `[META-INSTRUCCIÓN]` block — see §META-INSTRUCCIÓN Writing Guide.
 
@@ -477,9 +477,12 @@ Run the Quality Check (§Quality Check Before Appending) on the approved version
 Added to profile.md → SECCIÓN X.
 
 [If YAML update is warranted, proceed to §YAML Frontmatter Updates]
-
-Next step: run `/career-ops ingest` to regenerate cv.md.
 ```
+
+After writing the entry (and any YAML update), ask:
+> "Want me to regenerate your CV now with the updated profile?"
+
+Run `modes/ingest.md` only if the user confirms. If they decline, do nothing — they can trigger it later.
 
 ### Rules
 - Never write to `profile.md` during the review loop — only after explicit approval.

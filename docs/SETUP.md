@@ -19,22 +19,30 @@ npx playwright install chromium   # Required for job liveness checking
 
 ### 2. Configure your profile
 
+Start a session and the agent will guide you through the full setup interactively using the `onboard` mode — it collects your identity, target roles, narrative, compensation, and languages via a structured interview, then builds the trajectory corpus (education, experience, projects) either from documents in `sources/` or through conversation.
+
+If you prefer to set it up manually:
 ```bash
 cp templates/profile.template.md config/profile.md
 ```
+Then fill in the YAML frontmatter and the markdown body sections.
 
-Fill in the YAML frontmatter of `config/profile.md` with your personal details: name, email, target roles, narrative, compensation, languages. The markdown body below the frontmatter is where your trajectory corpus lives — built up over time using `analyze-sources`. Alternatively, start a session and the agent will guide you through the full setup interactively.
+### 3. Generate your CV
 
-### 3. Add your CV
+Once `config/profile.md` is complete, the agent runs `ingest` to generate `config/cv.md` automatically. You can also trigger it explicitly:
 
-Create `config/cv.md` with your full CV in markdown format. This is the source of truth for all evaluations and PDFs.
+```
+/career-ops ingest
+```
 
-(Optional) Drop raw academic documents (project reports, internship descriptions) into `sources/` and run `analyze-sources` to build up the trajectory corpus in `config/profile.md`.
+`config/profile.md` is the source of truth. Never edit `config/cv.md` by hand — regenerate it from the profile instead.
+
+(Optional) Drop raw academic documents (internship reports, project briefs) into `sources/` at any time. Use `analyze-sources` to extract and add entries to `config/profile.md`, then re-run `ingest`.
 
 ### 4. Configure portals
 
 ```bash
-cp templates/portals.example.yml config/portals.yml
+cp templates/portals.template.yml config/portals.yml
 ```
 
 Edit `config/portals.yml`:

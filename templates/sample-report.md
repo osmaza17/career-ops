@@ -1,7 +1,7 @@
-# Evaluation: Acme AI -- Senior AI Engineer
+# Evaluation: Acme AI -- Senior Industrial Engineer
 
 **Date:** 2026-04-01
-**Archetype:** AI Platform / LLMOps Engineer
+**Archetype:** Industrial Platform / LLMOps Engineer
 **Score:** 4.2/5
 **URL:** https://jobs.example.com/acme-ai-senior-engineer
 **PDF:** output/cv-candidate-acme-ai-2026-04-01.pdf
@@ -12,13 +12,13 @@
 
 | Field | Value |
 |-------|-------|
-| **Archetype** | AI Platform / LLMOps Engineer |
+| **Archetype** | Industrial Platform / LLMOps Engineer |
 | **Domain** | Platform / Infrastructure |
 | **Function** | Build |
 | **Seniority** | Senior (IC4-IC5) |
 | **Remote** | Full remote (US timezone overlap) |
 | **Team size** | ~8 engineers |
-| **TL;DR** | Senior AI eng to build and scale LLM infrastructure for enterprise customers |
+| **TL;DR** | Senior Industrial eng to build and scale LLM infrastructure for enterprise customers |
 
 ## B) CV Match
 
@@ -55,7 +55,7 @@
 
 | # | Section | Current | Proposed Change | Why |
 |---|---------|---------|-----------------|-----|
-| 1 | Summary | "Full-stack AI engineer" | "AI platform engineer focused on LLM infrastructure and observability" | Match JD language |
+| 1 | Summary | "Industrial engineer with ML background" | "Industrial engineer specialized in production systems and operational efficiency" | Match JD language |
 | 2 | TechFin bullets | Generic ML platform | Add "LLM serving" context | JD specifically mentions LLMs |
 | 3 | Projects | Both listed equally | Lead with LLM Eval Toolkit | Direct LLM experience proof |
 

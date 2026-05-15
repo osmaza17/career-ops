@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/osmaza17/career-ops/dashboard/internal/model"
+	"github.com/osmaza17/career-ops/dashboard/internal/theme"
 )
 
 func tabIndexForFilter(t *testing.T, filter string) int {
@@ -59,7 +59,7 @@ func TestWithReloadedDataPreservesStateAndSelection(t *testing.T) {
 		initialApps[1],
 		{
 			Company:    "Gamma",
-			Role:       "AI Engineer",
+			Role:       "Industrial Engineer",
 			Status:     "Interview",
 			Score:      4.8,
 			ReportPath: "reports/003-gamma.md",
@@ -130,7 +130,7 @@ func TestRejectedAndDiscardedTabsFilterCorrectly(t *testing.T) {
 		},
 		{
 			Company:    "Gamma",
-			Role:       "AI Engineer",
+			Role:       "Industrial Engineer",
 			Status:     "Applied",
 			Score:      4.6,
 			ReportPath: "reports/003-gamma.md",

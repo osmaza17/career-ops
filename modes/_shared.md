@@ -111,7 +111,8 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 7. Be direct and actionable -- no fluff
 8. Concise professional English. Short sentences, action verbs, no passive voice.
 8b. Key proof points and metrics in PDF Professional Summary — recruiters may only read this section.
-9. **Tracker additions as TSV** -- NEVER edit applications.md directly. Write TSV in `batch/tracker-additions/`.
+9. **Tracker additions as TSV** -- NEVER edit applications.md directly. Write TSV in `batch/tracker-additions/`. For single evaluations: immediately run `node merge-tracker.mjs` after writing the TSV. For batch sessions: run once at the end (see `modes/batch.md`).
+9b. **Writing style** -- Before generating any candidate-facing text (cover letters, outreach messages, form answers, follow-up emails): read `config/strategy.md ## Writing Style`. If that section is absent, follow Writing Style Calibration (below in this file) to extract and cache it first.
 10. **Include `**URL:**` in every report header.**
 
 ### Tools

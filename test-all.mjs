@@ -103,7 +103,7 @@ try {
     finalUrl: 'https://example.workday.com/job/123',
     bodyText: [
       '663 JOBS FOUND',
-      'Senior AI Engineer',
+      'Senior Industrial Engineer',
       'Join our applied AI team to ship production systems, partner with customers, and own delivery across evaluation, deployment, and reliability.',
     ].join('\n'),
     applyControls: ['Apply for this Job'],

@@ -26,7 +26,7 @@ Also update the "Adaptive Framing" table to map YOUR specific projects to each a
 
 ## Portals (config/portals.yml)
 
-Copy from `templates/portals.example.yml` and customize:
+Copy from `templates/portals.template.yml` and customize:
 
 1. **title_filter.positive**: Keywords matching your target roles
 2. **title_filter.negative**: Tech stacks or domains to exclude

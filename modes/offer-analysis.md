@@ -162,6 +162,7 @@ Save the full evaluation in `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 **Date:** {YYYY-MM-DD}
 **Archetype:** {detected}
 **Score:** {X/5}
+**URL:** {url}
 **Legitimacy:** {High Confidence | Proceed with Caution | Suspicious}
 **PDF:** {path or pending}
 
@@ -199,18 +200,18 @@ Save the full evaluation in `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 
 ### 2. Register in tracker
 
-**ALWAYS** register in `data/applications.md`:
-- Next sequential number
-- Current date
-- Company
-- Role
-- Score: match average (1-5)
-- Status: `Evaluated`
-- PDF: ❌ (or ✅ if auto-pipeline generated PDF)
-- Report: relative link to the report .md (e.g. `[001](reports/001-company-2026-01-01.md)`)
+**NEVER write directly to `data/applications.md`.** Always use the TSV → merge pipeline:
 
-**Tracker format:**
+1. Write one TSV line to `batch/tracker-additions/{num}-{company-slug}.tsv` (9 tab-separated columns):
 
-```markdown
-| # | Date | Company | Role | Score | Status | PDF | Report |
+```
+{num}\t{YYYY-MM-DD}\t{company}\t{role}\tEvaluated\t{X.X}/5\t❌\t[{num}](reports/{num}-{slug}-{date}.md)\t{one-line note}
+```
+
+Column order: num · date · company · role · **status** · score · pdf · report · notes  
+(Status comes BEFORE score — merge-tracker.mjs handles the column swap into applications.md.)
+
+2. Immediately run:
+```bash
+node merge-tracker.mjs
 ```

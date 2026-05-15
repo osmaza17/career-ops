@@ -29,12 +29,13 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
-| `config/profile.md`           | Compact proof points from portfolio (optional)                                                                                                      |
+| `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + full trajectory corpus (education, experience, projects). Created by `onboard`, read by every mode. |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
 | `followup-cadence.mjs`               | Follow-up cadence calculator (JSON output)                                                                                                          |
 | `data/follow-ups.md`                 | Follow-up history tracker                                                                                                                           |
+| `data/linkedin.md`                   | LinkedIn profile context — saved by `linkedin-optimizer`, read each session to skip re-interview                                                    |
 | `scan.mjs`                           | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost                                                                |
 | `check-liveness.mjs`                 | Job posting liveness checker                                                                                                                        |
 | `liveness-core.mjs`                  | Shared liveness logic (expired signals win over generic Apply text)                                                                                 |
@@ -44,73 +45,34 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 
 **Before doing ANYTHING else, check if the system is set up.** Run these checks silently every time a session starts:
 
-1. Does `config/cv.md` exist?
-2. Does `config/profile.md` exist?
+1. Does `config/profile.md` exist?
+2. Does `config/cv.md` exist?
 3. Does `config/strategy.md` exist (not just templates/strategy.template.md)?
-4. Does `config/portals.yml` exist (not just templates/portals.example.yml)?
+4. Does `config/portals.yml` exist (not just templates/portals.template.yml)?
 
 If `config/strategy.md` is missing, copy from `templates/strategy.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
 
-**If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Guide the user step by step:
+**If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Follow this order exactly — each step depends on the previous one.
 
-#### Step 1: CV (required)
-If `config/cv.md` is missing, ask:
-> "I don't have your CV yet. You can either:
-> 1. Paste your CV here and I'll convert it to markdown
-> 2. Paste your LinkedIn URL and I'll extract the key info
-> 3. Tell me about your experience and I'll draft a CV for you
->
-> Which do you prefer?"
+#### Step 1: Profile (required — source of truth)
 
-Create `config/cv.md` from whatever they provide. Make it clean markdown with standard sections (Summary, Experience, Projects, Education, Skills).
+If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles everything needed to build a complete profile: the YAML frontmatter (identity, target roles, narrative, compensation, languages) and the full trajectory corpus (education, experience, projects, associations, competitions, training). It also handles processing raw documents from `sources/` if the user has them.
 
-#### Step 2: Profile (required)
-If `config/profile.md` is missing, copy `templates/profile.template.md` → `config/profile.md`, then run the guided interview below to fill in the YAML frontmatter. Work through the groups in order — ask each group as a single message, wait for the answer, then move to the next.
+**Do not proceed to Step 2 until `config/profile.md` is complete.**
 
-**Group 1 — Identity**
-> "Let's set up your profile. First, the basics:
-> - Full name (as it should appear on your CV)
-> - Primary email
-> - Phone number(s) — if you have separate numbers for different countries, tell me both
-> - LinkedIn URL
-> - University or institutional email (if you have one and want it on your CV)
-> - Current city and country"
+#### Step 2: CV (generated from profile)
 
-**Group 2 — Target roles**
-> "What roles are you targeting? Give me:
-> - Your top 2–3 target job titles (e.g. 'Operations Research Analyst', 'Strategy Consultant')
-> - For each, is it a dream role, a strong fit, or a stretch? (I'll set the archetype fit accordingly)
-> - What level are you targeting? (e.g. Junior, Mid, Senior)"
-
-**Group 3 — Narrative**
-> "Now the most important part — your story:
-> - In one line, how would you describe yourself professionally? (e.g. 'Industrial engineer from X — specializing in Y')
-> - What makes you stand out from other candidates at your level? What can you do that most can't?
-> - What's your strongest achievement so far — the one you'd lead with in any interview?
-> - Any other top achievements worth capturing? (I'll build your proof-points list)"
-
-**Group 4 — Compensation**
-> "Compensation:
-> - What's your target salary range?
-> - What's your walk-away minimum? (this stays private — only used by the negotiation mode)
-> - Are you open to relocating or working remotely? Any restrictions?"
-
-**Group 5 — Languages and awards**
-> "Two final things:
-> - What languages do you speak? For each: name, level, and certificate if you have one (e.g. 'English — C1 Advanced, Cambridge certificate')
-> - Any prizes or ranked competitive results? (e.g. '1st prize at X competition, 80 teams') — skip if none"
-
-After all five groups are answered, fill in every key in the YAML frontmatter of `config/profile.md` from the collected answers. Show the completed YAML to the user for review before saving — iterate if they want changes. Only write to the file once they confirm.
-
-For archetypes and targeting narrative, store the user-specific mapping in `config/strategy.md` or `config/profile.md` rather than editing `modes/_shared.md`.
+If `config/cv.md` is missing but `config/profile.md` exists, run `modes/ingest.md` to generate cv.md from the profile. Do not ask the user to paste their CV manually — ingest reads profile.md and produces cv.md.
 
 #### Step 3: Portals (recommended)
+
 If `config/portals.yml` is missing:
 > "I'll set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles?"
 
-Copy `templates/portals.example.yml` → `config/portals.yml`. If they gave target roles in Step 2, update `title_filter.positive` to match.
+Copy `templates/portals.template.yml` → `config/portals.yml`. If target roles are already in `config/profile.md`, update `title_filter.positive` to match.
 
 #### Step 4: Tracker
+
 If `data/applications.md` doesn't exist, create it:
 ```markdown
 # Applications Tracker
@@ -119,24 +81,8 @@ If `data/applications.md` doesn't exist, create it:
 | --- | ---- | ------- | ---- | ----- | ------ | --- | ------ | ----- |
 ```
 
-#### Step 5: Get to know the user (important for quality)
+#### Step 5: Ready
 
-After the basics are set up, proactively ask for more context. The more you know, the better your evaluations will be:
-
-> "The basics are ready. But the system works much better when it knows you well. Can you tell me more about:
-> - What makes you unique? What's your 'superpower' that other candidates don't have?
-> - What kind of work excites you? What drains you?
-> - Any deal-breakers? (e.g., no on-site, no startups under 20 people, no Java shops)
-> - Your best professional achievement — the one you'd lead with in an interview
-> - Any projects, articles, or case studies you've published?
->
-> The more context you give me, the better I filter. Think of it as onboarding a recruiter — the first week I need to learn about you, then I become invaluable."
-
-Store any insights the user shares in `config/profile.md` (narrative, proof points) or `config/strategy.md` (archetypes, negotiation scripts). Do not put user-specific content into `modes/_shared.md`.
-
-**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md` or `config/profile.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
-
-#### Step 6: Ready
 Once all files exist, confirm:
 > "You're all set! You can now:
 > - Paste a job URL to evaluate it
@@ -145,12 +91,14 @@ Once all files exist, confirm:
 >
 > Everything is customizable — just ask me to change anything.
 >
-> Tip: Having a personal portfolio dramatically improves your job search. If you don't have one yet, there is one, open source: github.com/santifer/cv-santiago — feel free to fork it and make it yours."
+> Tip: Having a personal portfolio dramatically improves your job search. If you don't have one yet, there is one, open source: github.com/osmaza17/cv-santiago — feel free to fork it and make it yours."
 
 Then suggest automation:
 > "Want me to scan for new offers automatically? I can set up a recurring scan every few days so you don't miss anything. Just say 'scan every 3 days' and I'll configure it."
 
-If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring `/career-ops scan` (or `/career-ops-scan` if using OpenCode). If those aren't available, suggest adding a cron job or remind them to run `/career-ops scan` (or `/career-ops-scan` if using OpenCode) periodically.
+If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring `/career-ops scan` (or `/career-ops-scan` if using OpenCode). If those aren't available, suggest adding a cron job or remind them to run the scan periodically.
+
+**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md` or `config/profile.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
 
 ### Personalization
 
@@ -165,16 +113,7 @@ This system is designed to be customized by YOU (AI Agent). When the user asks y
 
 ### Language Modes
 
-Default modes are in `modes/` (English). French language modes are available in `modes/fr/`.
-
-- **French (Francophone market):** `modes/fr/` — native French translations with France/Belgium/Switzerland/Luxembourg-specific vocabulary (CDI/CDD, convention collective SYNTEC, RTT, mutuelle, prévoyance, 13e mois, intéressement/participation, titres-restaurant, CSE, portage salarial, etc.). Includes `_shared.md`, `offre.md` (evaluation), `postuler.md` (apply), `pipeline.md`.
-
-**When to use French modes:** If the user is targeting French-language job postings, lives in France/Belgium/Switzerland/Luxembourg/Quebec, or asks for French output. Either:
-1. User says "use French modes" → read from `modes/fr/` instead of `modes/`
-2. User sets `language.modes_dir: modes/fr` in `config/profile.md` → always use French modes
-3. You detect a French JD → suggest switching to French modes
-
-**When NOT to:** If the user applies to English-language roles, even at French companies, use the default English modes.
+All modes are in `modes/` (English). If the user is targeting French-language job postings or asks for French output, the agent should produce French-language content using the same modes — adapting vocabulary to the French market (CDI/CDD, SYNTEC, RTT, mutuelle, 13e mois, intéressement/participation, titres-restaurant, etc.) without switching to a separate folder.
 
 ### Skill Modes
 
@@ -183,8 +122,9 @@ Default modes are in `modes/` (English). French language modes are available in 
 | Pastes JD or URL                                            | auto-pipeline (evaluate + report + PDF + tracker) |
 | Asks to evaluate offer                                      | `offer-analysis`                                  |
 | Asks to compare offers                                      | `offers-comparison`                               |
-| Wants LinkedIn outreach                                     | `contact`                                         |
-| Asks for company research                                   | `deep`                                            |
+| Wants LinkedIn outreach (messages to recruiters/contacts)   | `contact`                                         |
+| Wants to optimize their LinkedIn profile                    | `linkedin-optimizer`                              |
+| Asks for company research on ONE company                    | `deep`                                            |
 | Preps for interview at specific company                     | `interview-prep`                                  |
 | Wants to generate CV/PDF                                    | `pdf`                                             |
 | Evaluates a course/cert                                     | `training`                                        |
@@ -198,23 +138,32 @@ Default modes are in `modes/` (English). French language modes are available in 
 | Asks about follow-ups or application cadence                | `followup`                                        |
 | Wants to rebuild cv.md from profile.md                    | `ingest`                                          |
 | Has raw academic documents to digest (project reports, internship descriptions, association activity files) | `analyze-sources` |
+| Needs to create or complete config/profile.md              | `onboard`                                         |
+| Wants to update profile after initial setup (roles, comp, narrative, new entries) | `update-profile` |
+| Pastes 2+ job URLs, or says "evaluate these jobs / clear my pipeline / process all these URLs" | `parallel-eval` |
+| Names 2+ companies to research, compare, rank, or build a target list from | `intel-sweep`  |
+| Has multiple new files in sources/ to process, or says "process all my sources / I added N documents" | `parallel-sources` |
+| Has ONE new file in sources/ to add interactively          | `analyze-sources`                                 |
 
 ### CV Source of Truth
 
-- `config/cv.md` is the canonical CV
-- `config/profile.md` has detailed proof points (optional)
-- `sources/` holds raw academic documents — **only `modes/analyze-sources.md` reads from this folder**
-- **NEVER hardcode metrics** -- read them from these files at evaluation time
+- `config/profile.md` is the master source of truth — it feeds every mode and must be created first
+- `config/cv.md` is the formatted CV, generated from profile.md by `modes/ingest.md`
+- `sources/` holds raw academic documents — read by `modes/onboard.md` (during initial setup), `modes/analyze-sources.md` (interactive single-file processing), and `modes/parallel-sources.md` (parallel batch processing). No other mode accesses this folder.
+- **NEVER hardcode metrics** — read them from these files at evaluation time
 
 ### Full pipeline (raw documents → CV)
 
 ```
-sources/          →  analyze-sources  →  config/profile.md
+(first run)        →  onboard          →  config/profile.md
+sources/           →  analyze-sources   →  config/profile.md  (single file, interactive)
+sources/           →  parallel-sources  →  config/profile.md  (batch, agents draft in parallel)
+config/profile.md  →  update-profile   →  config/profile.md  (edits after first run)
 config/profile.md  →  ingest           →  config/cv.md
-config/cv.md         →  pdf / latex      →  output/*.pdf
+config/cv.md       →  pdf / latex      →  output/*.pdf
 ```
 
-**Access rule:** `sources/` is exclusively accessed by `analyze-sources`. No other mode, agent, or script reads files from that folder.
+**Access rule:** `sources/` is accessed only by `modes/onboard.md` (initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode, agent, or script reads files from that folder.
 
 ---
 
