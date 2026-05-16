@@ -278,6 +278,8 @@ Ask blocking questions first. If none are blocking, ask up to 2 enhancing questi
 
 Write entries in **the language of `config/profile.md`**. Use the templates below.
 
+**Writing conventions:** When drafting bullets, summaries, or any prose destined for `config/profile.md`, apply the rules in `modes/writing.md` (bullet ordering, bold, parentheses, colon, middle-dot, Specificity Standard, vocabulary bans, etc.).
+
 All entries end with a `[META-INSTRUCCIÓN]` block — see §META-INSTRUCCIÓN Writing Guide.
 
 ### Entry template: Professional Experience → SECCIÓN 4

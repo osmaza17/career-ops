@@ -17,6 +17,12 @@ Transform `config/profile.md` (YAML frontmatter + trajectory corpus) into `confi
 
 ---
 
+## Writing Conventions
+
+All writing style rules (bullet ordering, bold, parentheses, colon, middle-dot, triple-dash, Specificity Standard, Headline, Hobbies, trim signals, vocabulary) are centralized in `modes/writing.md`. Read and apply that file before generating any output.
+
+---
+
 ## Step 1 — Parse profile.md
 
 Read the full file. Separate three types of content:
@@ -55,6 +61,7 @@ Before writing any section, apply these filters:
 ```
 # [Full Name]
 
+**Headline:** [Professional title] specialized in [specialization]
 **Email:** ... | **Phone (ES):** ... | **Phone (FR):** ...
 **LinkedIn:** ... | **Location:** ...
 
@@ -105,34 +112,31 @@ Before writing any section, apply these filters:
 ## Languages
 
 [rows]
+
+---
+
+## Hobbies
+
+[rows — optional]
 ```
+
+---
+
+### Headline
+
+→ LaTeX: `\cvheadline{...}` — apply the fixed Headline structure from `modes/writing.md §9`.
 
 ---
 
 ### Summary
 
-Exactly 3 sentences:
-
-1. Who you are + institution + graduation year (or expected).
-2. 1–2 hard differentiators — use real figures, rankings, or unique facts from profile.md.
-3. Type of role sought + area or contract type.
-
-Rules: no first-person singular · no "passionate about" or equivalents · no em-dashes · do not list projects or experiences.
+Three sentences following the Summary structure in `modes/writing.md §15`. Named clients and verified results from `narrative.proof_points` in the YAML frontmatter are mandatory in S2.
 
 ---
 
 ### Date format
 
-All dates follow: `[mon. YYYY] -- [mon. YYYY]`
-
-| Language | Month abbreviations |
-|---|---|
-| French (default) | `janv.` `févr.` `mars` `avr.` `mai` `juin` `juil.` `août` `sept.` `oct.` `nov.` `déc.` |
-| English | `Jan.` `Feb.` `Mar.` `Apr.` `May` `June` `July` `Aug.` `Sept.` `Oct.` `Nov.` `Dec.` |
-
-- Separator: `--` (double hyphen = en-dash in LaTeX). Never `-` or `—`.
-- Single-month entry: `avr. 2026` (no separator).
-- Ongoing: `oct. 2025 -- en cours` (FR) / `Oct. 2025 -- present` (EN).
+Apply date format from `modes/writing.md §16`. Separator: `--` (double hyphen). Never `-` or `—`.
 
 ---
 
@@ -146,7 +150,7 @@ All dates follow: `[mon. YYYY] -- [mon. YYYY]`
 **Country:** [Country]
 
 - [Bullet: specialization or programme focus]
-- [Bullet: quantitative achievement — GPA, ranking, award]
+- [Bullet: quantitative achievement — "Average X/10 --- top Y% of N students". Use `---` to link score and ranking. Never "GPA".]
 - [Bullet: unique milestone — optional]
 ```
 
@@ -180,10 +184,10 @@ Rules:
 
 Fields:
 - **Company** = company name as written (LaTeX will uppercase it automatically). E.g., "Bucarest 54", "Air Liquide".
-- **Post** = role and domain. E.g., "Stage en Génie Civil", "Consultant Opérations · Supply Chain".
+- **Post** = role and domain. E.g., "Stage en Génie Civil", "Consultant Opérations, Supply Chain".
 - **Country** = country only, no city.
 
-→ LaTeX: `\cventry{Company}{Post}{Country}{Date}` — displays as: line 1 = **COMPANY · Post** (bold); line 2 = Country (left, muted) and Date (right, muted).
+→ LaTeX: `\cventry{Company}{Post}{Country}{Date}` — displays as: line 1 = **COMPANY · Post** (bold, the `·` here is structural inside the LaTeX command); line 2 = dates (left, muted) and Country (right, muted).
 
 Follow all Bullet Rules. Write as many bullets as there are genuinely strong things to say — minimum 1, maximum 3. One strong bullet beats two weak ones.
 
@@ -201,7 +205,7 @@ Follow all Bullet Rules. Write as many bullets as there are genuinely strong thi
 ```
 
 Fields:
-- **Title** = role/position. If the organization adds signal, embed it in the title: "Secrétaire Général BDI", "Trésorier Club Espagnol".
+- **Title** = role/position. Use a comma to separate role and organization — never `·`. E.g., "Secretary General, BDI", "Treasurer, Club Español".
 - No **Subtitle** — `\cventryassociatif` has no subtitle argument; omit this field entirely.
 - No **Country** field.
 
@@ -224,11 +228,8 @@ Follow all Bullet Rules. Write as many bullets as there are genuinely strong thi
 ```
 
 Fields:
-- **Title** = what type of project it is — describes the TYPE (étude, modélisation, diagnostic, go-to-market, product launch...). If there is a named client, append after `·`, never at the start.
-  - ✗ `Air Liquide · H₂ Supply Chain Optimisation`
-  - ✓ `H₂ Supply Chain Optimisation · Air Liquide`
-- **Subtitle** = relevant clarification: academic framework, program, team composition, or context. Use `·` to combine elements.
-- **Never include the country of execution** in either Title or Subtitle. Country is irrelevant context in academic/consulting project entries — the school name or client name already carries the necessary signal.
+- **Title** = apply the project title pattern from `modes/writing.md §19.1`. Title ≤ 45 characters (right-column hard limit — `modes/latex.md §3d`).
+- **Subtitle** = apply the subtitle pattern from `modes/writing.md §19.2`. Do NOT list tools; no country of execution.
 
 → LaTeX: `\cventryprojet{Title}{Subtitle}{Date}` (Title ≤ 45 chars — right-column limit).
 
@@ -236,15 +237,7 @@ Follow all Bullet Rules.
 
 **Number of bullets:** write as many as there are genuinely strong things to say — minimum 1, maximum 3. One strong bullet is better than two weak ones. If only one thing is truly impressive, write one bullet and move on.
 
-**Ordering:** decreasing order of what will interest the interviewer most. Default ranking:
-
-1. **Competitive prizes** — ranked against other candidates, judged externally. Most credible signal.
-2. **Real clients, especially well-known ones** — CAC 40, Fortune 500, named institutions. Shows real-world delivery.
-3. **Projects with strong quantified outcomes** — regardless of client prestige, if the numbers are compelling.
-4. **Technically sophisticated projects** — novel methodology, complex modelling, original design.
-5. **Purely academic projects** — no external client, no prize. Go last.
-
-When two entries tie on tier, the one with the harder metric or the more recognisable name goes first. Never order by date.
+**Ordering:** decreasing order of interest to the interviewer — apply the project entry ordering from `modes/writing.md §1.3`. Never order by date.
 
 ---
 
@@ -261,8 +254,8 @@ When two entries tie on tier, the one with the harder metric or the more recogni
 ```
 
 Fields:
-- **Title** = "[position] · [contest name]". E.g., "1er Prix · Programme Akademia".
-- **Subtitle** = organizer or foundation. E.g., "Fondation Bankinter · Hackathon national, 80 équipes".
+- **Title** = "[position], [contest name]". E.g., "1st Prize, Programme Akademia".
+- **Subtitle** = organizer or foundation. E.g., "Fondation Bankinter, Hackathon national, 80 teams".
 - No **Country** field.
 
 → LaTeX: `\cventrycontest{Title}{Subtitle}{Date}`
@@ -287,7 +280,7 @@ Maximum 2 bullets. Do not duplicate content from a Projects entry covering the s
 - **AI & Automation:** Claude Code, n8n, LLM
 ```
 
-Rules: omit soft skills entirely · sort items within each row by relevance to the most common target role · maximum 5 rows.
+Apply Skills section rules from `modes/writing.md §20`.
 
 ---
 
@@ -306,154 +299,23 @@ Include certificate name when it exists.
 
 ---
 
+### Hobbies
+
+```
+## Hobbies
+
+[one line — optional]
+```
+
+Apply Hobbies inclusion criteria and format from `modes/writing.md §10`.
+
+→ LaTeX: `\section*{Centres d'intérêt}` (optional section — see `modes/latex.md §7.10`).
+
+---
+
 ## Bullet Rules
 
-> Apply to all bullets in Experience, Student Life and Projects. Education bullets are factual statements — these rules do not apply there.
-
-### Ordering
-
-**R0 — Most impressive fact first.**
-
-Within each entry, order bullets so the single most impactful line comes first. A recruiter who reads only the first bullet of each entry must leave with the best possible impression.
-
-What counts as "most impressive": a hard metric, a named client or institution, a competition result, a unique outcome. If two bullets have a metric, the larger or more surprising one goes first.
-
-✗ Method → result order:
-```
-Designed a proprietary dispatch heuristic (Simul8).
-Won a zero-stockout fleet recommendation accepted by Air Liquide.
-```
-✓ Result → method order:
-```
-Won a **zero-stockout** fleet recommendation accepted by Air Liquide.
-Designed a proprietary dispatch heuristic with a multi-component cost function (Simul8).
-```
-
-### Structure
-
-Pattern: `[Past-tense verb] [object] [with/on/for/across] [specification] (tools, scale — max 4 elements).`
-
-No subject — the verb stands alone, implying first person without writing "I".
-
-| Rule | Requirement |
-|---|---|
-| R1 | Single sentence. ≤ 12 words preferred; 18 words hard limit. Ends with a period. |
-| R2 | Opens with a past-tense action verb. Never a noun phrase, infinitive, gerund, or "Responsible for". |
-| R3 | Tools, scales, KPIs always in parentheses at the end, separated by commas. Never in the prose. |
-| R4 | One action per bullet. If two actions exist → split into two bullets. |
-| R5 | Bold only on: (a) hard verifiable metric (figure, %, €, ranking), (b) domain methodology explicitly named in a JD. Max 2 bold elements per bullet. Never bold the verb. |
-| R6 | Real figures only. If no metric exists, omit the number — a bullet without a figure is fine. If an entire entry has no quantifiable metric, compensate with specificity: name the client, state the scale, or give a concrete qualitative outcome. Never invent or approximate. |
-| R7 | If the same idea fits in fewer words, use fewer words. Do not pad. |
-| R8 | **Manager filter.** Every bullet must be useful to a non-specialist hiring manager. If the fact only makes sense to someone already deep in the implementation, cut the technical detail and keep only the outcome, scale, or competence signal. Ask: "Would a recruiter who doesn't know the domain find this useful?" If not, rewrite. |
-| R9 | **Purpose clarity.** The first bullet of any project or experience entry must make clear (a) what was being done and (b) for whom or to what end. Do not lead with methodology when the project's purpose is still unknown to the reader. |
-
-**Trim signals — rewrite if any of these appear:**
-- Any em-dash (`—`): remove — replace with `·` if separating related elements, or rephrase entirely
-- "through/via" followed by another long phrase → cut after the verb + object
-- Two parenthetical groups in one bullet → keep only the more informative one
-- Statistical/implementation configuration in prose (number of replicas, confidence intervals, warmup periods, parameter names) → cut from prose; name the method in parentheses, not its setup: ✗ `(Simul8, 4 replicas, 95% CI)` → ✓ `(Simul8)`
-- Technical jargon with no managerial value (internal parameter names, solver settings, data structure details) → cut entirely unless they signal a rare, named competence
-- Problem input dimensions that describe the problem's geometry, not the value delivered (distances, geographic extents, exact raw volumes) → cut. ✗ `for 5 stations across 50–200 km` → ✓ `for 5 delivery stations`. ✗ `carbon balance of 146,400 t CO₂` → state the conclusion only
-
-### Verb examples (English)
-
-Designed · Developed · Modelled · Optimised · Deployed · Analysed · Audited · Managed · Coordinated · Conducted · Formulated · Built · Led · Negotiated · Presented · Reduced · Quantified · Won · Maintained · Monitored
-
-### Verb examples (French — only used when cv.md is NOT in French)
-
-Conçu · Développé · Modélisé · Optimisé · Déployé · Analysé · Audité · Géré · Coordonné · Conduit · Formulé · Construit · Dirigé · Négocié · Présenté · Réduit · Quantifié · Obtenu · Maintenu
-
-### French bullet structure — deverbal nouns
-
-In French, opening a bullet with a past participle without a subject (`Conçu…`, `Recommandé…`) is grammatically incomplete. When cv.md is in French, replace the verb with its **deverbal noun**:
-
-Pattern: `[Deverbal noun] de/d'/du/des [object] [complement] (tools, scale).`
-
-| Past participle | Deverbal noun |
-|---|---|
-| Conçu / Développé | Conception de / Développement de |
-| Recommandé | Recommandation de |
-| Réduit | Réduction de |
-| Identifié | Identification de |
-| Proposé | Proposition de |
-| Modélisé | Modélisation de |
-| Formulé | Formulation de |
-| Diagnostiqué | Diagnostic de |
-| Géré | Gestion de |
-| Piloté | Pilotage de |
-| Coordonné | Coordination de |
-| Obtenu | Obtention de |
-| Déterminé | Détermination de |
-| Élaboré | Élaboration de |
-| Comparé | Comparaison de |
-
-✗ `Conçu un algorithme de dispatch propriétaire (Simul8).`
-✓ `Conception d'un algorithme de dispatch propriétaire (Simul8).`
-
-All other rules (R1–R9, trim signals, self-check) apply equally.
-
-### Banned
-
-- Noun phrase opening: `Design of a tool…`, `Conception d'un outil…`
-- Infinitive: `Develop a tool…`, `Développer un outil…`
-- Gerund: `Developing…`, `Développant…`
-- Explicit subject: `I developed…`, `J'ai développé…`
-- Implicit first person: `In charge of…`, `Responsible for…`, `En charge de…`
-- Connectors: `as well as` · `while` · `in order to` · `allowing` · `ainsi que` · `tout en` · `afin de` · `permettant de` · `qui a permis de`
-
-### Globally banned vocabulary
-
-passionate about · results-driven · team player · leveraged · spearheaded · synergy · go-getter · in order to · so as to
-
-### Banned verbs (grandiose)
-
-orchestrated · championed · catalyzed · pioneered · evangelized · galvanized · drove (as in "drove impact") · secured commitment
-
-### Banned adjectives
-
-strategic · transversal · complex · high-impact · ambitious · challenging · innovative · dynamic · rigorous · autonomous · significant · notable · key · critical · solid
-
-### Examples
-
-**Wrong form (noun phrase):**
-✗ `Development of a Python tool enabling automation of logistics data processing.`
-✓ `Developed a logistics data automation tool (Python, pandas).`
-
-**Wrong form (too long — em-dash list):**
-✗ `Ran the annual IKEA logistics operation for incoming international students — survey, consolidated order, on-campus delivery.`
-✓ `Ran annual IKEA furniture logistics for incoming international students.`
-
-**Wrong form (too long — "through" padding):**
-✗ `Identified **5 critical operational bottlenecks** in a 1,242 m² facility through on-site observation and structured interviews.`
-✓ `Identified **5 operational bottlenecks** in a 1,242 m² facility (on-site visits, interviews).`
-
-**Wrong form (two actions):**
-✗ `Concluded against Bokashi as a national solution and redirected recommendation toward integrated methanisation.`
-✓ `Recommended methanisation over Bokashi after ruling it out as a national-scale solution.`
-
-**Wrong form (grandiose verb):**
-✗ `Orchestrated annual IKEA logistics operation for incoming international students.`
-✓ `Ran annual IKEA furniture logistics for incoming international students.`
-
-### Bullet self-check
-
-Before writing the next bullet, verify the current one passes all nine:
-
-Per bullet:
-1. Opens with a past-tense verb (no subject, no noun phrase)?
-2. ≤ 12 words? If not, can it be cut without losing meaning?
-3. No em-dash, no "through/via" padding, no double parenthetical?
-4. Tools and scales in parentheses, not prose?
-5. Bold only on a hard metric or named methodology?
-6. Free of banned adjectives, connectors, and grandiose verbs?
-7. Exactly one action?
-8. Would a non-specialist hiring manager find this useful? No implementation minutiae. (R8)
-9. If this is the first bullet: is the purpose and beneficiary of the project/task immediately clear? (R9)
-
-Per entry (after writing all bullets):
-10. Is the most impressive bullet first?
-
-Any failure → rewrite before moving on.
+Apply all rules from `modes/writing.md` (R0–R9, trim signals, self-check, colon convention, Specificity Standard, deverbal nouns for French, vocabulary bans). Education bullets are factual statements — R0–R9 do not apply there.
 
 ---
 

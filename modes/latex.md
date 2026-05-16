@@ -27,6 +27,16 @@
 
 ---
 
+<writing-conventions>
+
+## Writing Conventions
+
+All writing style rules (bullet ordering, bold, parentheses, colon, middle-dot, triple-dash, Specificity Standard, Headline, Hobbies, trim signals, vocabulary) are centralized in `modes/writing.md`. Read and apply that file before generating any output.
+
+</writing-conventions>
+
+---
+
 <global-format>
 
 ## 1. Global Format Rules
@@ -145,12 +155,12 @@ The preamble defines all packages, colors, commands and environments. Copy it in
 
 % \cventry — Expérience Professionnelle
 %   #1 company              → line 1 left, bold UPPERCASE
-%   #2 post/domain          → line 1 left, bold (after ·)
-%   #3 country              → line 2 left, muted small
-%   #4 dates                → line 2 right, muted small
+%   #2 post/domain          → line 1 left, bold (after company)
+%   #3 country              → line 2 right, muted small
+%   #4 dates                → line 2 left, muted small
 \newcommand{\cventry}[4]{%
     \noindent{\normalsize\textbf{\MakeUppercase{#1} · #2}}\\%
-    \noindent{\small\textcolor{muted}{#3}}\hfill{\small\textcolor{muted}{#4}}\par\vspace{-4pt}%
+    \noindent{\small\textcolor{muted}{#4}}\hfill{\small\textcolor{muted}{#3}}\par\vspace{-4pt}%
 }
 
 % \cventryformation — Formation (4-arg)
@@ -189,11 +199,10 @@ The preamble defines all packages, colors, commands and environments. Copy it in
     {\small\itshape #2}\par\vspace{-4pt}%
 }
 
-% \cvskill — skill row: label : values
-\newcommand{\cvskill}[2]{\noindent\textbf{#1~:} {\small #2}\par\vspace{1pt}}
+% \cvskill — skill row (use inside cvskillsblock): label : values
+\newcommand{\cvskill}[2]{\item \textbf{#1~:} #2}
 
 %==================== LANGUAGES ENVIRONMENT ==============
-% \lang{Language}{level · certificate}
 \newenvironment{cvlanguages}{%
     \begin{list}{}{%
         \setlength{\leftmargin}{0pt}\setlength{\rightmargin}{0pt}%
@@ -201,6 +210,14 @@ The preamble defines all packages, colors, commands and environments. Copy it in
         \setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}%
     }\small\color{bodytext}}{\end{list}}
 \newcommand{\lang}[2]{\item \textbf{#1~:} #2}
+
+%==================== SKILLS ENVIRONMENT =================
+\newenvironment{cvskillsblock}{%
+    \begin{list}{}{%
+        \setlength{\leftmargin}{0pt}\setlength{\rightmargin}{0pt}%
+        \setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}%
+        \setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}%
+    }\small\color{bodytext}}{\end{list}}
 
 %==================== BULLET ENVIRONMENTS ================
 %
@@ -346,17 +363,7 @@ These commands from fontawesome5 or currency packages cause **undefined control 
 
 ## 4a. Bold Usage
 
-Bold (`\textbf{}`) is a scarce resource. Its only purpose is to make the reader's eye stop on the 3–5 most impressive facts on the entire page. If it appears too often, it stops working.
-
-**Rules:**
-- Maximum **8 bold elements** across the full CV. Count them before compiling.
-- Bold only on: hard verifiable metrics (figures, %, €, rankings, counts) and competition results.
-- Never bold: injected JD keywords, tool names, methodology names, the candidate's name in running text, company names in bullets.
-- Never bold something just because it appears in the JD — keyword injection (§4b) is reformulation, not emphasis.
-- If in doubt: remove the bold. A number without bold is still a number; a bold adjective is noise.
-
-**What a recruiter's eye should land on:**
-The 3–5 boldest facts should together tell the strongest version of the candidate's story — a metric, a ranking, a client name, a prize. Read only the bold text: does it make a compelling case on its own?
+Apply bold rules from `modes/writing.md §3` and `§2.5`. In LaTeX, bold is rendered with `\textbf{}`. Global ceiling: ≤ 8 bold elements across the full CV. Never bold JD keywords injected via §4b.
 
 </bold-usage>
 
@@ -379,6 +386,18 @@ The 3–5 boldest facts should together tell the strongest version of the candid
 
 ---
 
+<writing-style>
+
+## 4c. Writing Style
+
+Apply all writing style rules from `modes/writing.md` — bullet structure (R0–R9), bold, parentheses, colon, project titles (§19.1), project subtitles (§19.2), Specificity Standard (§8), deverbal nouns for French CVs (§18), and vocabulary bans (§14). The LaTeX-specific rendering note: bold is `\textbf{}`, and client names in `\cventryprojet` titles use `\textbf{Client}`.
+
+For project entry title and subtitle patterns and examples, see `modes/writing.md §19`. For the `§7.8` section below, the title and subtitle patterns in the comments cross-reference writing.md.
+
+</writing-style>
+
+---
+
 <entry-headers>
 
 ## 5. Entry Headers — Commands by Section
@@ -387,14 +406,14 @@ Each section uses its own dedicated command. They are **not interchangeable**.
 
 | Section | Command | Args | Layout |
 |---|---|---|---|
-| Expérience Professionnelle | `\cventry` | 4 | line 1: COMPANY · Post · line 2: country left / dates right |
+| Expérience Professionnelle | `\cventry` | 4 | line 1: COMPANY — Post · line 2: dates left / country right |
 | Formation | `\cventryformation` | 4 | country in `#4` |
 | Projets & Innovation | `\cventryprojet` | 3 | none |
 | Vie Étudiante | `\cventryassociatif` | 2 | none |
 | Concours & Hackathons | `\cventrycontest` | 3 | none |
 
 **`\cventry{company}{post}{country}{dates}`** — Expérience  
-Line 1: **COMPANY · Post** (bold, company auto-uppercased). Line 2: country (left, muted) and dates (right, muted).  
+Line 1: **COMPANY · Post** (bold, company auto-uppercased). Line 2: dates (left, muted) and country (right, muted).  
 - `#1` = company name as written — `\MakeUppercase` is applied automatically.
 - `#2` = post and domain. E.g., "Stage en Génie Civil", "Consultant Opérations · Supply Chain".
 - `#3` = country only, no city.
@@ -438,25 +457,27 @@ Line 1: bold role. Line 2: muted dates (acts as subtitle). No location argument.
 
 ### 6.1 Dates
 
-LaTeX format: `{sept. 2023 -- juin 2024}`
-
-- Month in lowercase abbreviated form.
-- Separator: `--` (en-dash). Not `-` or `---`.
-- Ongoing: `{déc. 2024 -- en cours}`
+Apply date format rules from `modes/writing.md §16`. LaTeX rendering: wrap dates in curly braces as the argument to the entry command.
 
 ✗ `{09/2023 - 06/2024}` · `{Septembre 2023 -- Juin 2024}` · `{sept. 2023 --- juin 2024}`  
-✓ `{sept. 2023 -- juin 2024}`
+✓ `{sept. 2023 -- juin 2024}`  
+✓ `{déc. 2024 -- en cours}`
 
 ---
 
-### 6.2 Em-dashes
+### 6.2 Em-dashes (`---`) and `·`
 
-- **Banned everywhere.** Do not use `---` anywhere in the CV — not in titles, not in bullets, not in paragraphs.
-- Use `·` to separate related elements (title · context, institution · programme, etc.).
+Apply the triple-dash rule (`modes/writing.md §7`) and the middle-dot prohibition (`modes/writing.md §6`). LaTeX-specific notes:
 
-✓ `\cventry{EXEO · Stage Ingénierie Logistique}{...}{...}{...}`  
-✗ `\cventry{EXEO --- Stage Ingénierie Logistique}{...}{...}{...}`  
-✗ bullet: `Analyse des flux --- identification des goulots.`
+- `---` renders as an em-dash in LaTeX — permitted only in project titles, project subtitles, and education score/ranking bullets.
+- The only `·` permitted is the one hardcoded inside `\cventry` between company and post (`\MakeUppercase{#1} · #2`) — structural, cannot be removed. Do not reproduce it elsewhere.
+
+✗ `\cventryprojet{Diagnostic opérationnel · Veganic}{...}{...}` — use comma  
+✗ bullet prose: `Analyse des flux --- identification des goulots.` — em-dash banned in prose  
+✗ `\cvheadline{Élève-ingénieur · Recherche Opérationnelle}` — `·` banned in headlines  
+✓ `\cventryprojet{Mission de conseil --- \textbf{Air Liquide}}{...}{...}` — structural separator in title  
+✓ `\cventryprojet{Diagnostic opérationnel, Veganic}{...}{...}` — comma instead of `·`  
+✓ Education bullet: `Moyenne \textbf{8,7/10 --- top 2\,\%} sur 311 étudiants.` — score --- ranking
 
 </dates-and-dashes>
 
@@ -475,26 +496,26 @@ Sections are distributed across two columns:
 
 ### 7.1 Header and Profil
 
-The headline reflects the candidate's identity (school + specialisation + domain), not a generic job title copy-pasted from the posting.
+Apply Headline structure from `modes/writing.md §9` and Summary structure from `modes/writing.md §15`.
 
 ```latex
 \begin{center}
     \cvname{Óscar Martínez Zamora}\\[3pt]
-    \cvheadline{\'El\`eve-ing\'enieur CentraleSup\'elec · Recherche Op\'erationnelle \& D\'ecarbonation}
+    \cvheadline{Industrial Engineer specialized in Operations Research \& Risk Analytics}
 \end{center}
 \vspace{2pt}{\color{accent}\hrule height 0.8pt}\vspace{4pt}
 
-\section*{Profil}
+\section*{Profile}
 \small
-Élève-ingénieur en double diplôme CentraleSupélec x UPV, spécialisation
-\emph{Operations Research and Risk Analytics}, en recherche d'une alternance
-en conseil opérationnel à partir de septembre 2026.
-Mon parcours associe modélisation quantitative (optimisation combinatoire,
-simulation stochastique) et conduite de missions client réelles :
-dimensionnement de flotte pour Air Liquide, diagnostic d'une PME industrielle
-et lancement \emph{go-to-market} primé.
-Je cherche à mettre cette double compétence au service de projets de
-transformation des opérations et de la supply chain.
+% PROFILE SECTION — 3 sentences (S1 Identity, S2 Track record, S3 Aspiration).
+% See modes/writing.md §15 for the full structure and rules.
+Engineering student at CentraleSupélec, Université Paris-Saclay,
+specializing in Operations Research and Risk Analytics,
+seeking an alternance in operations consulting from September 2026.
+My background combines quantitative modelling and real client delivery:
+fleet sizing for Air Liquide, operational diagnosis of an industrial SME,
+and a go-to-market strategy ranked \textbf{1\textsuperscript{st}} among 80 teams.
+Seeking to bring this dual competence to operations and supply chain transformation projects.
 
 \vspace{2pt}
 ```
@@ -552,12 +573,12 @@ Environment: `cvbulletsexp` (►).
 
 ### 7.5 Vie Étudiante
 
-Environment: `cvbulletsassociatif` (►). Add `\vspace{4pt}` between entries.
+Environment: `cvbulletsassociatif` (►). No extra `\vspace` between entries — use the same spacing as Projects and Formation.
 
 ```latex
 \section*{Vie \'Etudiante}
 
-\cventryassociatif{Secr\'etaire G\'en\'eral BDI}{f\'ev. 2026 -- f\'ev. 2027}
+\cventryassociatif{Secr\'etaire G\'en\'eral, BDI}{f\'ev. 2026 -- f\'ev. 2027}
 \begin{cvbulletsassociatif}
     \item{} Coordination d'une association de \textbf{35 membres}
             pour l'int\'egration des \'etudiants internationaux.
@@ -565,9 +586,9 @@ Environment: `cvbulletsassociatif` (►). Add `\vspace{4pt}` between entries.
             (World Week, \textbf{200+} participants).
     \item{} Gestion de \textbf{3 partenariats} corporate actifs
             (McKinsey Paris, McKinsey Casablanca, Soci\'et\'e G\'en\'erale).
-\end{cvbulletsassociatif}\vspace{4pt}
+\end{cvbulletsassociatif}
 
-\cventryassociatif{Tr\'esorier Club Espagnol}{f\'ev. 2026 -- f\'ev. 2027}
+\cventryassociatif{Tr\'esorier, Club Espagnol}{f\'ev. 2026 -- f\'ev. 2027}
 \begin{cvbulletsassociatif}
     \item{} Gestion financi\`ere et n\'egociation de subventions
             devant le CA du BDI (\textbf{300\,€} obtenus).
@@ -578,13 +599,17 @@ Environment: `cvbulletsassociatif` (►). Add `\vspace{4pt}` between entries.
 
 ### 7.6 Compétences
 
+Skill rows use `\cvskill` inside a `cvskillsblock` environment. The environment hardcodes zero spacing between rows — do not add any `\vspace` between rows.
+
 ```latex
 \section*{Comp\'etences}
-\cvskill{Programmation}{Python, SQL, MATLAB}
-\cvskill{Optimisation}{Gurobi, Simul8, MILP, MCDA}
-\cvskill{Analyse \& BI}{Power BI, Excel, AutoCAD, CYPE}
-\cvskill{Outils}{LaTeX, Office Suite}
-\cvskill{IA \& Automation}{Claude Code, n8n, LLM}
+\begin{cvskillsblock}
+    \cvskill{Programmation}{Python, SQL, MATLAB}
+    \cvskill{Optimisation}{Gurobi, Simul8, MILP, MCDA}
+    \cvskill{Analyse \& BI}{Power BI, Excel, AutoCAD, CYPE}
+    \cvskill{Outils}{LaTeX, Office Suite}
+    \cvskill{IA \& Automation}{Claude Code, n8n, LLM}
+\end{cvskillsblock}
 ```
 
 ---
@@ -605,12 +630,12 @@ Environment: `cvbulletsformation` (►).
 
 \cventryformation{Master Ing\'enierie Industrielle}{Universitat Polit\`ecnica de Val\`encia}{sept. 2024 -- avr. 2027}{Espagne}
 \begin{cvbulletsformation}
-    \item{} Moyenne \textbf{7,7/10 · top 10\,\%} de la promotion.
+    \item{} Moyenne \textbf{7,7/10}, top 10\,\% de la promotion.
 \end{cvbulletsformation}
 
 \cventryformation{Licence Ing\'enierie Industrielle}{Universitat Polit\`ecnica de Val\`encia}{sept. 2020 -- juil. 2024}{Espagne}
 \begin{cvbulletsformation}
-    \item{} Moyenne \textbf{8,7/10 · top 2\,\%} sur 311 \'etudiants ;
+    \item{} Moyenne \textbf{8,7/10}, top 2\,\% sur 311 \'etudiants ;
             Prix Haute Performance Acad\'emique UPV.
     \item{} Semestre Erasmus \`a Politechnika Krakowska (Cracovie).
 \end{cvbulletsformation}
@@ -622,10 +647,12 @@ Environment: `cvbulletsformation` (►).
 
 Environment: `cvbullets` (►).
 
+**Title pattern** and **Subtitle pattern**: see `modes/writing.md §19`. No tools in the subtitle; tools go in bullets only.
+
 ```latex
 \section*{Projets \& Innovation}
 
-\cventryprojet{Simulation supply chain H$_2$ · Air Liquide}
+\cventryprojet{Simulation supply chain H$_2$, Air Liquide}
               {ST7 Optimisation et gestion de flux, CentraleSup\'elec}
               {avr. 2026}
 \begin{cvbullets}
@@ -648,7 +675,7 @@ Environment: `cvbullets` (►).
             co\^ut, carbone et r\'eglementaire (loi AGEC 2024).
 \end{cvbullets}
 
-\cventryprojet{Diagnostic op\'erationnel · Veganic}
+\cventryprojet{Diagnostic op\'erationnel, Veganic}
               {Am\'elioration des op\'erations d'une PME agro-chimique}
               {f\'ev. -- juin 2025}
 \begin{cvbullets}
@@ -673,8 +700,8 @@ Use `\cventrycontest` (same 3-arg structure as `\cventryprojet`) and `cvbulletsc
 ```latex
 \section*{Concours \& Hackathons}
 
-\cventrycontest{1\textsuperscript{er} Prix · Programme Akademia}
-               {Fondation Bankinter · Hackathon national, 80 \'equipes}
+\cventrycontest{1\textsuperscript{er} Prix, Programme Akademia}
+               {Fondation Bankinter, Hackathon national, 80 \'equipes}
                {f\'ev. 2025}
 \begin{cvbulletscontest}
     \item{} Conception d'un mod\`ele MCDA \'evaluant \textbf{36\,000+}
@@ -684,8 +711,8 @@ Use `\cventrycontest` (same 3-arg structure as `\cventryprojet`) and `cvbulletsc
             canal de distribution, \'economies unitaires, roadmap produit.
 \end{cvbulletscontest}\vspace{4pt}
 
-\cventrycontest{Finalist · Case Competition Name}
-               {Organizer · Category}
+\cventrycontest{Finalist, Case Competition Name}
+               {Organizer, Category}
                {nov. 2024}
 \begin{cvbulletscontest}
     \item{} One-line achievement with a verifiable metric.
@@ -696,12 +723,7 @@ Use `\cventrycontest` (same 3-arg structure as `\cventryprojet`) and `cvbulletsc
 
 ### 7.10 Hobbies (optional section)
 
-Include only if:
-- (a) The hobby directly connects to the role or company culture, or
-- (b) The CV does not fill the page.
-
-✗ `Centres d'intérêt : musique, voyages, sport.`  
-✓ `Voile compétitive · classé régional. Contributeur open source (github.com/…).`
+Apply Hobbies inclusion criteria and format from `modes/writing.md §10`.
 
 </sections>
 
@@ -727,7 +749,7 @@ IF any of these is not immediately visible → reorganise the visual hierarchy.
 1. Does it fit on 1 A4 page without reducing font size or margins?
 2. Do all dates follow `{mon. YYYY -- mon. YYYY}`?
 3. Do all `\cventry` commands have 4 arguments with location in `#4`?
-4. Are there any em-dashes (`---`) anywhere in the document (titles, bullets, paragraphs)? → replace with `·` or rephrase.
+4. Are there any em-dashes (`---`) or `·` anywhere in the document content (titles, bullets, paragraphs)? → replace with a comma or rephrase. The only permitted `·` is the structural one inside `\cventry` between company and post.
 5. Are the 5 elements of the scan test §8.1 immediately visible?
 6. Is the active palette the confirmed one? Are the other three commented out?
 7. Does the file include `\pdfgentounicode=1` after `\pagestyle{empty}`?
