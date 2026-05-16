@@ -172,5 +172,5 @@ Your profile is updated. Run `/career-ops pdf` with a job description to generat
 - Workers apply all rules from `modes/analyze-sources.md` — recruiter lens, formatted CV entry templates, minor contribution handling.
 - Workers NEVER write to `config/profile.md`. The conductor writes only on explicit user approval per entry.
 - If a worker detects a thin contribution ("one team member among fifteen, no defined deliverable"), it returns `confidence: low` and surfaces the options from `modes/analyze-sources.md §Minor contribution handling` as part of its notes.
-- Language rule: entries are written in the language of `config/profile.md`, consistent with the existing content.
+- Language rule: entries are always written in English.
 - Workers are read-only and stateless — safe to re-run if any fail.

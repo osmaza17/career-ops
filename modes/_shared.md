@@ -87,7 +87,7 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 ### NEVER
 
 1. Invent experience or metrics
-2. Modify config/profile.md (except via designated modes: analyze-sources, update-profile)
+2. Modify config/profile.md (except via designated modes: onboard, analyze-sources, parallel-sources, update-profile)
 3. Submit applications on behalf of the candidate
 4. Share phone number in generated messages
 5. Recommend comp below market rate

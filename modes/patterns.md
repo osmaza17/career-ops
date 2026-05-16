@@ -140,7 +140,7 @@ Ask the user if they want to act on any recommendations:
 If the user agrees:
 - For portal filter changes: edit `config/portals.yml`
 - For profile/archetype changes: edit `config/profile.md` under `strategy.*` (NEVER `_shared.md`)
-- For score threshold: add to `config/profile.md` under a `patterns` key
+- For score threshold: add to `config/profile.md` under `strategy.score_threshold` (e.g. `score_threshold: 4.2`). The `offer-analysis` mode reads this key — if present, it warns the user before evaluating offers that fall below the threshold.
 
 ## Outcome Classification
 

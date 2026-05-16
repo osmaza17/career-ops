@@ -4,6 +4,8 @@ When the candidate pastes an offer (text or URL), ALWAYS deliver all 7 blocks (A
 
 ## Step 0 — Archetype Detection
 
+Check `config/profile.md` for `strategy.score_threshold`. If set, note the user's data-driven minimum score — surface a warning at the end of the evaluation if the final score falls below it.
+
 Classify the offer into one of the 6 archetypes (see `_shared.md`). If hybrid, indicate the 2 closest. This determines:
 - Which proof points to prioritize in block B
 - How to rewrite the summary in block E
