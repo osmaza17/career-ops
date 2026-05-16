@@ -21,11 +21,7 @@ npx playwright install chromium   # Required for job liveness checking
 
 Start a session and the agent will guide you through the full setup interactively using the `onboard` mode — it collects your identity, target roles, narrative, compensation, and languages via a structured interview, then builds the trajectory corpus (education, experience, projects) either from documents in `sources/` or through conversation.
 
-If you prefer to set it up manually:
-```bash
-cp templates/profile.template.md config/profile.md
-```
-Then fill in the YAML frontmatter and the markdown body sections.
+If you prefer to set it up manually, create `config/profile.md` with your YAML frontmatter and markdown body sections (see `config/profile.md` in the onboarding flow for the format).
 
 ### 3. Generate your CV
 
@@ -41,14 +37,10 @@ Once `config/profile.md` is complete, it IS your CV — there is no intermediate
 
 ### 4. Configure portals
 
-```bash
-cp templates/portals.template.yml config/portals.yml
-```
-
-Edit `config/portals.yml`:
-- Update `title_filter.positive` with keywords matching your target roles
-- Add companies you want to track in `tracked_companies`
-- Customize `search_queries` for your preferred job boards
+Run `/career-ops scan` to set up the job portal scanner. It will create `config/portals.yml` with:
+- `title_filter.positive` keywords matching your target roles
+- Companies you want to track in `tracked_companies`
+- Customizable `search_queries` for your preferred job boards
 
 ### 5. Start using
 

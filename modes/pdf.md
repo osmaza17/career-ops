@@ -1,89 +1,133 @@
 # Mode: pdf — CV PDF Generation
 
-PDF generation uses LaTeX. Execute the full pipeline from `modes/latex.md`.
+<purpose>
+Generate a tailored PDF CV for a target role. Defaults to LaTeX; offers Canva when a design ID is configured.
+</purpose>
 
-## Canva CV Generation (optional)
+<rules>
+- NEVER invent metrics, keywords, or experience not present in `config/profile.md`
+- Canva text replacements MUST stay within ±15% of the original character count (fixed-size text boxes)
+- NEVER commit a Canva transaction without explicit user approval
+- Download the export URL immediately — pre-signed S3 links expire in ~2 hours
+- After generation, update the tracker: flip PDF column from ❌ to ✅ if the offer is already registered
+</rules>
 
-If `config/profile.md` has `cv.canva_resume_design_id` set, offer the user a choice before generating:
-- **"LaTeX/PDF (fast, ATS-optimized)"** — default flow above
-- **"Canva CV (visual, design-preserving)"** — flow below
+---
 
-If the user has no `cv.canva_resume_design_id`, skip this prompt and use the LaTeX flow.
+## LaTeX Flow (default)
 
-### Canva workflow
+<agent_instruction>
+Execute the full LaTeX pipeline defined in `modes/latex.md`. Use this path unless the user explicitly requests Canva or `cv.canva_resume_design_id` is set in `config/profile.md`.
+</agent_instruction>
 
-#### Step 1 — Duplicate the base design
+---
 
-a. `export-design` the base design (using `cv.canva_resume_design_id`) as PDF → get download URL
-b. `import-design-from-url` using that download URL → creates a new editable design (the duplicate)
-c. Note the new `design_id` for the duplicate
+## Canva Flow (optional)
 
-#### Step 2 — Read the design structure
+<agent_instruction>
+Check `config/profile.md` for `cv.canva_resume_design_id`. If absent, skip to LaTeX. If present, ask:
+</agent_instruction>
 
-a. `get-design-content` on the new design → returns all text elements (richtexts) with their content
-b. Map text elements to CV sections by content matching:
-   - Look for the candidate's name → header section
-   - Look for "Summary" or "Professional Summary" → summary section
-   - Look for company names from the `experience[].company` array in `config/profile.md` → experience sections
-   - Look for degree/school names → education section
-   - Look for skill keywords → skills section
-c. If mapping fails, show the user what was found and ask for guidance
+<user_prompt>
+Which CV format would you like?
+1. LaTeX/PDF — fast, ATS-optimized (default)
+2. Canva CV — visual, design-preserving
+</user_prompt>
 
-#### Step 3 — Generate tailored content
+<process>
 
-Same content generation as the LaTeX flow:
+<step id="1" name="Duplicate base design">
+
+- `export-design` the base design (`cv.canva_resume_design_id`) as PDF → get download URL
+- `import-design-from-url` with that URL → creates editable duplicate
+- Record the new `design_id`
+
+<validation>
+If `import-design-from-url` fails → fall back to LaTeX pipeline and notify user.
+</validation>
+</step>
+
+<step id="2" name="Map design structure">
+
+- `get-design-content` on the duplicate → returns all richtext elements
+- Map elements to CV sections by content matching:
+  - Candidate name → header
+  - "Summary" / "Professional Summary" → summary
+  - Company names from `experience[].company` → experience sections
+  - Degree/school names → education
+  - Skill keywords → skills
+- Record character count for each element (needed for budget enforcement in Step 3)
+
+<validation>
+If mapping fails → show user what was found and ask for manual guidance.
+</validation>
+</step>
+
+<step id="3" name="Generate tailored content">
+
+<agent_instruction>
+Apply the same tailoring logic as the LaTeX flow:
 - Rewrite Professional Summary with JD keywords + exit narrative
 - Reorder experience bullets by JD relevance
-- Select top competencies from JD requirements
-- Inject keywords naturally (NEVER invent)
+- Select top competencies matching JD requirements
+- Inject keywords naturally
 
-**IMPORTANT — Character budget rule:** Each replacement text MUST be approximately the same length as the original text it replaces (within ±15% character count). If tailored content is longer, condense it. The Canva design has fixed-size text boxes — longer text causes overlapping with adjacent elements. Count the characters in each original element from Step 2 and enforce this budget when generating replacements.
+Enforce character budget: each replacement MUST be within ±15% of the original element's character count (recorded in Step 2). Condense if over budget.
+</agent_instruction>
+</step>
 
-#### Step 4 — Apply edits
+<step id="4" name="Apply edits and verify layout">
 
-a. `start-editing-transaction` on the duplicate design
-b. `perform-editing-operations` with `find_and_replace_text` for each section:
-   - Replace summary text with tailored summary
-   - Replace each experience bullet with reordered/rewritten bullets
-   - Replace competency/skills text with JD-matched terms
-   - Replace project descriptions with top relevant projects
-c. **Reflow layout after text replacement:**
-   After applying all text replacements, the text boxes auto-resize but neighboring elements stay in place. This causes uneven spacing between work experience sections. Fix this:
-   1. Read the updated element positions and dimensions from the `perform-editing-operations` response
-   2. For each work experience section (top to bottom), calculate where the bullets text box ends: `end_y = top + height`
-   3. The next section's header should start at `end_y + consistent_gap` (use the original gap from the template, typically ~30px)
-   4. Use `position_element` to move the next section's date, company name, role title, and bullets elements to maintain even spacing
-   5. Repeat for all work experience sections
-d. **Verify layout before commit:**
-   - `get-design-thumbnail` with the transaction_id and page_index=1
-   - Visually inspect the thumbnail for: text overlapping, uneven spacing, text cut off, text too small
-   - If issues remain, adjust with `position_element`, `resize_element`, or `format_text`
-   - Repeat until layout is clean
-d. Show the user the final preview and ask for approval
-e. `commit-editing-transaction` to save (ONLY after user approval)
+a. `start-editing-transaction` on the duplicate
+b. `perform-editing-operations` — `find_and_replace_text` for each section (summary, experience bullets, skills, projects)
+c. **Reflow layout** after replacements:
+   - Read updated element positions/dimensions from the operation response
+   - For each experience section top-to-bottom: `end_y = top + height`
+   - Move next section's elements to `end_y + original_gap` (typically ~30px) using `position_element`
+d. **Verify layout** — `get-design-thumbnail` (page_index=1); check for overlapping text, uneven spacing, cut-off text; fix with `position_element` / `resize_element` / `format_text` until clean
 
-#### Step 5 — Export and download PDF
+<validation>
+Show the user the final preview thumbnail.
+</validation>
 
-a. `export-design` the duplicate as PDF (format: a4 or letter based on JD location)
-b. **IMMEDIATELY** download the PDF using Bash:
-   ```bash
-   curl -sL -o "output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf" "{download_url}"
-   ```
-   The export URL is a pre-signed S3 link that expires in ~2 hours. Download it right away.
-c. Verify the download:
-   ```bash
-   file output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf
-   ```
-   Must show "PDF document". If it shows XML or HTML, the URL expired — re-export and retry.
-d. Report: PDF path, file size, Canva design URL (for manual tweaking)
+<user_prompt>
+Here's the preview. Does this look good? I'll save it once you confirm.
+</user_prompt>
 
-#### Error handling
+e. `commit-editing-transaction` — ONLY after user approval
 
-- If `import-design-from-url` fails → fall back to LaTeX pipeline with message
-- If text elements can't be mapped → warn user, show what was found, ask for manual mapping
-- If `find_and_replace_text` finds no matches → try broader substring matching
-- Always provide the Canva design URL so the user can edit manually if auto-edit fails
+<validation>
+If `find_and_replace_text` finds no matches → try broader substring matching. Always provide the Canva design URL so the user can edit manually if auto-edit fails.
+</validation>
+</step>
 
-## Post-generation
+<step id="5" name="Export and download PDF">
 
-Update tracker if the offer is already registered: change PDF from ❌ to ✅.
+a. `export-design` the duplicate as PDF (format: `a4` or `letter` based on JD location)
+b. Download immediately:
+
+```bash
+curl -sL -o "output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf" "{download_url}"
+```
+
+c. Verify:
+
+```bash
+file output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf
+```
+
+Must show "PDF document". If XML/HTML → URL expired; re-export and retry.
+
+</step>
+
+</process>
+
+<output>
+- `output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf`
+- Canva design URL (for manual tweaking)
+- File size confirmation
+</output>
+
+<completion>
+PDF saved to `output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf` ({size}). Canva design: {url} — open it anytime for manual adjustments.
+</completion>

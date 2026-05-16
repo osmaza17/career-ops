@@ -1,25 +1,26 @@
 # Mode: batch — Mass Processing of Jobs
 
-Two usage modes: **conductor --chrome** (navigates portals in real time) or **standalone** (script for URLs already collected).
+<purpose>
+Process multiple job postings in parallel using a conductor–worker architecture. Two sub-modes: **Mode A: Conductor --chrome** (navigates portals live via browser) and **Mode B: Standalone** (script-driven from a pre-collected URL list).
+</purpose>
+
+<rules>
+- Always run `node merge-tracker.mjs` as the final step of any batch run.
+- Workers operate in headless mode — use the correct CLI command from the **Headless / Batch Mode** table in `AGENTS.md`.
+- Never edit `applications.md` directly to add new entries — write TSV lines to `batch/tracker-additions/` and let `merge-tracker.mjs` handle the merge.
+- Each worker is self-contained with its own 200K token context; conductor only orchestrates.
+- Evaluation logic follows `modes/offer-analysis.md` — do not duplicate it here.
+</rules>
 
 ## Architecture
 
 ```text
 Conductor (headed browser mode)
   │
-  │  Chrome: navigates portals (logged-in sessions)
-  │  Reads DOM directly — the user sees everything in real time
-  │
-  ├─ Job 1: reads JD from DOM + URL
-  │    └─► headless worker → report .md + PDF + tracker-line
-  │
-  ├─ Job 2: click next, read JD + URL
-  │    └─► headless worker → report .md + PDF + tracker-line
-  │
+  ├─ Job 1: reads JD from DOM + URL → headless worker → report .md + PDF + tracker-line
+  ├─ Job 2: click next, read JD + URL → headless worker → report .md + PDF + tracker-line
   └─ End: merge tracker-additions → applications.md + summary
 ```
-
-Each worker is a headless child process with a clean 200K token context. The conductor only orchestrates. See the **Headless / Batch Mode** table in `AGENTS.md` for the correct command per CLI.
 
 ## Files
 
@@ -35,25 +36,42 @@ batch/
 
 ## Mode A: Conductor --chrome
 
-1. **Read state**: `batch/batch-state.tsv` → identify what has already been processed
-2. **Navigate portal**: Chrome → search URL
-3. **Extract URLs**: Read results DOM → extract URL list → append to `batch-input.tsv`
-4. **For each pending URL**:
-   a. Chrome: click on the job → read JD text from the DOM
-   b. Save JD to `/tmp/batch-jd-{id}.txt`
-   c. Calculate next sequential REPORT_NUM
-   d. Execute via Bash:
+<process>
 
-      ```bash
-      # Use your CLI's headless command (see AGENTS.md — Headless / Batch Mode)
-      <headless-cmd> "Process this job. URL: {url}. JD: /tmp/batch-jd-{id}.txt. Report: {num}. ID: {id}"
-      ```
+<step id="1" name="Read state">
+<agent_instruction>Read `batch/batch-state.tsv` to identify already-processed jobs and skip them.</agent_instruction>
+</step>
 
-   e. Update `batch-state.tsv` (completed/failed + score + report_num)
-   f. Log to `logs/{report_num}-{id}.log`
-   g. Chrome: go back → next job
-5. **Pagination**: If no more jobs → click "Next" → repeat
-6. **End**: Run `node merge-tracker.mjs` to merge all tracker additions into `applications.md`. Then output a summary (jobs processed, scores, reports written).
+<step id="2" name="Navigate and extract">
+<agent_instruction>Open Chrome → navigate to search URL → read results DOM → extract URL list → append new URLs to `batch-input.tsv`.</agent_instruction>
+</step>
+
+<step id="3" name="Process each pending URL">
+<agent_instruction>
+For each pending URL:
+a. Chrome: click job → read JD text from DOM
+b. Save JD to `/tmp/batch-jd-{id}.txt`
+c. Calculate next sequential REPORT_NUM
+d. Execute headless worker via Bash (use CLI command from `AGENTS.md`):
+   ```bash
+   <headless-cmd> "Process this job. URL: {url}. JD: /tmp/batch-jd-{id}.txt. Report: {num}. ID: {id}"
+   ```
+e. Update `batch-state.tsv` (status + score + report_num)
+f. Log to `logs/{report_num}-{id}.log`
+g. Chrome: go back → next job
+</agent_instruction>
+</step>
+
+<step id="4" name="Pagination">
+<agent_instruction>When results are exhausted, click "Next" and repeat Step 3.</agent_instruction>
+</step>
+
+<step id="5" name="Finalize">
+<agent_instruction>Run `node merge-tracker.mjs` to merge all tracker additions into `applications.md`.</agent_instruction>
+<user_prompt>Batch complete. {N} jobs processed. Summary: [table of company / score / report link]</user_prompt>
+</step>
+
+</process>
 
 ## Mode B: Standalone script
 
@@ -68,48 +86,46 @@ Options:
 - `--parallel N` — N workers in parallel
 - `--max-retries N` — attempts per job (default: 2)
 
+<agent_instruction>After `batch-runner.sh` completes, the user must run `node merge-tracker.mjs` manually. Remind them if they forget.</agent_instruction>
+
 ## batch-state.tsv Format
 
+<format>
 ```text
 id	url	status	started_at	completed_at	report_num	score	error	retries
 1	https://...	completed	2026-...	2026-...	002	4.2	-	0
 2	https://...	failed	2026-...	2026-...	-	-	Error msg	1
 3	https://...	pending	-	-	-	-	-	0
 ```
-
-## End of batch (both modes)
-
-Always run as the final step:
-
-```bash
-node merge-tracker.mjs
-```
-
-This merges all `batch/tracker-additions/*.tsv` files into `applications.md`. If skipped, tracker additions are orphaned and `applications.md` will be out of date. For Mode A the conductor runs this; for Mode B the user runs it after `batch-runner.sh` completes.
-
-## Resumability
-
-- If it crashes → re-run → reads `batch-state.tsv` → skip completed jobs
-- Lock file (`batch-runner.pid`) prevents double execution
-- Each worker is independent: failure in job #47 does not affect the others
+</format>
 
 ## Workers (headless mode)
 
-Each worker receives `batch-prompt.md` as a system prompt. It is self-contained. Use your CLI's headless command — see the **Headless / Batch Mode** table in `AGENTS.md`.
+<agent_instruction>Each worker receives `batch-prompt.md` as system prompt. It is self-contained — use the headless CLI command from `AGENTS.md`.</agent_instruction>
 
-The worker produces:
-1. `.md` report in `reports/`
-2. PDF in `output/`
-3. Tracker line in `batch/tracker-additions/{id}.tsv`
+<output>
+Each worker produces:
+1. `.md` report → `reports/`
+2. PDF → `output/`
+3. Tracker TSV line → `batch/tracker-additions/{id}.tsv`
 4. Result JSON via stdout
+</output>
 
-## Error handling
+## Resumability
+
+<agent_instruction>
+- On crash/restart: re-read `batch-state.tsv` → skip completed jobs automatically.
+- Lock file (`batch-runner.pid`) prevents double execution.
+- Worker failures are isolated — job #47 failing does not affect others.
+</agent_instruction>
+
+## Error Handling
 
 | Error | Recovery |
 |-------|----------|
-| URL inaccessible | Worker fails → conductor marks `failed`, continues |
-| JD behind login | Conductor attempts to read DOM. If it fails → `failed` |
-| Portal changes layout | Conductor reasons about HTML, adapts |
-| Worker crashes | Conductor marks `failed`, continues. Retry with `--retry-failed` |
-| Conductor crashes | Re-run → reads state → skip completed jobs |
-| PDF fails | .md report is saved. PDF remains pending |
+| URL inaccessible | Worker fails → mark `failed`, continue |
+| JD behind login | Conductor reads DOM; if fails → mark `failed` |
+| Portal layout change | Conductor reasons about HTML and adapts |
+| Worker crashes | Mark `failed`, continue; retry with `--retry-failed` |
+| Conductor crashes | Re-run → reads state → skips completed |
+| PDF fails | `.md` report saved; PDF remains pending |

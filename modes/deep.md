@@ -1,32 +1,55 @@
 # Mode: deep — Deep Research Prompt
 
-## Language
+<purpose>
+Generate a structured research prompt the user can paste into Perplexity, Claude, or ChatGPT to investigate a company and role before an interview or application decision. Output is user-facing; language follows the user, not the JD.
+</purpose>
 
-This mode is **user-facing**: the output is a research doc the user reads, not content sent to the company. Override the shared "language of the JD (EN default)" rule and resolve output language in this order:
-
-1. **User prompt language** — if the surrounding chat is in a non-English language, emit the doc in that language.
-2. **JD language** — only as a last resort when the user prompt has no language signal (e.g., a bare URL).
+<rules>
+- Output language: user-prompt language first; JD language only when the user gives no language signal (e.g. bare URL).
+- Never add commentary around the prompt — output it directly as a clean markdown block.
+- Never hardcode metrics or profile data — read candidate context from `config/profile.md` at generation time.
+- Replace every `[placeholder]` with actual values from the JD before emitting.
+</rules>
 
 ---
 
 ## Step 1 — Detect context
 
-Before generating the prompt, identify from the JD and company name:
+<process>
 
-| Signal | What to detect |
-|--------|---------------|
+<phase id="1" name="Context detection">
+
+<agent_instruction>
+Before generating the prompt, detect the following signals from the JD and company name to adapt the sector-specific axes:
+</agent_instruction>
+
+<reference id="context-signals">
+
+| Signal | Values |
+|--------|--------|
 | **Sector** | consulting · industrial/manufacturing · logistics/supply chain · finance/banking · energy/utilities · engineering services · tech/software · healthcare/pharma · public sector · other |
 | **Company type** | listed · private · PE-backed · startup · public institution |
 | **Role type** | analyst/consultant · engineer (civil/industrial/process) · operations · data/quantitative · product · other |
 
-Use this to adapt axis 1 (sector lens) and axis 4 (operations and culture questions).
+</reference>
+
+<agent_instruction>
+Use detected sector to adapt Axis 1 (sector lens) and Axis 4 (operations and culture). Inject the matching block from the `<reference id="sector-adapters">` table below.
+</agent_instruction>
+
+</phase>
 
 ---
 
 ## Step 2 — Generate the research prompt
 
-Output a structured prompt the user can paste into Perplexity, Claude, or ChatGPT:
+<phase id="2" name="Prompt generation">
 
+<output>
+Emit the following prompt, fully filled in, as a clean markdown block:
+</output>
+
+<format>
 ```
 ## Deep Research: [Company] — [Role]
 
@@ -38,7 +61,7 @@ I need actionable information for the interview and to assess fit.
 - What is its size? (employees, revenue, market cap or valuation if known)
 - Who owns it? (listed, private equity, family-controlled, public institution)
 - What markets or geographies does it operate in?
-[SECTOR ADAPTER — see §Sector-specific questions below]
+[SECTOR ADAPTER — inject from §Sector-specific questions, Axis 1]
 
 ### 2. Strategic direction
 - What are the company's stated priorities for the next 2–3 years?
@@ -58,7 +81,7 @@ I need actionable information for the interview and to assess fit.
 - What is the office/remote/hybrid policy?
 - What is the typical career trajectory from this type of role?
 - What is the management style — hierarchical, flat, autonomous?
-[SECTOR ADAPTER — see §Sector-specific questions below]
+[SECTOR ADAPTER — inject from §Sector-specific questions, Axis 4]
 
 ### 5. Challenges and pressures
 - What are the main business pressures this company faces right now?
@@ -79,115 +102,49 @@ Given my profile (read from config/profile.md for specific experience):
 - What story should I tell in the interview?
 - What gaps or objections should I prepare for?
 ```
+</format>
+
+</phase>
+
+</process>
 
 ---
 
 ## Sector-specific questions
 
-Inject into **Axis 1** and **Axis 4** based on the detected sector. Replace the `[SECTOR ADAPTER]` placeholder with the relevant block below.
+<reference id="sector-adapters">
+Inject the matching block into `[SECTOR ADAPTER]` placeholders in Axis 1 and Axis 4.
 
 ### Consulting / Professional services
-**Axis 1 addition:**
-- What are their main practice areas and which are growing?
-- Who are their key clients — by sector, size, or name if known?
-- How do they differentiate from other firms at their tier?
-- What is their staffing model — generalist, specialist, or hybrid?
-
-**Axis 4 addition:**
-- What is the typical utilization rate and travel expectation?
-- Up-or-out culture or more stable progression?
-
----
+**Axis 1:** What are their main practice areas and which are growing? · Key clients by sector or name? · How do they differentiate at their tier? · Staffing model — generalist, specialist, or hybrid?
+**Axis 4:** Typical utilization rate and travel expectation? · Up-or-out culture or stable progression?
 
 ### Industrial / Manufacturing
-**Axis 1 addition:**
-- What do they produce and where? What is their production footprint?
-- What is their supply chain structure — vertically integrated or outsourced?
-- What are their key inputs and how exposed are they to commodity price risk?
-- What are their sustainability or decarbonization commitments?
-
-**Axis 4 addition:**
-- Is the role site-based, plant-based, or office-based?
-- What is the typical interface between the role and production operations?
-
----
+**Axis 1:** What do they produce and where? Production footprint? · Supply chain — vertically integrated or outsourced? · Exposure to commodity price risk? · Sustainability / decarbonization commitments?
+**Axis 4:** Site-based, plant-based, or office-based? · Interface between this role and production operations?
 
 ### Logistics / Supply Chain
-**Axis 1 addition:**
-- What logistics services do they offer — freight, warehousing, last-mile, 4PL?
-- What is their network structure (hubs, depots, routes)?
-- How tech-enabled are their operations — WMS, TMS, automation?
-- What is their exposure to e-commerce vs. industrial/B2B flows?
-
-**Axis 4 addition:**
-- Is the role operations-facing or more analytical/strategic?
-- What is the typical mix of client-facing vs. internal work?
-
----
+**Axis 1:** Services offered — freight, warehousing, last-mile, 4PL? · Network structure (hubs, depots, routes)? · Tech stack — WMS, TMS, automation? · E-commerce vs. industrial/B2B exposure?
+**Axis 4:** Operations-facing or analytical/strategic? · Mix of client-facing vs. internal work?
 
 ### Finance / Banking
-**Axis 1 addition:**
-- What products or services do they offer — retail, corporate, investment, asset management?
-- What is their regulatory environment and key compliance exposure?
-- What is their risk appetite and recent credit/market performance?
-- Are they growing organically or through M&A?
-
-**Axis 4 addition:**
-- What is the desk/team structure for this role?
-- What is the regulatory and compliance workload for someone in this role?
-
----
+**Axis 1:** Products — retail, corporate, investment, asset management? · Regulatory environment and compliance exposure? · Risk appetite and recent performance? · Organic growth or M&A?
+**Axis 4:** Desk/team structure for this role? · Regulatory and compliance workload?
 
 ### Energy / Utilities
-**Axis 1 addition:**
-- What is their energy mix — fossil, renewable, nuclear, hybrid?
-- What is their exposure to energy transition regulation (EU taxonomy, carbon markets)?
-- What major infrastructure projects are underway?
-- How exposed are they to commodity price and regulatory risk?
-
-**Axis 4 addition:**
-- Is the role project-based, operational, or strategic?
-- What is the typical interface between this role and field/plant operations?
-
----
+**Axis 1:** Energy mix — fossil, renewable, nuclear, hybrid? · Exposure to energy transition regulation (EU taxonomy, carbon markets)? · Major infrastructure projects underway? · Commodity price and regulatory risk?
+**Axis 4:** Project-based, operational, or strategic role? · Interface with field/plant operations?
 
 ### Engineering services / Technical consulting
-**Axis 1 addition:**
-- What sectors do they serve and what is their technical specialisation?
-- Do they do design, project management, or both?
-- What is their typical project size and duration?
-- What software tools and methods are standard in their practice?
-
-**Axis 4 addition:**
-- What is the typical split between client-site and office work?
-- What certifications or norms are relevant for this team?
-
----
+**Axis 1:** Sectors served and technical specialisation? · Design, project management, or both? · Typical project size and duration? · Standard software tools and methods?
+**Axis 4:** Split between client-site and office work? · Relevant certifications or norms for this team?
 
 ### Tech / Software
-**Axis 1 addition:**
-- What is their core product and what problem does it solve?
-- What is their tech stack at a high level?
-- Do they have an engineering blog or public talks? What do they publish?
-- What is their AI/ML adoption — core to product, supporting, or exploratory?
-
-**Axis 4 addition:**
-- How do they ship — deploy cadence, CI/CD practices?
-- Remote-first or office-first culture for the engineering team?
-
----
+**Axis 1:** Core product and problem solved? · High-level tech stack? · Engineering blog or public talks? · AI/ML adoption — core to product, supporting, or exploratory?
+**Axis 4:** Deploy cadence, CI/CD practices? · Remote-first or office-first for engineering?
 
 ### Other / Unknown sector
-**Axis 1 addition:**
-- What is the company's primary value creation mechanism?
-- What are their key assets, capabilities, or relationships?
-- What would make this company hard to replace in its market?
+**Axis 1:** Primary value creation mechanism? · Key assets, capabilities, or relationships? · What makes this company hard to replace in its market?
+**Axis 4:** What does a typical week look like in this role?
 
-**Axis 4 addition:**
-- What does a typical week look like for someone in this role?
-
----
-
-## Output format
-
-Emit the filled-in research prompt as a clean markdown block the user can copy and paste. Customise every `[placeholder]` with the actual values from the JD. Do not add commentary around the prompt — just output it directly.
+</reference>

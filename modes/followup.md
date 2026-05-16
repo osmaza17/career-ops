@@ -1,116 +1,168 @@
 # Mode: followup -- Follow-up Cadence Tracker
 
-## Purpose
-
+<purpose>
 Track follow-up cadence for active applications. Flag overdue follow-ups, extract contacts from notes, and generate tailored follow-up email/LinkedIn drafts using report context.
+</purpose>
 
-## Inputs
+<rules>
+- Never record a follow-up draft as sent — only record ones the user confirms they sent.
+- Never generate another follow-up for cold entries (followupCount >= 2); suggest closing instead.
+- Never use "just checking in", "just following up", "touching base", or "circling back" in any draft.
+- Lead with value, not with the ask. Keep all email drafts under 150 words.
+- Read candidate name, proof points, and identity from `config/profile.md` at draft time — never hardcode.
+</rules>
 
-- `data/applications.md` — Application tracker
-- `data/follow-ups.md` — Follow-up history (created on first use)
-- `reports/` — Evaluation reports (for context in drafts)
-- `config/profile.md` — User profile (name, identity)
-- `config/profile.md` — CV sections and proof points for drafts
+<reference id="inputs">
 
-## Step 1 — Run Cadence Script
+| File | Purpose |
+|------|---------|
+| `data/applications.md` | Application tracker |
+| `data/follow-ups.md` | Follow-up history (created on first use) |
+| `reports/` | Evaluation reports (for company context in drafts) |
+| `config/profile.md` | Identity, proof points, CV sections |
 
-Execute:
+</reference>
 
-```bash
-node followup-cadence.mjs
-```
+<reference id="cadence-rules">
 
-Parse the JSON output. It contains:
+| Status | First follow-up | Subsequent | Max attempts |
+|--------|----------------|------------|-------------|
+| Applied | 7 days after application | Every 7 days | 2 (then mark cold) |
+| Responded | 1 day (urgent reply) | Every 3 days | No limit |
+| Interview | 1 day after (thank-you) | Every 3 days | No limit |
 
-| Key | Contents |
-|-----|----------|
-| `metadata` | Analysis date, total tracked, actionable count, overdue/urgent/cold/waiting counts |
-| `entries` | Per-application: company, role, status, days since application, follow-up count, urgency, next follow-up date, extracted contacts, report path |
-| `cadenceConfig` | Cadence rules (applied: 7 days, responded: 3 days, interview: 1 day) |
+Defaults can be overridden via `node followup-cadence.mjs --applied-days N`.
 
-If no actionable entries, tell the user:
-> "No active applications to follow up on. Apply to some roles first with `/career-ops` and come back when they're aging."
+</reference>
 
-## Step 2 — Display Dashboard
+<reference id="urgency-indicators">
 
-Show a cadence dashboard sorted by urgency (urgent > overdue > waiting > cold):
+| Label | Meaning |
+|-------|---------|
+| **URGENT** | Company replied — respond within 24 hours |
+| **OVERDUE** | Follow-up is past due |
+| **waiting (X days)** | On track, follow-up scheduled |
+| **COLD** | 2+ follow-ups sent, suggest closing |
 
+</reference>
+
+---
+
+## Process
+
+<process>
+
+<step id="1" name="Run Cadence Script">
+
+<agent_instruction>
+Execute `node followup-cadence.mjs` and parse the JSON output.
+
+Key fields in the output:
+- `metadata` — analysis date, total tracked, actionable/overdue/urgent/cold/waiting counts
+- `entries` — per-application: company, role, status, days since application, followup count, urgency, next follow-up date, extracted contacts, report path
+- `cadenceConfig` — active cadence rules
+</agent_instruction>
+
+<agent_instruction>
+If no actionable entries exist, stop and show:
+</agent_instruction>
+
+<user_prompt>
+No active applications to follow up on. Apply to some roles first with `/career-ops` and come back when they're aging.
+</user_prompt>
+
+</step>
+
+<step id="2" name="Display Dashboard">
+
+<agent_instruction>
+Show a cadence dashboard sorted by urgency (urgent > overdue > waiting > cold). Use urgency indicators from `<reference id="urgency-indicators">`.
+</agent_instruction>
+
+<format>
 ```
 Follow-up Cadence Dashboard — {date}
 {N} applications tracked, {N} actionable
 
 | # | Company | Role | Status | Days | Follow-ups | Next | Urgency | Contact |
 ```
+</format>
 
-Use visual indicators:
-- **URGENT** — respond within 24 hours (company replied)
-- **OVERDUE** — follow-up is past due
-- **waiting (X days)** — on track, follow-up scheduled
-- **COLD** — 2+ follow-ups sent, suggest closing
+</step>
 
-## Step 3 — Generate Follow-up Drafts
+<step id="3" name="Generate Follow-up Drafts">
 
-For each **overdue** or **urgent** entry only:
+<agent_instruction>
+Generate drafts only for **overdue** or **urgent** entries. For each, read the linked report (`reportPath`) for company context and `config/profile.md` for proof points and candidate identity.
+</agent_instruction>
 
-1. Read the linked report (`reportPath` from JSON) for company context
-2. Read `config/profile.md` for proof points
-3. Read `config/profile.md` for candidate name and identity
+<section name="First follow-up (followupCount == 0)">
 
-### Email Follow-up Framework (first follow-up, followupCount == 0)
+<agent_instruction>
+Generate a 3–4 sentence email:
+1. Reference the specific role + application date.
+2. One concrete value-add from the report's Block B match or a proof point from `config/profile.md`. Quantify if possible.
+3. Soft ask + availability (offer a specific time window).
+4. (Optional) Brief mention of a relevant recent project or achievement.
 
-Generate a 3-4 sentence email:
+Also reference something specific to that company from report Block A.
+</agent_instruction>
 
-1. **Sentence 1:** Reference the specific role + when you applied. Be specific — mention the company name and role title.
-2. **Sentence 2:** One concrete value-add from the report's Block B match or a proof point from config/profile.md. Quantify if possible.
-3. **Sentence 3:** Soft ask + availability. Offer a specific time window ("this week" or "next Tuesday").
-4. **Sentence 4 (optional):** Brief mention of a relevant recent project or achievement.
+<format>
+```
+Subject: Re: {Role} — {Company}
 
-**Rules:**
-- Professional but warm, NOT desperate
-- **NEVER** use "just checking in", "just following up", "touching base", or "circling back"
-- Lead with value, not with the ask
-- Reference something specific to THAT company (from report Block A)
-- Keep under 150 words
-- Include a subject line
-- Use the candidate's name from `config/profile.md`
+Hi [contact name or "team"],
 
-**Example tone:**
-> Subject: Re: Supply Chain Analyst — Acme Logistics
->
-> Hi [contact name or "team"],
->
-> I submitted my application for the Supply Chain Analyst role on April 7th. I wanted to share that my recent discrete-event simulation project — delivering a zero-stockout fleet configuration for a real industrial client — closely mirrors the operational rigour described in the posting.
->
-> I'd welcome the chance to discuss how my background in optimisation and quantitative operations could contribute to your team. Would any time this week work for a brief conversation?
->
-> Best,
-> [Name]
+[Sentence 1: role + application date]
+[Sentence 2: specific value-add with quantification]
+[Sentence 3: soft ask + time window]
+[Optional Sentence 4: recent project/achievement]
 
-### LinkedIn Follow-up (if no email contact found)
+Best,
+[Name from config/profile.md]
+```
+</format>
 
-Reuse the contact framework: 3 sentences, 300 character max.
-- Hook specific to company → proof point → soft ask
-- Suggest the user run `/career-ops contact {company}` to find the right person first
+</section>
 
-### Second Follow-up (followupCount == 1)
+<section name="LinkedIn follow-up (no email contact found)">
 
-Shorter than first (2-3 sentences). Take a **new angle**:
-- Share a relevant insight, article, or project update
-- Don't repeat the first follow-up's content
-- Still reference the role specifically
+<agent_instruction>
+3 sentences, 300-character max. Structure: hook specific to company → proof point → soft ask.
+Suggest the user run `/career-ops contact {company}` to find the right person first.
+</agent_instruction>
 
-### Cold Application (followupCount >= 2)
+</section>
 
-Do NOT generate another follow-up. Instead suggest:
-> "This application has had {N} follow-ups with no response. Consider:
-> - Updating status to `Discarded` if the role seems filled
-> - Trying a different contact via `/career-ops contact`
-> - Keeping in `Applied` status but deprioritizing"
+<section name="Second follow-up (followupCount == 1)">
 
-## Step 4 — Present Drafts
+<agent_instruction>
+Shorter than the first (2–3 sentences). Take a new angle: share a relevant insight, article, or project update. Do not repeat the first follow-up's content. Still reference the role specifically.
+</agent_instruction>
 
-For each draft, show:
+</section>
 
+<section name="Cold application (followupCount >= 2)">
+
+<agent_instruction>
+Do not generate another follow-up draft. Show this message instead:
+</agent_instruction>
+
+<user_prompt>
+This application has had {N} follow-ups with no response. Consider:
+- Updating status to `Discarded` if the role seems filled
+- Trying a different contact via `/career-ops contact`
+- Keeping in `Applied` status but deprioritizing
+</user_prompt>
+
+</section>
+
+</step>
+
+<step id="4" name="Present Drafts">
+
+<format>
 ```
 ## Follow-up: {Company} — {Role} (#{num})
 
@@ -122,52 +174,55 @@ For each draft, show:
 
 {draft text}
 ```
+</format>
 
-## Step 5 — Record Follow-ups
+</step>
 
-After the user reviews and says they've sent a follow-up, record it:
+<step id="5" name="Record Follow-ups">
 
-1. If `data/follow-ups.md` doesn't exist, create it:
-   ```markdown
-   # Follow-up History
+<agent_instruction>
+Only record follow-ups the user confirms they actually sent.
 
-   | # | App# | Date | Company | Role | Channel | Contact | Notes |
-   |---|------|------|---------|------|---------|---------|-------|
-   ```
+If `data/follow-ups.md` doesn't exist, create it:
+</agent_instruction>
 
-2. Append a row with:
-   - `#` = next sequential number in the follow-ups table
-   - `App#` = application number from tracker
-   - `Date` = today's date
-   - `Company` = company name
-   - `Role` = role title
-   - `Channel` = Email / LinkedIn / Other
-   - `Contact` = who it was sent to
-   - `Notes` = brief note (e.g., "First follow-up, referenced H₂ supply chain project")
+<format>
+```markdown
+# Follow-up History
 
-3. Optionally update the Notes column in `data/applications.md` with "Follow-up {N} sent {YYYY-MM-DD}"
+| # | App# | Date | Company | Role | Channel | Contact | Notes |
+|---|------|------|---------|------|---------|---------|-------|
+```
+</format>
 
-**IMPORTANT:** Only record follow-ups the user confirms they actually sent. Never record a draft as sent.
+<agent_instruction>
+Append a row with: next sequential `#`, application number, today's date, company, role, channel (Email / LinkedIn / Other), contact name, and a brief note (e.g., "First follow-up, referenced H₂ supply chain project").
 
-## Step 6 — Summary
+Optionally update the Notes column in `data/applications.md` with "Follow-up {N} sent {YYYY-MM-DD}".
+</agent_instruction>
 
-After showing all drafts, summarize:
+</step>
 
-> **Follow-up Dashboard** ({date})
-> - {N} applications being tracked
-> - {N} overdue — drafts generated above
-> - {N} urgent — respond today
-> - {N} waiting — next follow-up dates shown
-> - {N} cold — consider closing
->
-> Review the drafts above and tell me which ones you've sent so I can record them.
+<step id="6" name="Summary">
 
-## Cadence Rules Reference
+<completion>
+**Follow-up Dashboard** ({date})
+- {N} applications being tracked
+- {N} overdue — drafts generated above
+- {N} urgent — respond today
+- {N} waiting — next follow-up dates shown
+- {N} cold — consider closing
 
-| Status | First follow-up | Subsequent | Max attempts |
-|--------|----------------|------------|-------------|
-| Applied | 7 days after application | Every 7 days | 2 (then mark cold) |
-| Responded | 1 day (urgent reply) | Every 3 days | No limit |
-| Interview | 1 day after (thank-you) | Every 3 days | No limit |
+Review the drafts above and tell me which ones you've sent so I can record them.
+</completion>
 
-These defaults can be overridden via `node followup-cadence.mjs --applied-days N`.
+</step>
+
+</process>
+
+<output>
+- Cadence dashboard table (Step 2)
+- Follow-up email/LinkedIn drafts for overdue and urgent entries (Steps 3–4)
+- Updated `data/follow-ups.md` row(s) after user confirmation (Step 5)
+- Optional update to `data/applications.md` notes column (Step 5)
+</output>

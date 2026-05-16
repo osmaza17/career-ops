@@ -53,7 +53,7 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `batch/batch-prompt.md` | Batch worker prompt |
 | `batch/batch-runner.sh` | Batch orchestrator |
 | `dashboard/*` | Go TUI dashboard |
-| `templates/*` | Copy-and-fill templates, canonical schemas (`states.yml`), and read-only reference examples |
+| `states.yml` | Canonical application status values |
 | `.claude/skills/*` | Skill definitions |
 | `docs/*` | Documentation |
 | `VERSION` | Current version number |

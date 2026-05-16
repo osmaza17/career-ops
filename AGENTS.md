@@ -12,7 +12,7 @@ There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 **System Layer (auto-updatable, DON'T put user data here):**
 - `modes/_shared.md`, `modes/offer-analysis.md`, all other modes
-- `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `templates/*`, `batch/*`
+- `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `batch/*`
 
 **THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
 
@@ -46,7 +46,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 **Before doing ANYTHING else, check if the system is set up.** Run these checks silently every time a session starts:
 
 1. Does `config/profile.md` exist?
-2. Does `config/portals.yml` exist (not just templates/portals.template.yml)?
+2. Does `config/portals.yml` exist?
 
 **If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Follow this order exactly — each step depends on the previous one.
 
@@ -63,7 +63,7 @@ If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles eve
 If `config/portals.yml` is missing:
 > "I'll set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles?"
 
-Copy `templates/portals.template.yml` → `config/portals.yml`. If target roles are already in `config/profile.md`, update `title_filter.positive` to match.
+The portal configuration is built by the scanner setup in `modes/scan.md`. If target roles are already in `config/profile.md`, the setup will auto-populate `title_filter.positive` to match.
 
 #### Step 3: Tracker
 
@@ -230,14 +230,14 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 1. **NEVER edit applications.md to ADD new entries** -- Write TSV in `batch/tracker-additions/` and `merge-tracker.mjs` handles the merge.
 2. **YES you can edit applications.md to UPDATE status/notes of existing entries.**
 3. All reports MUST include `**URL:**` in the header (between Score and PDF). Include `**Legitimacy:** {tier}` (see Block G in `modes/offer-analysis.md`).
-4. All statuses MUST be canonical (see `templates/states.yml`).
+4. All statuses MUST be canonical (see `states.yml`).
 5. Health check: `node verify-pipeline.mjs`
 6. Normalize statuses: `node normalize-statuses.mjs`
 7. Dedup: `node dedup-tracker.mjs`
 
 ### Canonical States (applications.md)
 
-**Source of truth:** `templates/states.yml`
+**Source of truth:** `states.yml`
 
 | State       | When to use                            |
 | ----------- | -------------------------------------- |

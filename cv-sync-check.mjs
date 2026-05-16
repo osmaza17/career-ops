@@ -22,7 +22,7 @@ const errors = [];
 // 1. Check profile.md exists
 const profilePath = join(projectRoot, 'config', 'profile.md');
 if (!existsSync(profilePath)) {
-  errors.push('config/profile.md not found. Copy from templates/profile.template.md and fill in your details, or run the onboarding flow.');
+  errors.push('config/profile.md not found. Run the onboarding flow or manually create it with profile YAML and CV sections.');
 } else {
   const profileContent = readFileSync(profilePath, 'utf-8');
   const requiredFields = ['full_name', 'email', 'location'];

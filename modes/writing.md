@@ -1,8 +1,14 @@
+<purpose>
 # Writing Conventions — CV Output Quality
 
 All rules in this file govern **how the CV is written and formatted**. They apply to every mode that produces or edits CV content (`analyze-sources`, `latex`, `pdf`, `update-profile`). They are language-agnostic unless explicitly marked FR or EN.
+</purpose>
 
 ---
+
+<rules>
+
+<reference id="bullet-ordering">
 
 ## 1. Bullet Ordering Rules
 
@@ -28,7 +34,11 @@ Order project entries by decreasing interest to the interviewer:
 
 When two entries tie on tier, the one with the harder metric or more recognizable name goes first. Never order by date.
 
+</reference>
+
 ---
+
+<reference id="bullet-structure">
 
 ## 2. Bullet Structure Rules
 
@@ -89,7 +99,11 @@ Every bullet must be useful to a non-specialist hiring manager. If the fact only
 
 The first bullet of any project or experience entry must make clear (a) what was being done and (b) for whom or to what end. Do not lead with methodology when the project's purpose is still unknown to the reader.
 
+</reference>
+
 ---
+
+<reference id="bold-rules">
 
 ## 3. Bold Usage — Global Rules
 
@@ -105,7 +119,11 @@ Bold is a scarce resource. Its only purpose is to make the reader's eye stop on 
 
 **Self-check:** Read only the bold text across the CV. Does it alone make a compelling case — a metric, a ranking, a client name, a prize? If not, reassign which elements receive bold.
 
+</reference>
+
 ---
+
+<reference id="parentheses-rule">
 
 ## 4. Parentheses Rule
 
@@ -116,7 +134,11 @@ See section 2.3 (R3) above — two permitted contexts only. Summary:
 
 No other use is valid.
 
+</reference>
+
 ---
+
+<reference id="colon-convention">
 
 ## 5. Colon Convention
 
@@ -126,12 +148,18 @@ The colon introduces the result or a list of specifics after the method.
 
 **English typography:** no space before colon — `[method]: [result or enumeration]`
 
+<format>
 Examples:
 - FR: `Modélisation VAN de l'investissement optimal : retour en 18 mois et +68 % de productivité.`
 - EN: `Modelled NPV of the optimal investment: break-even in 18 months and +68% palletisation throughput.`
 - Summary S2 (both languages): `My background combines X and Y: [example 1], [example 2], and [example 3].`
+</format>
+
+</reference>
 
 ---
+
+<reference id="middot-prohibition">
 
 ## 6. Middle-dot (·) Prohibition
 
@@ -141,16 +169,24 @@ Examples:
 
 Replace every other `·` with a comma.
 
+<format>
 Examples:
 - Wrong: `\cvheadline{Élève-ingénieur · Recherche Opérationnelle}` → use `specialized in` pattern
 - Wrong: `\cventryprojet{Diagnostic opérationnel · Veganic}{...}` → use a comma
 - Wrong: Student Life title `Secretary General · BDI` → use a comma: `Secretary General, BDI`
+</format>
+
+</reference>
 
 ---
+
+<reference id="triple-dash-rule">
 
 ## 7. Triple-dash (---) Rule
 
 `---` (triple hyphen, rendered as an em-dash in LaTeX) is a **structural visual separator** between two labeled elements of equal weight. It has exactly **three** permitted uses:
+
+<format>
 
 | Context | Example |
 |---|---|
@@ -158,17 +194,25 @@ Examples:
 | Project subtitle: framework ` --- ` domain qualifier | `Projet ST7, CentraleSupélec --- chaîne logistique hydrogène` |
 | Education bullet: score ` --- ` ranking | `Moyenne **8,7/10 --- top 2 %** sur 311 étudiants` |
 
+</format>
+
 **Banned everywhere else:** bullet body prose, profile/summary text, skills section, headlines, experience titles, and all other running text. Use a comma or rephrase.
 
+<format>
 Examples:
 - Wrong in prose: `Analyse des flux --- identification des goulots.` → use a comma
 - Wrong in experience title: `Stage en Génie Civil --- Bucarest 54` → use `\cventry{Bucarest 54}{Stage en Génie Civil}{...}` (the LaTeX command handles the visual separation)
 - Correct in project title: `H₂ Supply Chain Optimisation --- **Air Liquide**`
 - Correct in education bullet: `Average **8.7/10 --- top 2 %** of 311 students.`
+</format>
 
 **Date separator is `--` (double hyphen), not `---`.** Never use triple hyphen for date ranges.
 
+</reference>
+
 ---
+
+<reference id="specificity-standard">
 
 ## 8. Specificity Standard
 
@@ -181,7 +225,11 @@ Every bullet must answer: **what was done, for whom, at what scale?**
 
 A bullet without a figure is acceptable; a bullet without specificity is not.
 
+</reference>
+
 ---
+
+<reference id="headline-structure">
 
 ## 9. Headline Fixed Structure
 
@@ -189,9 +237,15 @@ A bullet without a figure is acceptable; a bullet without specificity is not.
 
 One clause. No school names. No `·` separators. No composite lists.
 
+<format>
 Example: `Industrial Engineer specialized in Operations Research & Risk Analytics`
+</format>
+
+</reference>
 
 ---
+
+<reference id="hobbies-criteria">
 
 ## 10. Hobbies Inclusion Criteria
 
@@ -199,12 +253,18 @@ Include the Hobbies / Centres d'intérêt section only if:
 - (a) The hobby directly connects to the role or company culture, or
 - (b) The CV does not fill the page.
 
+<format>
 Format: specific and verifiable — not a generic list.
 
 Wrong: `Hobbies: music, travel, sport.`
 Correct: `Competitive sailing, regional ranking. Open-source contributor (github.com/…).`
+</format>
+
+</reference>
 
 ---
+
+<reference id="bullet-length">
 
 ## 11. Bullet Length and Line-Wrap Guidelines
 
@@ -215,11 +275,17 @@ The left column is narrow (approximately 35% of A4 width). Bullets placed in sec
 - Tools and scale go in parentheses at the end, not mid-sentence — this keeps the main clause short.
 - When a bullet overflows the column width, trim it first (R7) before adjusting column ratios or font sizes.
 
+</reference>
+
 ---
+
+<reference id="trim-signals">
 
 ## 12. Trim Signals
 
 Rewrite a bullet immediately if any of the following appear:
+
+<format>
 
 | Signal | Action |
 |---|---|
@@ -232,7 +298,13 @@ Rewrite a bullet immediately if any of the following appear:
 | Problem input dimensions (geographic extents, exact raw volumes, distances) | Cut. State the conclusion, not the geometry. Wrong: `for 5 stations across 50–200 km` → Correct: `for 5 delivery stations`. |
 | Connectors: "as well as", "while", "in order to", "allowing", and French equivalents | Remove and split or rephrase. |
 
+</format>
+
+</reference>
+
 ---
+
+<reference id="bullet-structure-default">
 
 ## 13. Bullet Structure Default (Full Reminder)
 
@@ -240,6 +312,7 @@ Rewrite a bullet immediately if any of the following appear:
 
 Override the default only when the outcome is the single most striking fact (prize, record metric) — in that case, lead with it.
 
+<format>
 **Wrong (method leads when result is more impressive):**
 ```
 Designed a proprietary dispatch heuristic (Simul8).
@@ -251,8 +324,13 @@ Won a zero-stockout fleet recommendation accepted by Air Liquide.
 Won a **zero-stockout** fleet recommendation accepted by Air Liquide.
 Designed a proprietary dispatch heuristic with a multi-component cost function (Simul8).
 ```
+</format>
+
+</reference>
 
 ---
+
+<reference id="vocabulary-bans">
 
 ## 14. Vocabulary — Banned and Required
 
@@ -280,7 +358,11 @@ Designed a proprietary dispatch heuristic with a multi-component cost function (
 
 `strategic` · `transversal` · `complex` · `high-impact` · `ambitious` · `challenging` · `innovative` · `dynamic` · `rigorous` · `autonomous` · `significant` · `notable` · `key` · `critical` · `solid`
 
+</reference>
+
 ---
+
+<reference id="summary-rules">
 
 ## 15. Summary (Profile) Section Rules
 
@@ -299,22 +381,34 @@ Three sentences, fixed structure:
 - Parentheses allowed in S2 for technical clusters: `(combinatorial optimisation, simulation)`
 - Colon in S2 follows the language typography rule (section 5)
 
+</reference>
+
 ---
+
+<reference id="date-format">
 
 ## 16. Date Format
 
 All dates: `[mon. YYYY] -- [mon. YYYY]`
+
+<format>
 
 | Language | Month abbreviations |
 |---|---|
 | French | `janv.` `févr.` `mars` `avr.` `mai` `juin` `juil.` `août` `sept.` `oct.` `nov.` `déc.` |
 | English | `Jan.` `Feb.` `Mar.` `Apr.` `May` `June` `July` `Aug.` `Sept.` `Oct.` `Nov.` `Dec.` |
 
+</format>
+
 - Separator: `--` (double hyphen). Never `-` (single) or `---` (triple).
 - Single-month entry: `avr. 2026` (no separator).
 - Ongoing: `oct. 2025 -- en cours` (FR) / `Oct. 2025 -- present` (EN).
 
+</reference>
+
 ---
+
+<reference id="bullet-self-check">
 
 ## 17. Bullet Self-Check (Per Bullet)
 
@@ -335,11 +429,17 @@ Before writing the next bullet, verify the current one passes all nine rules:
 
 Any failure → rewrite before moving on.
 
+</reference>
+
 ---
+
+<reference id="french-deverbal-nouns">
 
 ## 18. French Deverbal Noun Reference
 
 When the CV is in French, replace the English past-tense verb with its deverbal noun.
+
+<format>
 
 | Past participle | Deverbal noun |
 |---|---|
@@ -362,12 +462,18 @@ When the CV is in French, replace the English past-tense verb with its deverbal 
 | Identifié | Identification de |
 | Réalisé | Réalisation de |
 
+</format>
+
 Wrong: `Conçu un algorithme de dispatch propriétaire (Simul8).`
 Correct: `Conception d'un algorithme de dispatch propriétaire (Simul8).`
 
 All other rules (R1–R9, trim signals, self-check) apply equally in French.
 
+</reference>
+
 ---
+
+<reference id="project-titles">
 
 ## 19. Project Entry Titles and Subtitles
 
@@ -381,10 +487,12 @@ All other rules (R1–R9, trim signals, self-check) apply equally in French.
 
 Canonical title openers: `Application de` / `Mission de conseil en` / `Étude de faisabilité` / `Stratégie de lancement` / `Mission d'amélioration` / `Diagnostic` / `Simulation` / `Analyse` / `Modélisation`
 
+<format>
 Wrong: `H₂ Supply Chain Optimisation · Air Liquide` — wrong separator
 Wrong: `Air Liquide · H₂ Supply Chain Optimisation` — client must not lead
 Correct: `H₂ Supply Chain Optimisation --- **Air Liquide**` — type first, ` --- `, bold client
 Correct: `Staff Planning Optimisation App` — internal project, no ` --- `
+</format>
 
 Title character limit: ≤ 45 characters (right-column layout constraint).
 
@@ -398,17 +506,27 @@ Title character limit: ≤ 45 characters (right-column layout constraint).
 - No team composition in the subtitle.
 - Never include the country of execution in either title or subtitle.
 
+<format>
 Examples:
 - `Pôle Projet Associatif Numérique, CentraleSupélec` (no domain qualifier needed)
 - `Projet ST7, CentraleSupélec --- chaîne logistique hydrogène`
 - `Programme Akademia, Fondation Innovation Bankinter --- Hackathon national`
 
 Wrong: `Self-initiated · Solo · MILP · CentraleSupélec Associations` — tools in subtitle, wrong separator
+</format>
+
+</reference>
 
 ---
+
+<reference id="skills-section">
 
 ## 20. Skills Section Rules
 
 - Omit soft skills entirely.
 - Sort items within each row by relevance to the most common target role.
 - Maximum 5 rows.
+
+</reference>
+
+</rules>

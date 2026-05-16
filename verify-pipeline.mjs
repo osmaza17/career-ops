@@ -25,9 +25,7 @@ const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   : join(CAREER_OPS, 'applications.md');
 const ADDITIONS_DIR = join(CAREER_OPS, 'batch/tracker-additions');
 const REPORTS_DIR = join(CAREER_OPS, 'reports');
-const STATES_FILE = existsSync(join(CAREER_OPS, 'templates/states.yml'))
-  ? join(CAREER_OPS, 'templates/states.yml')
-  : join(CAREER_OPS, 'states.yml');
+const STATES_FILE = join(CAREER_OPS, 'states.yml');
 
 // Ensure required directories exist (fresh setup)
 mkdirSync(join(CAREER_OPS, 'data'), { recursive: true });

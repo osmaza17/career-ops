@@ -1,35 +1,54 @@
-# Mode: patterns -- Rejection Pattern Detector
+# Mode: patterns — Rejection Pattern Detector
 
-## Purpose
+<purpose>
+Analyze all tracked applications to find patterns in outcomes and surface actionable insights. Identifies what is working (archetypes, remote policies, score ranges) and what is wasting time (geo-restricted roles, stack mismatches, low-score applications).
+</purpose>
 
-Analyze all tracked applications to find patterns in outcomes and surface actionable insights. Identifies what's working (archetypes, remote policies, score ranges) and what's wasting time (geo-restricted roles, stack mismatches, low-score applications).
+<rules>
+- Edit `config/profile.md` under `strategy.*` for any profile changes. NEVER edit `modes/_shared.md`.
+- For portal filter changes, edit `config/portals.yml`.
+- Do not run analysis if the data threshold is not met (see Step 1).
+</rules>
 
 ## Inputs
 
-- `data/applications.md` — Application tracker
-- `reports/` — Individual evaluation reports
-- `config/profile.md` — User profile (for recommendation context)
-- `config/profile.md` (`strategy.*` keys) — User archetypes and framing
-- `config/portals.yml` — Portal config (for filter update recommendations)
+- `data/applications.md` — application tracker
+- `reports/` — individual evaluation reports
+- `config/profile.md` — user profile and `strategy.*` keys
+- `config/portals.yml` — portal config (for filter update recommendations)
 
-## Minimum Threshold
+---
 
-Before running analysis, check: does `data/applications.md` have at least 5 entries with status beyond "Evaluated" (i.e., Applied, Responded, Interview, Offer, Rejected, Discarded, SKIP)?
+## Process
 
-If not, tell the user:
-> "Not enough data yet -- {N}/5 applications have progressed beyond evaluation. Keep applying and come back when you have more outcomes to analyze."
+<process>
+
+### Step 1 — Check Data Threshold
+
+<step id="1" name="Check Data Threshold">
+<agent_instruction>
+Count entries in `data/applications.md` with status beyond "Evaluated" (i.e., Applied, Responded, Interview, Offer, Rejected, Discarded, SKIP). Minimum required: 5.
+</agent_instruction>
+
+If threshold is not met:
+<user_prompt>
+"Not enough data yet — {N}/5 applications have progressed beyond evaluation. Keep applying and come back when you have more outcomes to analyze."
+</user_prompt>
 
 Exit gracefully.
+</step>
 
-## Step 1 — Run Analysis Script
+### Step 2 — Run Analysis Script
 
+<step id="2" name="Run Analysis Script">
+<agent_instruction>
 Execute:
 
 ```bash
 node analyze-patterns.mjs
 ```
 
-Parse the JSON output. It contains:
+Parse the JSON output:
 
 | Key | Contents |
 |-----|----------|
@@ -45,15 +64,19 @@ Parse the JSON output. It contains:
 | `recommendations` | Top 5 actionable items with reasoning and impact level |
 
 If the script returns `error`, display the error message and exit.
+</agent_instruction>
+</step>
 
-## Step 2 — Generate Report
+### Step 3 — Generate Report
 
+<step id="3" name="Generate Report">
+<agent_instruction>
 Write the report to `reports/pattern-analysis-{YYYY-MM-DD}.md`.
+</agent_instruction>
 
-### Report Structure
-
+<format>
 ```markdown
-# Pattern Analysis -- {YYYY-MM-DD}
+# Pattern Analysis — {YYYY-MM-DD}
 
 **Applications analyzed:** {total}
 **Date range:** {from} to {to}
@@ -62,8 +85,6 @@ Write the report to `reports/pattern-analysis-{YYYY-MM-DD}.md`.
 ---
 
 ## Conversion Funnel
-
-Show each status with count and percentage of total. Use a simple table:
 
 | Stage | Count | % |
 |-------|-------|---|
@@ -82,8 +103,8 @@ Show each status with count and percentage of total. Use a simple table:
 
 ## Archetype Performance
 
-Table with each archetype, total applications, positive outcomes, conversion rate.
-Highlight the best-performing archetype and the worst.
+Table with each archetype: total applications, positive outcomes, conversion rate.
+Highlight best-performing and worst-performing archetype.
 
 ## Top Blockers
 
@@ -96,59 +117,68 @@ Table showing conversion rate by remote policy bucket (global, regional, geo-res
 
 ## Skills and Domain Gaps
 
-List of most common missing skills, tools, or domain knowledge in negative/self-filtered outcomes with frequency.
+Most common missing skills, tools, or domain knowledge in negative/self-filtered outcomes with frequency.
 
 ## Recommended Score Threshold
 
-State the data-driven minimum score and reasoning.
+Data-driven minimum score and reasoning.
 
 ## Recommendations
 
-Number the top recommendations (from the script output). For each:
 1. **[IMPACT]** Action to take
    Reasoning behind the recommendation.
 ```
+</format>
+</step>
 
-## Step 3 — Present Summary
+### Step 4 — Present Summary
 
-Show the user a condensed version with:
-1. One-line stat summary (X applications, Y% applied, Z% positive outcome)
-2. Top 3 findings (most impactful patterns)
-3. Link to full report
+<step id="4" name="Present Summary">
+<user_prompt>
+"**Pattern Analysis Complete** ({total} applications, {date range})
 
-Example:
-> **Pattern Analysis Complete** (24 applications, Apr 7-8)
->
-> Key findings:
-> - Geo-restricted roles are 0% conversion (7 of 24) -- stop evaluating US/Canada-only postings
-> - Regional/global remote roles convert at 57-67% -- these are your sweet spot
-> - No positive outcomes below 4.2/5 -- consider this your score floor
->
-> Full report: `reports/pattern-analysis-2026-04-08.md`
+Key findings:
+- {finding 1}
+- {finding 2}
+- {finding 3}
 
-## Step 4 — Offer to Apply Recommendations
+Full report: `reports/pattern-analysis-{YYYY-MM-DD}.md`"
+</user_prompt>
 
-Ask the user if they want to act on any recommendations:
+<agent_instruction>
+Show one-line stat summary, top 3 most impactful findings, and a link to the full report.
+</agent_instruction>
+</step>
 
-> "Want me to apply any of these recommendations? I can:
-> - Update `config/portals.yml` to filter out geo-restricted roles
-> - Set a score threshold in `config/profile.md` for PDF generation
-> - Adjust archetype targeting based on what's converting
->
-> Just say which ones, or 'all' to apply everything."
+### Step 5 — Offer to Apply Recommendations
 
-If the user agrees:
-- For portal filter changes: edit `config/portals.yml`
-- For profile/archetype changes: edit `config/profile.md` under `strategy.*` (NEVER `_shared.md`)
-- For score threshold: add to `config/profile.md` under `strategy.score_threshold` (e.g. `score_threshold: 4.2`). The `offer-analysis` mode reads this key — if present, it warns the user before evaluating offers that fall below the threshold.
+<step id="5" name="Offer to Apply Recommendations">
+<user_prompt>
+"Want me to apply any of these recommendations? I can:
+- Update `config/portals.yml` to filter out geo-restricted roles
+- Set a score threshold in `config/profile.md` for PDF generation
+- Adjust archetype targeting based on what's converting
 
-## Outcome Classification
+Just say which ones, or 'all' to apply everything."
+</user_prompt>
 
-For reference, outcomes are classified as:
+<agent_instruction>
+If the user agrees, apply changes:
+- Portal filter changes → edit `config/portals.yml`
+- Profile/archetype changes → edit `config/profile.md` under `strategy.*`
+- Score threshold → add `strategy.score_threshold: X.X` to `config/profile.md`. The `offer-analysis` mode reads this key and warns the user when offers fall below it.
+</agent_instruction>
+</step>
+
+</process>
+
+---
+
+## Reference: Outcome Classification
 
 | Status | Outcome |
 |--------|---------|
-| Interview, Offer, Responded, Applied | **Positive** (invested effort or got traction) |
-| Rejected, Discarded | **Negative** (company said no or offer closed) |
-| SKIP | **Self-filtered** (user decided not to apply) |
-| Evaluated | **Pending** (no action taken yet) |
+| Interview, Offer, Responded, Applied | Positive (invested effort or got traction) |
+| Rejected, Discarded | Negative (company said no or offer closed) |
+| SKIP | Self-filtered (user decided not to apply) |
+| Evaluated | Pending (no action taken yet) |

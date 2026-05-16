@@ -1,5 +1,9 @@
 # System Context -- career-ops
 
+<purpose>
+Shared reference file loaded by every career-ops mode. Contains scoring rubrics, global rules, archetype definitions, writing style calibration, and tool configuration. Read this file BEFORE reading config/profile.md. User customizations in config/profile.md (under the `strategy:` key) override defaults defined here.
+</purpose>
+
 <!-- ============================================================
      THIS FILE IS AUTO-UPDATABLE. Don't put personal data here.
      
@@ -7,6 +11,8 @@
      This file contains system rules, scoring logic, and tool config
      that improve with each career-ops release.
      ============================================================ -->
+
+<reference id="sources-of-truth">
 
 ## Sources of Truth
 
@@ -18,9 +24,15 @@
 **RULE: NEVER hardcode metrics from proof points.** Read them from config/profile.md at evaluation time.
 **RULE: Read config/profile.md AFTER this file. User customizations in config/profile.md (under the `strategy:` key) override defaults here.**
 
+</reference>
+
 ---
 
+<reference id="scoring-system">
+
 ## Scoring System
+
+<scoring>
 
 The evaluation uses 6 blocks (A-F) with a global score of 1-5:
 
@@ -38,6 +50,12 @@ The evaluation uses 6 blocks (A-F) with a global score of 1-5:
 - 4.0-4.4 → Good match, worth applying
 - 3.5-3.9 → Decent but not ideal, apply only if specific reason
 - Below 3.5 → Recommend against applying (see Ethical Use in AGENTS.md)
+
+</scoring>
+
+</reference>
+
+<reference id="block-g-legitimacy">
 
 ## Posting Legitimacy (Block G)
 
@@ -67,6 +85,10 @@ Block G assesses whether a posting is likely a real, active opening. It does NOT
 - Present signals and let the user decide
 - Always note legitimate explanations for concerning signals
 
+</reference>
+
+<reference id="archetype-detection">
+
 ## Archetype Detection
 
 Classify every offer into one of these types (or hybrid of 2). Read `config/profile.md` (key `target_roles.archetypes` and `strategy.adaptive_framing`) for the user's specific archetypes — these defaults apply only when no override is present.
@@ -81,6 +103,10 @@ Classify every offer into one of these types (or hybrid of 2). Read `config/prof
 | Project / Programme Manager | "project management", "PMO", "milestones", "stakeholders", "budget", "programme", "risk management", "planning", "coordination" |
 
 After detecting archetype, read `config/profile.md` (key `strategy.adaptive_framing`) for the user's specific framing and proof points for that archetype.
+
+</reference>
+
+<rules>
 
 ## Global Rules
 
@@ -114,6 +140,8 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 
 ### Tools
 
+<section name="tool-config">
+
 | Tool | Use |
 |------|-----|
 | WebSearch | Comp research, trends, company culture, LinkedIn contacts, fallback for JDs |
@@ -125,12 +153,18 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 | Canva MCP | Optional visual CV generation. Duplicate base design, edit text, export PDF. Requires `cv.canva_resume_design_id` in the YAML frontmatter of `config/profile.md`. |
 | Bash | `node generate-pdf.mjs` |
 
+</section>
+
 ### Time-to-offer priority
 - Working demo + metrics > perfection
 - Apply sooner > learn more
 - 80/20 approach, timebox everything
 
+</rules>
+
 ---
+
+<reference id="writing-style-calibration">
 
 ## Writing Style Calibration
 
@@ -179,6 +213,8 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 - Habitual openers and closers
 - Rhetorical moves — does the user ask questions, use contrast, tell micro-stories?
 
+<rules>
+
 ### Rules
 
 - **Only extract what is demonstrably present.** Do not infer style from a single data point.
@@ -188,9 +224,13 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 - **Style calibration applies to tone and structure only.** Do not import content, claims, or metrics from samples into CVs, reports, or evaluations.
 - **No verbatim copying or personal identifiers.** Store only abstract style descriptors (tone, structure, vocabulary preferences). Do not quote user sentences verbatim and do not retain personal identifiers (names, emails, phone numbers) from writing samples. "Preserve idiosyncratic choices" applies to stylistic traits only.
 
+</rules>
+
 ### Persisting the extracted style
 
 After scanning (excluding any `README.md` files), write to `config/profile.md` only if at least one user-provided sample was found: update the `strategy.writing_style` key with the new content. This ensures there is always exactly one canonical entry. If no samples were found after filtering, do not write or modify the key.
+
+<format>
 
 ```markdown
 ## Writing Style
@@ -207,7 +247,13 @@ _Extracted from writing-samples/ on {date}. Re-run if new samples are added._
 **Avoid:** {words or patterns absent from samples}
 ```
 
+</format>
+
+</reference>
+
 ---
+
+<reference id="ats-writing-rules">
 
 ## Professional Writing & ATS Compatibility
 
@@ -234,3 +280,5 @@ Avoid generating em-dashes, smart quotes, and zero-width characters in the first
 - "Reduced lead time from 45 to 28 days (−38%)" beats "improved supply chain performance"
 - "MILP model for fleet sizing across 5 H₂ refuelling stations — zero-stockout configuration" beats "built an optimisation model"
 - Name tools, projects, clients, and quantified outcomes when allowed
+
+</reference>

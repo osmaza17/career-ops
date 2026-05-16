@@ -70,8 +70,8 @@ function checkProfile() {
     pass: false,
     label: 'config/profile.md not found',
     fix: [
-      'Run: cp templates/profile.template.md config/profile.md',
-      'Then fill in the YAML frontmatter, or start a session and the agent will guide you through it',
+      'Start a session and run the onboarding flow to create your profile',
+      'Or manually create config/profile.md with YAML frontmatter and CV sections',
     ],
   };
 }
@@ -84,8 +84,8 @@ function checkPortals() {
     pass: false,
     label: 'config/portals.yml not found',
     fix: [
-      'Run: cp templates/portals.example.yml config/portals.yml',
-      'Then customize with your target companies',
+      'Run /career-ops scan to set up the portal configuration',
+      'Or manually create config/portals.yml with your tracked companies',
     ],
   };
 }
