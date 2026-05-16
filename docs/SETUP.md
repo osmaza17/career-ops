@@ -29,15 +29,15 @@ Then fill in the YAML frontmatter and the markdown body sections.
 
 ### 3. Generate your CV
 
-Once `config/profile.md` is complete, the agent runs `ingest` to generate `config/cv.md` automatically. You can also trigger it explicitly:
+Once `config/profile.md` is complete, it IS your CV — there is no intermediate file. Run directly:
 
 ```
-/career-ops ingest
+/career-ops pdf
 ```
 
-`config/profile.md` is the source of truth. Never edit `config/cv.md` by hand — regenerate it from the profile instead.
+`config/profile.md` is the single source of truth. The formatted CV sections in its body are read directly by `modes/latex.md` to produce the `.tex` output.
 
-(Optional) Drop raw academic documents (internship reports, project briefs) into `sources/` at any time. Use `analyze-sources` to extract and add entries to `config/profile.md`, then re-run `ingest`.
+(Optional) Drop raw academic documents (internship reports, project briefs) into `sources/` at any time. Use `analyze-sources` to extract and add formatted CV entries directly to `config/profile.md`.
 
 ### 4. Configure portals
 

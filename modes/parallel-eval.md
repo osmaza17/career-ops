@@ -56,8 +56,8 @@ READ THESE FILES FIRST (required — do not skip):
   modes/_shared.md        scoring rules, archetype definitions, global rules
   modes/offer-analysis.md evaluation template blocks A-G
   config/profile.md       candidate identity, proof points, targets
-  config/cv.md            formatted CV (match against JD requirements)
-  config/strategy.md      user archetypes and negotiation context
+  config/profile.md       CV sections and candidate data (match against JD requirements)
+  config/profile.md       user archetypes (target_roles.archetypes, strategy.*) and negotiation context (strategy.negotiation_scripts)
 
 VERIFICATION NOTE: You are running in headless parallel mode. Use WebFetch
 to read the JD. Mark the report header with:

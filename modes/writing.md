@@ -1,6 +1,6 @@
 # Writing Conventions — CV Output Quality
 
-All rules in this file govern **how the CV is written and formatted**. They apply to every mode that produces or edits CV content (`ingest`, `latex`, `pdf`, `update-profile`). They are language-agnostic unless explicitly marked FR or EN.
+All rules in this file govern **how the CV is written and formatted**. They apply to every mode that produces or edits CV content (`analyze-sources`, `latex`, `pdf`, `update-profile`). They are language-agnostic unless explicitly marked FR or EN.
 
 ---
 
@@ -339,7 +339,7 @@ Any failure → rewrite before moving on.
 
 ## 18. French Deverbal Noun Reference
 
-When cv.md is in French, replace the English past-tense verb with its deverbal noun.
+When the CV is in French, replace the English past-tense verb with its deverbal noun.
 
 | Past participle | Deverbal noun |
 |---|---|

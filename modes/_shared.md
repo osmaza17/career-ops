@@ -3,7 +3,7 @@
 <!-- ============================================================
      THIS FILE IS AUTO-UPDATABLE. Don't put personal data here.
      
-     Your customizations go in config/strategy.md (never auto-updated).
+     Your customizations go in config/profile.md under the strategy: key (never auto-updated).
      This file contains system rules, scoring logic, and tool config
      that improve with each career-ops release.
      ============================================================ -->
@@ -12,14 +12,11 @@
 
 | File | Path | When |
 |------|------|------|
-| cv.md | `config/cv.md` | ALWAYS |
-| profile.md | `config/profile.md` | ALWAYS — YAML frontmatter (identity, targets, languages) + markdown body (trajectory corpus, proof points) |
-| strategy.md | `config/strategy.md` | ALWAYS (user archetypes, narrative, negotiation) |
-| writing-samples/ | `writing-samples/` | When generating candidate-facing text — check `config/strategy.md` for cached `## Writing Style` first; only scan files if absent |
+| profile.md | `config/profile.md` | ALWAYS — YAML frontmatter (identity, targets, languages) + markdown body (formatted CV sections: education, experience, projects, skills, languages) |
+| writing-samples/ | `writing-samples/` | When generating candidate-facing text — check `config/profile.md` under `strategy.writing_style` for cached style first; only scan files if absent |
 
-**RULE: NEVER hardcode metrics from proof points.** Read them from config/cv.md + config/profile.md at evaluation time.
-**RULE: For article/project metrics, config/profile.md takes precedence over config/cv.md.**
-**RULE: Read config/strategy.md AFTER this file. User customizations in config/strategy.md override defaults here.**
+**RULE: NEVER hardcode metrics from proof points.** Read them from config/profile.md at evaluation time.
+**RULE: Read config/profile.md AFTER this file. User customizations in config/profile.md (under the `strategy:` key) override defaults here.**
 
 ---
 
@@ -30,7 +27,7 @@ The evaluation uses 6 blocks (A-F) with a global score of 1-5:
 | Dimension | What it measures |
 |-----------|-----------------|
 | CV Match | Skills, experience, proof points alignment |
-| North Star alignment | How well the role fits the user's target archetypes (from config/strategy.md) |
+| North Star alignment | How well the role fits the user's target archetypes (from `config/profile.md`, key `target_roles.archetypes`) |
 | Comp | Salary vs market (5=top quartile, 1=well below) |
 | Cultural signals | Company culture, growth, stability, remote policy |
 | Red flags | Blockers, warnings (negative adjustments) |
@@ -72,7 +69,7 @@ Block G assesses whether a posting is likely a real, active opening. It does NOT
 
 ## Archetype Detection
 
-Classify every offer into one of these types (or hybrid of 2). Read `config/strategy.md` for the user's specific archetypes — these defaults apply only when strategy.md has no override.
+Classify every offer into one of these types (or hybrid of 2). Read `config/profile.md` (key `target_roles.archetypes` and `strategy.adaptive_framing`) for the user's specific archetypes — these defaults apply only when no override is present.
 
 | Archetype | Key signals in JD |
 |-----------|-------------------|
@@ -83,14 +80,14 @@ Classify every offer into one of these types (or hybrid of 2). Read `config/stra
 | Data / Quantitative Analyst | "analytics", "data", "Power BI", "SQL", "Python", "KPIs", "reporting", "forecasting", "dashboards", "business intelligence" |
 | Project / Programme Manager | "project management", "PMO", "milestones", "stakeholders", "budget", "programme", "risk management", "planning", "coordination" |
 
-After detecting archetype, read `config/strategy.md` for the user's specific framing and proof points for that archetype.
+After detecting archetype, read `config/profile.md` (key `strategy.adaptive_framing`) for the user's specific framing and proof points for that archetype.
 
 ## Global Rules
 
 ### NEVER
 
 1. Invent experience or metrics
-2. Modify config/cv.md or config/profile.md
+2. Modify config/profile.md (except via designated modes: analyze-sources, update-profile)
 3. Submit applications on behalf of the candidate
 4. Share phone number in generated messages
 5. Recommend comp below market rate
@@ -101,9 +98,9 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 ### ALWAYS
 
 0. **Cover letter:** If the form allows it, ALWAYS include one. Same visual design as CV. JD quotes mapped to proof points. 1 page max.
-1. Read config/cv.md, config/strategy.md, and config/profile.md (if exists) before evaluating
+1. Read config/profile.md (YAML frontmatter + CV body sections) before evaluating
 1b. **First evaluation of each session:** Run `node cv-sync-check.mjs`. If warnings, notify user.
-2. Detect the role archetype and adapt framing per config/strategy.md
+2. Detect the role archetype and adapt framing per `config/profile.md` (key `strategy.adaptive_framing`)
 3. Cite exact lines from CV when matching
 4. Use WebSearch for comp and company data
 5. Register in tracker after evaluating
@@ -112,7 +109,7 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 8. Concise professional English. Short sentences, action verbs, no passive voice.
 8b. Key proof points and metrics in PDF Professional Summary — recruiters may only read this section.
 9. **Tracker additions as TSV** -- NEVER edit applications.md directly. Write TSV in `batch/tracker-additions/`. For single evaluations: immediately run `node merge-tracker.mjs` after writing the TSV. For batch sessions: run once at the end (see `modes/batch.md`).
-9b. **Writing style** -- Before generating any candidate-facing text (cover letters, outreach messages, form answers, follow-up emails): read `config/strategy.md ## Writing Style`. If that section is absent, follow Writing Style Calibration (below in this file) to extract and cache it first.
+9b. **Writing style** -- Before generating any candidate-facing text (cover letters, outreach messages, form answers, follow-up emails): read `config/profile.md` under `strategy.writing_style`. If that key is absent, follow Writing Style Calibration (below in this file) to extract and cache it first.
 10. **Include `**URL:**` in every report header.**
 
 ### Tools
@@ -122,7 +119,7 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 | WebSearch | Comp research, trends, company culture, LinkedIn contacts, fallback for JDs |
 | WebFetch | Fallback for extracting JDs from static pages |
 | Playwright | Verify offers (browser_navigate + browser_snapshot). **NEVER 2+ agents with Playwright in parallel.** |
-| Read | config/cv.md, config/strategy.md, config/profile.md |
+| Read | config/profile.md |
 | Write | applications.md, reports .md |
 | Edit | Update tracker |
 | Canva MCP | Optional visual CV generation. Duplicate base design, edit text, export PDF. Requires `cv.canva_resume_design_id` in the YAML frontmatter of `config/profile.md`. |
@@ -137,11 +134,11 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 
 ## Writing Style Calibration
 
-**Check `config/strategy.md` first.** If a `## Writing Style` section exists there, use it directly — do not re-scan the writing-samples files. Re-scanning is only needed when new samples are added or the user explicitly asks to recalibrate.
+**Check `config/profile.md` first** (key `strategy.writing_style`). If that key exists, use it directly — do not re-scan the writing-samples files. Re-scanning is only needed when new samples are added or the user explicitly asks to recalibrate.
 
 **When to apply:** Before generating any text the user will send or publish — cover letters, LinkedIn outreach, application form answers, follow-up emails, executive summaries, profile blurbs. Does NOT apply to internal evaluation reports (A–F blocks, scores, analysis).
 
-**If no cached style in `config/strategy.md`:** Read all files in `writing-samples/`, **skipping any file named `README.md`**. If no user-provided samples are found, skip style calibration and gently note — once, without pressure — that adding a writing sample (e.g. a past cover letter, a LinkedIn About section, any professional writing) would help tailor outputs to their voice. If samples exist, extract the markers below and write the result to `config/strategy.md` under `## Writing Style` so future sessions skip this step.
+**If no cached style in `config/profile.md`** (key `strategy.writing_style` absent): Read all files in `writing-samples/`, **skipping any file named `README.md`**. If no user-provided samples are found, skip style calibration and gently note — once, without pressure — that adding a writing sample (e.g. a past cover letter, a LinkedIn About section, any professional writing) would help tailor outputs to their voice. If samples exist, extract the markers below and write the result to `config/profile.md` under the `strategy.writing_style` key so future sessions skip this step.
 
 ### What to extract
 
@@ -193,7 +190,7 @@ After detecting archetype, read `config/strategy.md` for the user's specific fra
 
 ### Persisting the extracted style
 
-After scanning (excluding any `README.md` files), write to `config/strategy.md` only if at least one user-provided sample was found: find the existing `## Writing Style` section and replace the entire block up to the next `##` heading (or EOF) with the new content. If no `## Writing Style` section exists, append it. This ensures there is always exactly one canonical section. If no samples were found after filtering, do not write or modify the section.
+After scanning (excluding any `README.md` files), write to `config/profile.md` only if at least one user-provided sample was found: update the `strategy.writing_style` key with the new content. This ensures there is always exactly one canonical entry. If no samples were found after filtering, do not write or modify the key.
 
 ```markdown
 ## Writing Style

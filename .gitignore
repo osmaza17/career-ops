@@ -27,7 +27,6 @@ writing-samples/*
 config/profile.md
 config/portals.yml
 config/strategy.md
-config/cv.md
 .update-dismissed
 .update-lock
 

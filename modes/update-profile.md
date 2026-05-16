@@ -4,12 +4,12 @@
 
 Make targeted changes to `config/profile.md` after it was created by `onboard`. Covers two types of update:
 
-- **YAML edits** — target roles, compensation, narrative, languages, awards, contact details
-- **Trajectory edits** — adding, revising, or removing entries in the markdown body sections (education, experience, projects, associations, competitions, training)
+- **YAML edits** — target roles, compensation, narrative, languages, awards, contact details, strategy
+- **Trajectory edits** — adding, revising, or removing entries in the YAML arrays (education, experience, projects, student_life, competitions, skills, additional_training)
 
 This mode never rewrites the whole file. It reads the current state, applies only the requested change, shows a preview, and writes on explicit confirmation.
 
-After any update, offer to regenerate `config/cv.md` via `ingest` — but only run it if the user confirms.
+After any update, summarize what changed. The profile is the CV — changes take effect immediately for the next `pdf` run.
 
 ---
 
@@ -79,6 +79,8 @@ Confirm to save, or tell me what to adjust.
 
 5. Write on explicit confirmation. Update only the `target_roles` keys — do not touch anything else.
 
+**Note on archetype fields:** Each entry in `target_roles.archetypes` also has `thematic_axes` and `value_proposition` keys — these can be updated independently (e.g., to sharpen the positioning for a specific archetype without changing its fit level).
+
 **After saving:** ask whether to update `config/portals.yml` title filters to match the new roles.
 
 ---
@@ -89,7 +91,7 @@ Triggered by: "update my headline", "change my story", "add a proof point", "upd
 
 1. Read the current `narrative` block.
 2. Show the specific field being changed (not the whole block if only one field is targeted).
-3. If the user wants to change the **headline or exit story**: ask for the new text, then draft it with light polish (apply the same rules as `ingest.md` — no first-person, no "passionate about", no em-dashes).
+3. If the user wants to change the **headline or exit story** (`exit_story` for the short version used in the PDF, `exit_story_long` for the extended LinkedIn/interview version): ask for the new text, then draft it with light polish (no first-person, no "passionate about", no em-dashes). Also check whether `exit_story_usage` (the usage notes for pdf, star, and draft_answers) needs updating.
 4. If the user wants to **add a proof point**: ask for the achievement in plain language, then format it:
 
 ```yaml
@@ -106,7 +108,7 @@ Triggered by: "update my headline", "change my story", "add a proof point", "upd
 
 Triggered by: "update my salary", "change my minimum", "I'm now open to remote", "update location flexibility"
 
-1. Read the current `compensation` block and show it.
+1. Read the current `compensation` block and show it. The block also includes `market_context` (market rate notes) and `approach` (negotiation guidance) — these can be updated too if the user requests it.
 2. Apply the requested change. For the walk-away minimum, confirm that it will remain private.
 3. Show the updated block:
 
@@ -126,9 +128,9 @@ Confirm to save.
 
 ### Contact Details and Identity
 
-Triggered by: "update my email", "add a phone number", "change my location", "new LinkedIn URL"
+Triggered by: "update my email", "add a phone number", "change my location", "new LinkedIn URL", "update my location policy"
 
-Read the relevant `candidate.*` or `location.*` keys, apply the change, show the affected lines, write on confirmation.
+Read the relevant `candidate.*` or `location.*` keys, apply the change, show the affected lines, write on confirmation. The `location` block also contains `in_forms` (text to use when filling application forms) and `scoring_rules` (how location constraints affect offer scoring) — these can be updated if the user's situation changes (e.g., moving cities, changing remote preference).
 
 ---
 
@@ -163,7 +165,7 @@ Triggered by: "I won a competition", "add an award", "update my prizes"
 
 ---
 
-## Trajectory Edits (Markdown Body)
+## Trajectory Edits (YAML Arrays)
 
 ### Adding a New Entry
 
@@ -181,7 +183,7 @@ For new trajectory content, two paths depending on what the user provides:
 - Draft the entry using the appropriate template from `modes/analyze-sources.md`
 - Enter the review loop, write on approval
 
-In both cases: write to the correct section (`SECTION 1`, `SECTION 4`, etc.), in correct chronological order. Never append blindly to the end of the file.
+In both cases: append to the correct YAML array (`education`, `experience`, `projects`, `student_life`, `competitions`, `skills`, `additional_training`), in correct chronological position. Never append blindly to the end of the array without checking order.
 
 ---
 
@@ -193,7 +195,7 @@ Triggered by: "update my Air Liquide entry", "the project description is wrong",
 2. Show it verbatim.
 3. Apply the requested change — targeted edit only. If the user asks to add a metric, add it; don't rewrite the whole entry.
 4. Show the full revised entry side by side with the current one if the change is significant, or just show the revised entry if it is a minor edit.
-5. Write on explicit confirmation. Replace only the entry block — from its `### [Title]` heading to the next `---` separator. Never touch anything outside that block.
+5. Write on explicit confirmation. Locate the matching YAML object in the array by its `title:` or `company:` key. Replace only that object. Never touch other objects in the same array.
 
 ---
 
@@ -204,17 +206,31 @@ Triggered by: "remove the X entry", "delete my internship at Y", "take out the Z
 1. Find and show the entry in full.
 2. Ask for explicit confirmation:
    > "This will permanently remove the [Title] entry from profile.md. Confirm?"
-3. Remove only that entry block on confirmation. Never remove section headers or adjacent entries.
+3. Remove only that YAML object from its array on confirmation. Never remove other objects in the same array.
 
 ---
 
-### Updating a META-INSTRUCCIÓN
+### Strategy
 
-Triggered by: "change the pairing rule for X", "update the framing for Y entry", "this entry should always appear with Z"
+Triggered by: "update my negotiation script", "add a deal breaker", "change my framing for consulting roles", "update my fit signals", "refine my cross-cutting advantage", "change my AI positioning"
 
-1. Find the entry and show its current `[META-INSTRUCCIÓN]` block.
-2. Apply the change — this is a behavioral directive for `ingest`, not visible in the CV.
-3. Show the updated META-INSTRUCCIÓN and confirm before writing.
+The `strategy` key lives inside `config/profile.md` (not a separate file). It contains:
+
+- `adaptive_framing` — per role-type emphasis and proof sources. Add, update, or remove a role-type entry.
+- `cross_cutting_advantage` — free-text block describing the candidate's unique positioning. Update if the narrative evolves.
+- `ai_positioning` — how to frame AI tool use honestly. Update if new tools or projects change the story.
+- `portfolio` — public URL and notes. Update when a portfolio goes live.
+- `negotiation_scripts` — named scripts for salary discussions. Add new scripts or update existing ones.
+- `deal_breakers` — hard constraints the user would reject an offer over. Add or remove items.
+- `fit_signals` — what energizes vs. drains the user. Add or remove items.
+
+Procedure for any strategy change:
+1. Read the relevant sub-key and show it.
+2. Apply the requested change.
+3. Show the full updated sub-key before writing.
+4. Write on explicit confirmation.
+
+**After saving:** check whether the change affects `config/portals.yml` scoring logic (e.g., a new deal-breaker may warrant adding a negative filter).
 
 ---
 
@@ -225,16 +241,14 @@ Triggered by: "change the pairing rule for X", "update the framing for Y entry",
 - **No writes without confirmation** — show the proposed change in full and wait for explicit approval at every step.
 - **Preserve structure** — do not alter section headers, separators (`---`), or any content outside the targeted block.
 - **No fabrication** — if the user provides a vague update ("my salary is now higher"), ask for the specific number rather than inferring.
-- **After any YAML edit**, check whether `config/portals.yml` or `config/strategy.md` should also be updated (e.g., a role change may affect portal search filters or archetype scoring).
+- **After any YAML edit**, check whether `config/portals.yml` should also be updated (e.g., a role change may affect portal search filters or archetype scoring in `strategy.adaptive_framing`).
 
 ---
 
 ## After Every Update
 
-Once all changes in the session are saved, summarize what changed and offer to regenerate the CV:
+Once all changes in the session are saved, summarize what changed:
 
 > "Done — [brief description of what changed / list of changes if multiple].
 >
-> Want me to regenerate your CV now with the updated profile?"
-
-If the user confirms, run `modes/ingest.md`. If they decline or don't respond clearly, do nothing — they can trigger it later with `/career-ops ingest`.
+> Your profile is updated. Run `/career-ops pdf` with a job description to generate a tailored CV."

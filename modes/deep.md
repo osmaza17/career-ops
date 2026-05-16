@@ -73,7 +73,7 @@ I need actionable information for the interview and to assess fit.
 - Who would I be working with and reporting to?
 
 ### 7. Candidate angle
-Given my profile (read from config/cv.md and config/profile.md for specific experience):
+Given my profile (read from config/profile.md for specific experience):
 - What unique value do I bring to this team given their current priorities?
 - Which of my projects or experiences are most directly relevant?
 - What story should I tell in the interview?

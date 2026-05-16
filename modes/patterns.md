@@ -9,7 +9,7 @@ Analyze all tracked applications to find patterns in outcomes and surface action
 - `data/applications.md` — Application tracker
 - `reports/` — Individual evaluation reports
 - `config/profile.md` — User profile (for recommendation context)
-- `config/strategy.md` — User archetypes and framing
+- `config/profile.md` (`strategy.*` keys) — User archetypes and framing
 - `config/portals.yml` — Portal config (for filter update recommendations)
 
 ## Minimum Threshold
@@ -132,14 +132,14 @@ Ask the user if they want to act on any recommendations:
 
 > "Want me to apply any of these recommendations? I can:
 > - Update `config/portals.yml` to filter out geo-restricted roles
-> - Set a score threshold in `config/strategy.md` for PDF generation
+> - Set a score threshold in `config/profile.md` for PDF generation
 > - Adjust archetype targeting based on what's converting
 >
 > Just say which ones, or 'all' to apply everything."
 
 If the user agrees:
 - For portal filter changes: edit `config/portals.yml`
-- For profile/archetype changes: edit `config/strategy.md` (NEVER `_shared.md`)
+- For profile/archetype changes: edit `config/profile.md` under `strategy.*` (NEVER `_shared.md`)
 - For score threshold: add to `config/profile.md` under a `patterns` key
 
 ## Outcome Classification

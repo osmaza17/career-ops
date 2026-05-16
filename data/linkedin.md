@@ -39,7 +39,7 @@ _Last updated: 2026-05-16_
 - Open to work: set to recruiters-only mode (recommended)
 
 ## Optimization History
-- 2026-05-16 — Full profile generated from career-ops data (profile.md + cv.md + strategy.md). All sections written: Headline (3 variants), About, Experience (4 roles), Projects (4 entries), Education (3 entries), Skills (60), Certifications, Featured recommendations.
+- 2026-05-16 — Full profile generated from career-ops data (profile.md — includes strategy content). All sections written: Headline (3 variants), About, Experience (4 roles), Projects (4 entries), Education (3 entries), Skills (60), Certifications, Featured recommendations.
 
 ## Effectiveness Tracking
 - (not yet tracked — profile not yet published with new copy)

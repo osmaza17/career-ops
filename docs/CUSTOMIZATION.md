@@ -11,18 +11,24 @@ Key sections:
 - **compensation**: Target range, minimum, currency
 - **location**: Country, timezone, visa status, on-site availability
 
-## Target Roles (config/strategy.md)
+## Target Roles & Strategy (config/profile.md)
 
-The archetype table in `config/strategy.md` determines how offers are scored and CVs are framed. Edit the table to match YOUR career targets:
+The archetype table in `config/profile.md` (under `target_roles.archetypes` and `strategy.adaptive_framing`) determines how offers are scored and CVs are framed. Edit these keys to match YOUR career targets:
 
-```markdown
-| Archetype | Thematic axes | What they buy |
-|-----------|---------------|---------------|
-| **Your Role 1** | key skills | what they need |
-| **Your Role 2** | key skills | what they need |
+```yaml
+target_roles:
+  archetypes:
+    - name: Your Role 1
+      thematic_axes: key skills
+      value_proposition: what they need
+
+strategy:
+  adaptive_framing:
+    - archetype: Your Role 1
+      proof_points: [project A, project B]
 ```
 
-Also update the "Adaptive Framing" table to map YOUR specific projects to each archetype.
+Also update `strategy.cross_cutting_advantage` to map YOUR specific projects across archetypes.
 
 ## Portals (config/portals.yml)
 

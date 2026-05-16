@@ -7,8 +7,8 @@ When the user asks to prep for an interview at a specific company+role, or when 
 1. **Company name** and **role title** (required)
 2. **Evaluation report** in `reports/` (if exists) — read for archetype, gaps, matched proof points
 3. **Story bank** at `interview-prep/story-bank.md` — read for existing prepared stories
-4. **CV** at `config/cv.md` + `config/profile.md` (markdown body) — read for proof points
-5. **Profile** at `config/profile.md` (YAML frontmatter) + `config/strategy.md` — read for candidate context
+4. **CV** at `config/profile.md` (body sections) — read for proof points
+5. **Profile** at `config/profile.md` (YAML frontmatter + `strategy.*` keys) — read for candidate context
 
 ## Step 1 — Research
 
@@ -74,7 +74,7 @@ Questions tied to the specific job description (archetype-aware).
 For each: the question, why they're likely asking it (what JD requirement it maps to), and the candidate's best angle.
 
 ### Background Red Flags
-Questions the interviewer will probably ask about gaps, transitions, or unusual elements in the candidate's background. Read `config/strategy.md` and `config/cv.md` to identify what might raise questions.
+Questions the interviewer will probably ask about gaps, transitions, or unusual elements in the candidate's background. Read `config/profile.md` (narrative + strategy keys) to identify what might raise questions.
 For each: the likely question, why it comes up, and a recommended framing (honest, specific, forward-looking — never defensive).
 
 ## Step 5 — Story Bank Mapping
@@ -87,7 +87,7 @@ For each: the likely question, why it comes up, and a recommended framing (hones
 - **partial**: story is adjacent, needs reframing
 - **none**: no existing story — flag for the user
 
-For each gap, suggest: "You need a story about {topic}. Consider: {specific experience from config/cv.md that could become a STAR+R story}."
+For each gap, suggest: "You need a story about {topic}. Consider: {specific experience from config/profile.md that could become a STAR+R story}."
 
 If the user wants to draft missing stories, help them build STAR+R format and append to `interview-prep/story-bank.md`.
 

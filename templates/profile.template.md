@@ -159,6 +159,4 @@ ___
 
 ## SECTION 9 — MISCELLANEOUS (archive)
 
-> **[META-INSTRUCCIÓN — SECTION]** Low-priority content documented for completeness and as a narrative reserve for interviews. Excluded from cv.md by default. Each entry may carry its own `[META-INSTRUCCIÓN]` specifying when and how to use it.
-
-*(Low-priority items: early experiences, extracurricular projects, archived material with limited CV value. Document here so nothing is lost; `ingest` will skip this section by default.)*
+*(Low-priority items: early experiences, extracurricular projects, archived material with limited CV value. Document here so nothing is lost — this section is excluded from the CV output by default.)*

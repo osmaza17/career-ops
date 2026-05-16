@@ -8,7 +8,7 @@ All base files for career-ops: copy-and-fill templates, canonical data schemas, 
 |------|---------|
 | `profile.template.md` | Base for `config/profile.md` — YAML frontmatter + empty trajectory corpus sections. Copy here to start onboarding. |
 | `portals.template.yml` | Base for `config/portals.yml` — 45+ pre-configured company and job board queries. Copy and customise for your target roles. |
-| `strategy.template.md` | Base for `config/strategy.md` — archetypes, narrative framing, negotiation scripts. Copy and fill with your specific targets. |
+| `strategy.template.md` | Reference template for strategy content (archetypes, adaptive framing, negotiation scripts). Content is now merged into `config/profile.md` under the `strategy:` key — use this template as a reference when editing that key. |
 
 ## Schemas (read-only, used by scripts)
 

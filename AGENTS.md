@@ -7,14 +7,14 @@
 There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 **User Layer (NEVER auto-updated, personalization goes HERE):**
-- `config/cv.md`, `config/profile.md`, `config/strategy.md`, `config/portals.yml`
+- `config/profile.md`, `config/portals.yml`
 - `data/*`, `reports/*`, `output/*`, `interview-prep/*`
 
 **System Layer (auto-updatable, DON'T put user data here):**
 - `modes/_shared.md`, `modes/offer-analysis.md`, all other modes
 - `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `templates/*`, `batch/*`
 
-**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/strategy.md` or `config/profile.md`. NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
+**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
 
 ## What is career-ops
 
@@ -29,7 +29,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
-| `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + full trajectory corpus (education, experience, projects). Created by `onboard`, read by every mode. |
+| `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + formatted CV sections (education, experience, projects, skills, languages). Created by `onboard`, populated by `analyze-sources`, read by every mode and by `latex` to generate `.tex` CVs. |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
@@ -46,32 +46,26 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 **Before doing ANYTHING else, check if the system is set up.** Run these checks silently every time a session starts:
 
 1. Does `config/profile.md` exist?
-2. Does `config/cv.md` exist?
-3. Does `config/strategy.md` exist (not just templates/strategy.template.md)?
-4. Does `config/portals.yml` exist (not just templates/portals.template.yml)?
-
-If `config/strategy.md` is missing, copy from `templates/strategy.template.md` silently. This is the user's customization file — it will never be overwritten by updates.
+2. Does `config/portals.yml` exist (not just templates/portals.template.yml)?
 
 **If ANY of these is missing, enter onboarding mode.** Do NOT proceed with evaluations, scans, or any other mode until the basics are in place. Follow this order exactly — each step depends on the previous one.
 
 #### Step 1: Profile (required — source of truth)
 
-If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles everything needed to build a complete profile: the YAML frontmatter (identity, target roles, narrative, compensation, languages) and the full trajectory corpus (education, experience, projects, associations, competitions, training). It also handles processing raw documents from `sources/` if the user has them.
+If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles everything needed to build a complete profile: the YAML frontmatter (identity, target roles, narrative, compensation, languages) and the formatted CV sections (education, experience, projects, associations, competitions, training). It also handles processing raw documents from `sources/` if the user has them.
+
+`config/profile.md` is both the data source AND the formatted CV — there is no intermediate file. `modes/latex.md` reads the CV sections directly from the body of `profile.md`.
 
 **Do not proceed to Step 2 until `config/profile.md` is complete.**
 
-#### Step 2: CV (generated from profile)
-
-If `config/cv.md` is missing but `config/profile.md` exists, run `modes/ingest.md` to generate cv.md from the profile. Do not ask the user to paste their CV manually — ingest reads profile.md and produces cv.md.
-
-#### Step 3: Portals (recommended)
+#### Step 2: Portals (recommended)
 
 If `config/portals.yml` is missing:
 > "I'll set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles?"
 
 Copy `templates/portals.template.yml` → `config/portals.yml`. If target roles are already in `config/profile.md`, update `title_filter.positive` to match.
 
-#### Step 4: Tracker
+#### Step 3: Tracker
 
 If `data/applications.md` doesn't exist, create it:
 ```markdown
@@ -81,7 +75,7 @@ If `data/applications.md` doesn't exist, create it:
 | --- | ---- | ------- | ---- | ----- | ------ | --- | ------ | ----- |
 ```
 
-#### Step 5: Ready
+#### Step 4: Ready
 
 Once all files exist, confirm:
 > "You're all set! You can now:
@@ -98,18 +92,18 @@ Then suggest automation:
 
 If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring `/career-ops scan` (or `/career-ops-scan` if using OpenCode). If those aren't available, suggest adding a cron job or remind them to run the scan periodically.
 
-**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/strategy.md` or `config/profile.md`. The system should get smarter with every interaction without putting personalization into system-layer files.
+**After every evaluation, learn.** If the user says "this score is too high, I wouldn't apply here" or "you missed that I have experience in X", update your understanding in `config/profile.md` (under the `strategy:` key or the relevant section). The system should get smarter with every interaction without putting personalization into system-layer files.
 
 ### Personalization
 
 This system is designed to be customized by YOU (AI Agent). When the user asks you to change archetypes, translate modes, adjust scoring, add companies, or modify negotiation scripts -- do it directly. You read the same files you use, so you know exactly what to edit.
 
 **Common customization requests:**
-- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/strategy.md` or `config/profile.md`
+- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/profile.md` (under `target_roles.archetypes` and `strategy.adaptive_framing`)
 - "Translate the modes to English" → edit all files in `modes/`
 - "Add these companies to my portals" → edit `config/portals.yml`
 - "Update my profile" → edit `config/profile.md`
-- "Adjust the scoring weights" → edit `config/strategy.md` for user-specific weighting, or edit `modes/_shared.md` and `batch/batch-prompt.md` only when changing the shared system defaults for everyone
+- "Adjust the scoring weights" → edit `config/profile.md` under the `strategy:` key for user-specific weighting, or edit `modes/_shared.md` and `batch/batch-prompt.md` only when changing the shared system defaults for everyone
 
 ### Language Modes
 
@@ -136,7 +130,6 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 | Batch processes offers                                      | `batch`                                           |
 | Asks about rejection patterns or wants to improve targeting | `patterns`                                        |
 | Asks about follow-ups or application cadence                | `followup`                                        |
-| Wants to rebuild cv.md from profile.md                    | `ingest`                                          |
 | Has raw academic documents to digest (project reports, internship descriptions, association activity files) | `analyze-sources` |
 | Needs to create or complete config/profile.md              | `onboard`                                         |
 | Wants to update profile after initial setup (roles, comp, narrative, new entries) | `update-profile` |
@@ -147,20 +140,19 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 
 ### CV Source of Truth
 
-- `config/profile.md` is the master source of truth — it feeds every mode and must be created first
-- `config/cv.md` is the formatted CV, generated from profile.md by `modes/ingest.md`
+- `config/profile.md` is the single source of truth — YAML frontmatter (identity, targets, compensation, languages) + formatted CV sections (Education, Experience, Student Life, Projects, Competitions, Skills, Languages). There is no intermediate CV file.
+- `modes/latex.md` reads the CV sections from `config/profile.md` directly.
 - `sources/` holds raw academic documents — read by `modes/onboard.md` (during initial setup), `modes/analyze-sources.md` (interactive single-file processing), and `modes/parallel-sources.md` (parallel batch processing). No other mode accesses this folder.
-- **NEVER hardcode metrics** — read them from these files at evaluation time
+- **NEVER hardcode metrics** — read them from `config/profile.md` at evaluation time
 
 ### Full pipeline (raw documents → CV)
 
 ```
-(first run)        →  onboard          →  config/profile.md
+(first run)        →  onboard          →  config/profile.md  (YAML + formatted CV sections)
 sources/           →  analyze-sources   →  config/profile.md  (single file, interactive)
 sources/           →  parallel-sources  →  config/profile.md  (batch, agents draft in parallel)
 config/profile.md  →  update-profile   →  config/profile.md  (edits after first run)
-config/profile.md  →  ingest           →  config/cv.md
-config/cv.md       →  pdf / latex      →  output/*.pdf
+config/profile.md  →  pdf / latex      →  output/*.pdf
 ```
 
 **Access rule:** `sources/` is accessed only by `modes/onboard.md` (initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode, agent, or script reads files from that folder.

@@ -8,9 +8,7 @@ These files contain your personal data, customizations, and work product. Update
 
 | File | Purpose |
 |------|---------|
-| `config/cv.md` | Your CV in markdown |
-| `config/profile.md` | Your single source of truth: YAML frontmatter (identity, targets, languages, comp) + markdown body (full trajectory corpus, proof points). Updated by `analyze-sources`. |
-| `config/strategy.md` | Your archetypes, narrative, negotiation scripts |
+| `config/profile.md` | Your single source of truth: YAML frontmatter (identity, targets, languages, comp, and strategy content including archetypes, adaptive framing, negotiation scripts, deal-breakers, and fit signals under the `strategy:` key) + formatted CV sections (education, experience, projects, skills, languages). Updated by `analyze-sources`. |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
 | `config/portals.yml` | Your customized company list |
 | `data/applications.md` | Your application tracker |
@@ -45,7 +43,6 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `modes/training.md` | Training evaluation instructions |
 | `modes/patterns.md` | Pattern analysis instructions |
 | `modes/followup.md` | Follow-up cadence instructions |
-| `modes/ingest.md` | Profile-to-CV ingestion instructions (reads `config/profile.md`, writes `config/cv.md`) |
 | `modes/latex.md` | LaTeX CV formatting and PDF generation |
 | `modes/interview-prep.md` | Company-specific interview intelligence |
 | `modes/analyze-sources.md` | Academic document digest instructions (sole reader of `sources/`, appends to and updates `config/profile.md`) |

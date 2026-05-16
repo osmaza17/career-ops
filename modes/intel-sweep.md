@@ -35,7 +35,7 @@ Wait for confirmation and role answer.
 
 ### Step 2 — Read candidate context
 
-Read `config/profile.md` (YAML frontmatter: `target_roles`, `narrative.proof_points`, `narrative.superpowers`) and `config/strategy.md` (archetype framing). Extract the top 2–3 proof points and the primary target archetype. Pass these to all workers so they can personalize Axis 7 (Candidate angle) of the deep research.
+Read `config/profile.md` (YAML frontmatter: `target_roles`, `narrative.proof_points`, `narrative.superpowers`, `strategy.adaptive_framing`). Extract the top 2–3 proof points and the primary target archetype. Pass these to all workers so they can personalize Axis 7 (Candidate angle) of the deep research.
 
 ### Step 3 — Spawn one research agent per company
 

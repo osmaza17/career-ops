@@ -62,20 +62,6 @@ async function checkPlaywright() {
   }
 }
 
-function checkCv() {
-  if (existsSync(join(projectRoot, 'config', 'cv.md'))) {
-    return { pass: true, label: 'config/cv.md found' };
-  }
-  return {
-    pass: false,
-    label: 'config/cv.md not found',
-    fix: [
-      'Create config/cv.md with your CV in markdown',
-      'Run /career-ops ingest to generate cv.md from config/profile.md, or see templates/sample-report.md for format reference',
-    ],
-  };
-}
-
 function checkProfile() {
   if (existsSync(join(projectRoot, 'config', 'profile.md'))) {
     return { pass: true, label: 'config/profile.md found' };
@@ -129,7 +115,6 @@ async function main() {
     checkNodeVersion(),
     checkDependencies(),
     await checkPlaywright(),
-    checkCv(),
     checkProfile(),
     checkPortals(),
     checkAutoDir('data'),

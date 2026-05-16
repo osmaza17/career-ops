@@ -22,36 +22,36 @@ Before running any phase, check for career-ops data. If these files exist, read 
 | File | What to extract |
 |------|----------------|
 | `config/profile.md` | `candidate.*` (identity, contact), `target_roles.*` (primary roles, archetypes), `narrative.*` (headline, exit_story, superpowers, proof_points), `languages` |
-| `config/cv.md` | Experience bullets (raw material for LinkedIn rewrite), Skills section (seed for 50+ LinkedIn skills), Education entries, Projects entries |
-| `config/strategy.md` | Archetype table (role-specific framing and proof point mapping), exit narrative |
+| `config/profile.md` (body) | Experience bullets (raw material for LinkedIn rewrite), Skills section (seed for 50+ LinkedIn skills), Education entries, Projects entries |
+| `config/profile.md` (`strategy.*`) | Archetype table (role-specific framing and proof point mapping via `strategy.adaptive_framing`), exit narrative |
 | `data/linkedin.md` | Previous session context — if it exists, skip questions already answered and confirm: "I have your profile context from last time — is everything still current?" |
 
 ### Data mapping: profile.md → LinkedIn sections
 
 | Interview question (Phase 1) | Answered by |
 |------------------------------|-------------|
-| Current role / institution | `candidate.*` + Education in `cv.md` |
+| Current role / institution | `candidate.*` + Education in `profile.md` body |
 | Target role | `target_roles.primary` |
 | What makes you different | `narrative.superpowers` |
-| Measurable proof points | `narrative.proof_points` + project bullets in `cv.md` |
-| Keyword targets | `target_roles.archetypes` names + `config/strategy.md` archetype keyword columns |
+| Measurable proof points | `narrative.proof_points` + project bullets in `profile.md` body |
+| Keyword targets | `target_roles.archetypes` names + `strategy.adaptive_framing` archetype keyword columns in `config/profile.md` |
 | Exit narrative / story | `narrative.exit_story` |
 | Credibility signals | Education entries + awards in `profile.md` YAML |
 | Languages | `languages` array |
-| Technical skills | Skills section in `cv.md` |
+| Technical skills | Skills section in `profile.md` body |
 
 ### CV voice vs. LinkedIn voice (CRITICAL)
 
-Never copy-paste bullets from `config/cv.md` into LinkedIn. The two formats have different voices:
+Never copy-paste bullets from `config/profile.md` into LinkedIn. The two formats have different voices:
 
-| CV (cv.md) | LinkedIn |
+| CV (profile.md body) | LinkedIn |
 |---|---|
 | Verb-first, no subject: `Optimised fleet sizing across 5 H₂ stations (Simul8)` | CAR format, first person welcome: `Led the fleet sizing analysis for Air Liquide's H₂ network — zero-stockout configuration validated across 12,000 simulation runs` |
 | 12 words or fewer, ends with period | 1-3 sentences, more narrative |
 | Tools in parentheses | Tools named naturally in prose |
 | No "I" | "I", "we", "our team" allowed |
 
-Use `cv.md` bullets as **raw material** — they contain the facts. Rewrite them in LinkedIn voice for every section.
+Use `profile.md` body bullets as **raw material** — they contain the facts. Rewrite them in LinkedIn voice for every section.
 
 ### About section source
 
@@ -200,7 +200,7 @@ Rules:
 - Start every bullet with a strong action verb (Led, Built, Designed, Grew, Reduced, Launched)
 - Include numbers in at least 60% of bullets
 - Don't list responsibilities — list achievements
-- **If career-ops files exist:** read the corresponding entry in `config/cv.md` for facts, then rewrite each bullet in CAR/first-person format. Never copy the CV bullet verbatim.
+- **If career-ops files exist:** read the corresponding entry in `config/profile.md` (body) for facts, then rewrite each bullet in CAR/first-person format. Never copy the CV bullet verbatim.
 
 ### Skills Section
 
@@ -208,7 +208,7 @@ Rules:
 - Pin top 3 to align with target role keywords
 - Order: most relevant to target role first
 - Include both hard skills (tools, technologies) and validated skills (methodologies, frameworks)
-- **If career-ops files exist:** seed from the Skills section in `config/cv.md`, then expand to 50+ by adding adjacent searchable terms from `target_roles.archetypes` keyword columns in `config/strategy.md`
+- **If career-ops files exist:** seed from the Skills section in `config/profile.md` (body), then expand to 50+ by adding adjacent searchable terms from `target_roles.archetypes` and `strategy.adaptive_framing` keyword columns in `config/profile.md`
 
 ### Featured Section
 
@@ -282,7 +282,7 @@ _Last updated: {YYYY-MM-DD}_
 
 **Effectiveness feedback loop**: When the user reports results (more profile views, recruiter messages, connection quality), record that in `## Effectiveness Tracking`. Future sessions can double down on what's working and drop what isn't.
 
-**Career change sync**: When the user gets a new job or changes direction, update `data/linkedin.md` — and offer to re-run `modes/ingest.md` to regenerate `config/cv.md` if `config/profile.md` was updated.
+**Career change sync**: When the user gets a new job or changes direction, update `data/linkedin.md` — and offer to run `modes/update-profile.md` to update `config/profile.md` with the new role.
 
 ---
 

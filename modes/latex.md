@@ -6,8 +6,8 @@
 
 ## Pipeline
 
-1. Read `config/cv.md` as source of truth
-2. Read the YAML frontmatter of `config/profile.md` (`candidate.*` and `location.*` keys) for candidate identity and contact info
+1. Read `config/profile.md` as a single YAML document. CV content lives in the top-level keys: `summary`, `education`, `experience`, `student_life`, `projects`, `competitions`, `skills`, `hobbies`. Identity and contact are in `candidate.*`. Languages are in the top-level `languages` array.
+2. Read `candidate.*` for identity and contact info; read `location.*` for location data
 3. Ask the user for the JD if not already in context (text or URL)
 4. Extract 15-20 keywords from the JD
 5. Detect JD language → CV language (EN default, FR is usual also)
@@ -79,6 +79,7 @@ Only one active (uncommented in the LaTeX `COLORS` block); the other three comme
 | 4 | Slate + Copper | `#3C3C3C` | `#B87333` | Tech, product, startups, data/AI profiles. |
 
 `muted` and `bodytext` → `#555555` fixed across all palettes. Do not modify.
+`datetext` → `#777777` fixed — used exclusively for dates in all entry commands. Do not modify. Mandatory: every date argument in every `\cventry*` command must use `\textcolor{datetext}`, never `\textcolor{muted}`.
 
 </color-palettes>
 
@@ -131,6 +132,7 @@ The preamble defines all packages, colors, commands and environments. Copy it in
 % Fixed — do not touch:
 \definecolor{muted}{HTML}{555555}
 \definecolor{bodytext}{HTML}{555555}
+\definecolor{datetext}{HTML}{777777}  % mandatory — dates only; always lighter than muted
 
 %==================== HYPERLINKS =========================
 \hypersetup{colorlinks=true, urlcolor=accent, linkcolor=accent}
@@ -160,42 +162,42 @@ The preamble defines all packages, colors, commands and environments. Copy it in
 %   #4 dates                → line 2 left, muted small
 \newcommand{\cventry}[4]{%
     \noindent{\normalsize\textbf{\MakeUppercase{#1} · #2}}\\%
-    \noindent{\small\textcolor{muted}{#4}}\hfill{\small\textcolor{muted}{#3}}\par\vspace{-4pt}%
+    \noindent{\small\textcolor{datetext}{#4}}\hfill{\small\textcolor{muted}{#3}}\par\vspace{-4pt}%
 }
 
 % \cventryformation — Formation (4-arg)
 %   #1 degree title         → line 1 left, bold
 %   #2 institution          → line 2 left, italic
-%   #3 dates                → line 1 right, muted
+%   #3 dates                → line 1 right, datetext
 %   #4 country              → line 2 right, italic muted
 \newcommand{\cventryformation}[4]{%
-    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{muted}{\small #3}\\%
+    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{datetext}{\small #3}\\%
     \noindent{\small\itshape #2}\hfill{\small\itshape\textcolor{muted}{#4}}\par\vspace{-4pt}%
 }
 
 % \cventryprojet — Projets & Innovation (3-arg, no location)
 %   #1 project title        → line 1 left, bold
 %   #2 context/subtitle     → line 2 left, italic
-%   #3 dates                → line 1 right, muted
+%   #3 dates                → line 1 right, datetext
 \newcommand{\cventryprojet}[3]{%
-    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{muted}{\small #3}\\%
+    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{datetext}{\small #3}\\%
     {\small\itshape #2}\par\vspace{-4pt}%
 }
 
 % \cventryassociatif — Vie Étudiante (2-arg, no location)
 %   #1 role title           → line 1 left, bold
-%   #2 dates                → line 2 left, muted (acts as subtitle)
+%   #2 dates                → line 2 left, datetext (acts as subtitle)
 \newcommand{\cventryassociatif}[2]{%
     \noindent{\normalsize\textbf{#1}}\\%
-    {\small\textcolor{muted}{#2}}\par\vspace{-4pt}%
+    {\small\textcolor{datetext}{#2}}\par\vspace{-4pt}%
 }
 
 % \cventrycontest — Concours & Hackathons (3-arg, no location)
 %   #1 contest/award title  → line 1 left, bold
 %   #2 context/organizer    → line 2 left, italic
-%   #3 dates                → line 1 right, muted
+%   #3 dates                → line 1 right, datetext
 \newcommand{\cventrycontest}[3]{%
-    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{muted}{\small #3}\\%
+    \noindent{\normalsize\textbf{#1}}\hfill\textcolor{datetext}{\small #3}\\%
     {\small\itshape #2}\par\vspace{-4pt}%
 }
 
@@ -498,24 +500,24 @@ Sections are distributed across two columns:
 
 Apply Headline structure from `modes/writing.md §9` and Summary structure from `modes/writing.md §15`.
 
+**Data source:** read from `config/profile.md` YAML keys:
+- `candidate.full_name` → `\cvname{}`
+- `narrative.headline` → `\cvheadline{}` (adapt to CV language and JD archetype)
+- `summary` (top-level string) → body of the `\section*{Profile}` paragraph, rewritten with JD keywords per §4b
+
 ```latex
 \begin{center}
-    \cvname{Óscar Martínez Zamora}\\[3pt]
-    \cvheadline{Industrial Engineer specialized in Operations Research \& Risk Analytics}
+    \cvname{<candidate.full_name>}\\[3pt]
+    \cvheadline{<narrative.headline — adapted to CV language and role archetype>}
 \end{center}
 \vspace{2pt}{\color{accent}\hrule height 0.8pt}\vspace{4pt}
 
 \section*{Profile}
 \small
 % PROFILE SECTION — 3 sentences (S1 Identity, S2 Track record, S3 Aspiration).
+% Source: summary: string from config/profile.md, rewritten with JD keywords.
 % See modes/writing.md §15 for the full structure and rules.
-Engineering student at CentraleSupélec, Université Paris-Saclay,
-specializing in Operations Research and Risk Analytics,
-seeking an alternance in operations consulting from September 2026.
-My background combines quantitative modelling and real client delivery:
-fleet sizing for Air Liquide, operational diagnosis of an industrial SME,
-and a go-to-market strategy ranked \textbf{1\textsuperscript{st}} among 80 teams.
-Seeking to bring this dual competence to operations and supply chain transformation projects.
+<rewritten summary paragraph — 3 sentences injecting JD keywords, no invented claims>
 
 \vspace{2pt}
 ```
@@ -524,29 +526,42 @@ Seeking to bring this dual competence to operations and supply chain transformat
 
 ### 7.2 Contact
 
+**Data source:** read from `config/profile.md` YAML keys:
+- `location.country` → country label after `\faMapMarker`
+- `candidate.phone_fr` → first phone line (omit if null)
+- `candidate.phone_es` → second phone line (omit if null)
+- `candidate.email` → mailto href and display text
+- `candidate.linkedin` → full URL; display text is the URL path segment after `/in/` (strip trailing slash)
+
+Phone format: keep digits as-is from YAML but insert spaces for readability (e.g., `+33 7 65 50 64 85`). Omit any phone field that is null or empty.
+
 ```latex
 \section*{Contact}
 \footnotesize
-\faMapMarker\ France\\[2pt]
-\faPhone\ +33 7 65 50 64 85\\[2pt]
-\faPhone\ +34 608 33 78 72\\[2pt]
-\faEnvelope\ \href{mailto:oscar.martinez-zamora@student-cs.fr}%
-    {oscar.martinez-zamora@student-cs.fr}\\[2pt]
-\faLinkedin\ \href{https://www.linkedin.com/in/oscarmartinezzamora/}%
-    {oscarmartinezzamora}
+\faMapMarker\ <location.country>\\[2pt]
+\faPhone\ <candidate.phone_fr formatted>\\[2pt]
+\faPhone\ <candidate.phone_es formatted>\\[2pt]
+\faEnvelope\ \href{mailto:<candidate.email>}%
+    {<candidate.email — escape underscores with \_>}\\[2pt]
+\faLinkedin\ \href{<candidate.linkedin>}%
+    {<linkedin path segment — e.g. oscarmartinezzamora>}
 ```
 
 ---
 
 ### 7.3 Langues
 
+**Data source:** iterate the `languages:` array in `config/profile.md`. Each item has:
+- `language` → language name (translate to CV language if FR posting)
+- `level` → level description
+
+Emit one `\lang{}{}` line per item, in the order they appear in the array. Translate language names to match CV language (e.g., for a French CV: "Spanish" → "Espagnol", "English" → "Anglais", "French" → "Français", "German" → "Allemand").
+
 ```latex
 \section*{Langues}
 \begin{cvlanguages}
-    \lang{Espagnol}{natif}
-    \lang{Anglais}{Cambridge C1 Advanced}
-    \lang{Fran\c{c}ais}{DELF B2}
-    \lang{Allemand}{A2}
+    % For each item in languages[]:
+    \lang{<language — translated to CV language>}{<level>}
 \end{cvlanguages}
 ```
 
@@ -556,16 +571,26 @@ Seeking to bring this dual competence to operations and supply chain transformat
 
 Environment: `cvbulletsexp` (►).
 
+**Data source:** iterate the `experience:` array in `config/profile.md`. Each item has:
+- `company` → `\cventry` arg 1 (company name; `\MakeUppercase` applied automatically)
+- `post` → `\cventry` arg 2 (role title; translate to CV language)
+- `country` → `\cventry` arg 3
+- `date` → `\cventry` arg 4
+- `bullets` → list of bullet strings; reorder by JD relevance; inject keywords per §4b
+
+Emit one `\cventry` + `\begin{cvbulletsexp}...\end{cvbulletsexp}` block per item. Escape all user text per §3c.
+
 ```latex
 \section*{Exp\'erience Professionnelle}
 
-\cventry{Bucarest 54}
-        {Stage en G\'enie Civil}
-        {Espagne}
-        {juin -- ao\^ut 2025}
+% For each item in experience[]:
+\cventry{<company>}
+        {<post — translated to CV language>}
+        {<country>}
+        {<date>}
 \begin{cvbulletsexp}
-    \item{} Con\c{c}u les installations \'electriques, plomberie et CVC
-            d'un b\^atiment r\'esidentiel (CYPE, CTE espagnol).
+    % For each bullet in bullets[]:
+    \item{} <bullet — translated, keyword-injected, escaped>
 \end{cvbulletsexp}
 ```
 
@@ -575,23 +600,21 @@ Environment: `cvbulletsexp` (►).
 
 Environment: `cvbulletsassociatif` (►). No extra `\vspace` between entries — use the same spacing as Projects and Formation.
 
+**Data source:** iterate the `student_life:` array in `config/profile.md`. Each item has:
+- `title` → `\cventryassociatif` arg 1 (role title; translate to CV language)
+- `date` → `\cventryassociatif` arg 2
+- `bullets` → list of bullet strings; select the 1–3 most JD-relevant; translate and escape
+
+Emit one `\cventryassociatif` + `\begin{cvbulletsassociatif}...\end{cvbulletsassociatif}` block per item included. Select 2–3 entries maximum to respect the 1-page constraint.
+
 ```latex
 \section*{Vie \'Etudiante}
 
-\cventryassociatif{Secr\'etaire G\'en\'eral, BDI}{f\'ev. 2026 -- f\'ev. 2027}
+% For each item in student_life[] (select 2–3 most relevant):
+\cventryassociatif{<title — translated to CV language>}{<date>}
 \begin{cvbulletsassociatif}
-    \item{} Coordination d'une association de \textbf{35 membres}
-            pour l'int\'egration des \'etudiants internationaux.
-    \item{} Pilotage du staffing \'ev\'enementiel
-            (World Week, \textbf{200+} participants).
-    \item{} Gestion de \textbf{3 partenariats} corporate actifs
-            (McKinsey Paris, McKinsey Casablanca, Soci\'et\'e G\'en\'erale).
-\end{cvbulletsassociatif}
-
-\cventryassociatif{Tr\'esorier, Club Espagnol}{f\'ev. 2026 -- f\'ev. 2027}
-\begin{cvbulletsassociatif}
-    \item{} Gestion financi\`ere et n\'egociation de subventions
-            devant le CA du BDI (\textbf{300\,€} obtenus).
+    % For each selected bullet in bullets[]:
+    \item{} <bullet — translated, keyword-injected, escaped>
 \end{cvbulletsassociatif}
 ```
 
@@ -601,14 +624,17 @@ Environment: `cvbulletsassociatif` (►). No extra `\vspace` between entries —
 
 Skill rows use `\cvskill` inside a `cvskillsblock` environment. The environment hardcodes zero spacing between rows — do not add any `\vspace` between rows.
 
+**Data source:** iterate the `skills:` array in `config/profile.md`. Each item has:
+- `category` → `\cvskill` arg 1 (label; translate to CV language)
+- `items` → `\cvskill` arg 2 (comma-separated tool/skill list; escape `&` as `\&`)
+
+Emit one `\cvskill{}{}` line per item in the array order. Prioritise or reorder categories to surface JD-relevant skills first.
+
 ```latex
 \section*{Comp\'etences}
 \begin{cvskillsblock}
-    \cvskill{Programmation}{Python, SQL, MATLAB}
-    \cvskill{Optimisation}{Gurobi, Simul8, MILP, MCDA}
-    \cvskill{Analyse \& BI}{Power BI, Excel, AutoCAD, CYPE}
-    \cvskill{Outils}{LaTeX, Office Suite}
-    \cvskill{IA \& Automation}{Claude Code, n8n, LLM}
+    % For each item in skills[]:
+    \cvskill{<category — translated to CV language>}{<items — escape & as \&>}
 \end{cvskillsblock}
 ```
 
@@ -618,26 +644,26 @@ Skill rows use `\cvskill` inside a `cvskillsblock` environment. The environment 
 
 Environment: `cvbulletsformation` (►).
 
+**Data source:** iterate the `education:` array in `config/profile.md`. Each item has:
+- `title` → `\cventryformation` arg 1 (degree title; translate to CV language)
+- `subtitle` → `\cventryformation` arg 2 (institution name)
+- `date` → `\cventryformation` arg 3
+- `country` → `\cventryformation` arg 4
+- `bullets` → list of bullet strings; select 1–2 most relevant per entry; translate and escape
+
+Emit one `\cventryformation` + `\begin{cvbulletsformation}...\end{cvbulletsformation}` block per item, in the order they appear in the array.
+
 ```latex
 \section*{Formation}
 
-\cventryformation{Dipl\^ome Ing\'enieur G\'en\'eraliste}{CentraleSup\'elec, Universit\'e Paris-Saclay}{sept. 2025 -- avr. 2027}{France}
+% For each item in education[]:
+\cventryformation{<title — translated to CV language>}
+                 {<subtitle — institution name>}
+                 {<date>}
+                 {<country — translated to CV language>}
 \begin{cvbulletsformation}
-    \item{} Sp\'ecialisation \emph{Operations Research and Risk Analytics}.
-    \item{} \textbf{Premier \'etudiant} du Master G\'enie Industriel de l'UPV
-            \`a int\'egrer ce programme d'\'echange (Universit\'e Paris-Saclay).
-\end{cvbulletsformation}
-
-\cventryformation{Master Ing\'enierie Industrielle}{Universitat Polit\`ecnica de Val\`encia}{sept. 2024 -- avr. 2027}{Espagne}
-\begin{cvbulletsformation}
-    \item{} Moyenne \textbf{7,7/10}, top 10\,\% de la promotion.
-\end{cvbulletsformation}
-
-\cventryformation{Licence Ing\'enierie Industrielle}{Universitat Polit\`ecnica de Val\`encia}{sept. 2020 -- juil. 2024}{Espagne}
-\begin{cvbulletsformation}
-    \item{} Moyenne \textbf{8,7/10}, top 2\,\% sur 311 \'etudiants ;
-            Prix Haute Performance Acad\'emique UPV.
-    \item{} Semestre Erasmus \`a Politechnika Krakowska (Cracovie).
+    % For each selected bullet in bullets[] (1–2 per entry):
+    \item{} <bullet — translated, keyword-injected, escaped>
 \end{cvbulletsformation}
 ```
 
@@ -649,41 +675,22 @@ Environment: `cvbullets` (►).
 
 **Title pattern** and **Subtitle pattern**: see `modes/writing.md §19`. No tools in the subtitle; tools go in bullets only.
 
+**Data source:** iterate the `projects:` array in `config/profile.md`. Each item has:
+- `title` → `\cventryprojet` arg 1 (≤ 45 chars; see §3d; translate to CV language; escape per §3c)
+- `subtitle` → `\cventryprojet` arg 2 (context line; translate to CV language; no tools here — move tools to bullets)
+- `date` → `\cventryprojet` arg 3
+- `bullets` → list of bullet strings; select the top 3-4 most JD-relevant projects (step 8 of pipeline); within each project select 2–3 bullets ordered by JD relevance; translate, inject keywords, escape
+
 ```latex
 \section*{Projets \& Innovation}
 
-\cventryprojet{Simulation supply chain H$_2$, Air Liquide}
-              {ST7 Optimisation et gestion de flux, CentraleSup\'elec}
-              {avr. 2026}
+% For each selected project in projects[] (top 3–4 by JD relevance):
+\cventryprojet{<title — ≤ 45 chars, translated, escaped>}
+              {<subtitle — translated, escaped, no tool names>}
+              {<date>}
 \begin{cvbullets}
-    \item{} Recommandation d'une configuration de flotte
-            \textbf{z\'ero-rupture} pour Air Liquide (mobilit\'e H$_2$).
-    \item{} Conception d'un algorithme de dispatch propri\'etaire
-            et d'une simulation supply chain (Simul8) pour 5~stations
-            de livraison.
-    \item{} D\'etermination de la configuration minimale viable de
-            flotte par analyse de capacit\'e et de sensibilit\'e.
-\end{cvbullets}
-
-\cventryprojet{\'Etude carbone des biod\'echets}
-              {P\^ole Projet S7, CentraleSup\'elec}
-              {sept. 2025 -- f\'ev. 2026}
-\begin{cvbullets}
-    \item{} Recommandation de la m\'ethanisation face au Bokashi
-            pour la gestion des biod\'echets en France.
-    \item{} Comparaison de trois solutions de valorisation sur axes
-            co\^ut, carbone et r\'eglementaire (loi AGEC 2024).
-\end{cvbullets}
-
-\cventryprojet{Diagnostic op\'erationnel, Veganic}
-              {Am\'elioration des op\'erations d'une PME agro-chimique}
-              {f\'ev. -- juin 2025}
-\begin{cvbullets}
-    \item{} Proposition de 5~am\'eliorations projetant \textbf{+68\,\%}
-            de d\'ebit en palettisation et utilisation des rayonnages
-            de 60 \`a 90\,\%.
-    \item{} Mod\'elisation du VAN de l'investissement optimal :
-            retour en 18~mois \`a 10\,\% d'actualisation.
+    % For each selected bullet (2–3 per project):
+    \item{} <bullet — translated, keyword-injected, escaped>
 \end{cvbullets}
 ```
 
@@ -697,25 +704,22 @@ Include only if:
 
 Use `\cventrycontest` (same 3-arg structure as `\cventryprojet`) and `cvbulletscontest` environment.
 
+**Data source:** iterate the `competitions:` array in `config/profile.md`. Each item has:
+- `title` → `\cventrycontest` arg 1 (≤ 45 chars; see §3d; translate to CV language; escape per §3c)
+- `subtitle` → `\cventrycontest` arg 2 (organizer/context; translate to CV language)
+- `date` → `\cventrycontest` arg 3
+- `bullets` → list of bullet strings; select 1–2 most JD-relevant; translate, inject keywords, escape
+
 ```latex
 \section*{Concours \& Hackathons}
 
-\cventrycontest{1\textsuperscript{er} Prix, Programme Akademia}
-               {Fondation Bankinter, Hackathon national, 80 \'equipes}
-               {f\'ev. 2025}
+% For each item in competitions[] that meets inclusion criteria (a) or (b):
+\cventrycontest{<title — ≤ 45 chars, translated, escaped>}
+               {<subtitle — organizer/context, translated, escaped>}
+               {<date>}
 \begin{cvbulletscontest}
-    \item{} Conception d'un mod\`ele MCDA \'evaluant \textbf{36\,000+}
-            zones de recensement espagnoles sur 7 crit\`eres
-            d\'emographiques, \'economiques et climatiques.
-    \item{} \'Elaboration d'un business model B2C complet :
-            canal de distribution, \'economies unitaires, roadmap produit.
-\end{cvbulletscontest}\vspace{4pt}
-
-\cventrycontest{Finalist, Case Competition Name}
-               {Organizer, Category}
-               {nov. 2024}
-\begin{cvbulletscontest}
-    \item{} One-line achievement with a verifiable metric.
+    % For each selected bullet (1–2 per entry):
+    \item{} <bullet — translated, keyword-injected, escaped>
 \end{cvbulletscontest}
 ```
 

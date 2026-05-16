@@ -18,12 +18,12 @@ User has multiple new files in `sources/` to process. Running `analyze-sources` 
 
 List all files in `sources/` (excluding `README.md`).
 
-Read `config/profile.md` and collect every `**Fuente:**` field value (exact filenames).
+Read `config/profile.md`. Collect every `title:` and `company:` value from each CV array (`experience`, `student_life`, `projects`, `competitions`, `additional_training`).
 
 Classify each source file:
-- **NEW** — no Fuente match in profile.md → spawn an agent
-- **ALREADY ANALYZED** — Fuente match found → skip (list at the end)
-- **PROBABLE MATCH** — no Fuente field but a legacy entry title or company name matches → flag, ask user to confirm before spawning
+- **NEW** — no matching title/company in any array → spawn an agent
+- **ALREADY ANALYZED** — matching title or company found → skip (list at the end)
+- **PROBABLE MATCH** — partial or fuzzy match → flag, ask user to confirm before spawning
 
 Present inventory:
 
@@ -35,7 +35,7 @@ Will process (NEW — {n} files):
   2. {filename} — probable type: ...
 
 Already analyzed (skipping):
-  - {filename} → existing entry: "{title}" in SECCIÓN X
+  - {filename} → existing entry: "{title/company}" in [{yaml_key}]
 
 Confirm to spawn one reader agent per new file?
 ```
@@ -55,19 +55,18 @@ DO NOT write to any file. Return only a JSON result.
 SOURCE FILE: sources/{filename}
 
 READ THESE FILES FIRST:
-  config/profile.md         existing entries (to understand language and structure)
-  modes/analyze-sources.md  extraction rules, recruiter lens, entry templates, META-INSTRUCCIÓN guide
+  config/profile.md         existing entries (to understand language and YAML structure)
+  modes/analyze-sources.md  extraction rules, recruiter lens, YAML entry templates
 
 TASK:
 1. Read sources/{filename} using the reading strategy in modes/analyze-sources.md §Step 2.5.
    (Short docs: read in full. Long docs: cover → summary → conclusions → results → intro.)
 2. Classify the document type: Project | Experience | Association | Competition | Training | Other
-3. Determine the target section (SECCIÓN 4/5/6/7/8) per the type table in modes/analyze-sources.md §Step 2.
+3. Determine the target YAML array (experience / student_life / projects / competitions / additional_training) per the type table in modes/analyze-sources.md §Step 2.
 4. Apply the recruiter lens from §Step 3 throughout — extract only what a non-specialist hiring
    manager would find useful. Suppress all technical minutiae.
 5. Extract facts per §Step 4 using the template for the detected type.
-6. Draft the full profile.md entry using the correct template from §Step 6, including the
-   META-INSTRUCCIÓN block (see §META-INSTRUCCIÓN Writing Guide).
+6. Draft the YAML entry object using the correct template from §Step 6 of modes/analyze-sources.md.
 7. Identify gaps:
    - BLOCKING: facts needed but absent from the document (entry cannot be finalized without them)
    - ENHANCING: optional improvements (entry is usable without them)
@@ -77,8 +76,8 @@ Return this JSON (no other output):
 {
   "filename": "{filename}",
   "type": "{type}",
-  "target_section": "SECCIÓN {n}",
-  "draft": "{full markdown entry as it would appear in profile.md — escape newlines as \\n}",
+  "target_section": "{yaml_key — e.g. experience, projects, student_life, competitions, additional_training}",
+  "draft": "{full YAML entry object as it would be appended to the target array — escape newlines as \\n}",
   "blocking_gaps": ["{question1}", "{question2}"],
   "enhancing_questions": ["{q1}", "{q2}"],
   "confidence": "{high|medium|low|failed}",
@@ -138,9 +137,9 @@ Apply user edits, show the full revised entry each round (never just the diff). 
 
 On approval:
 1. Run the Quality Check from `modes/analyze-sources.md §Quality Check Before Appending`.
-2. Append the approved entry to the correct SECCIÓN in `config/profile.md`.
-3. Confirm: `Added to profile.md → {target_section}.`
-4. Check if a YAML frontmatter update is warranted (strong proof point or new award) — follow `modes/analyze-sources.md §YAML Frontmatter Updates`.
+2. Append the approved YAML object to the correct array in `config/profile.md`.
+3. Confirm: `Added to profile.md → [{target_section}] array.`
+4. Check if a metadata update is warranted (strong proof point or new award) — follow `modes/analyze-sources.md §Profile Metadata Updates`.
 
 ### Step 5 — Handle failed workers
 
@@ -163,14 +162,14 @@ Done.
   {m} entries skipped
   {k} files failed (listed above)
 
-Want me to regenerate your CV now with the updated profile? (runs modes/ingest.md)
+Your profile is updated. Run `/career-ops pdf` with a job description to generate a tailored CV.
 ```
 
 ---
 
 ## Notes
 
-- Workers apply all rules from `modes/analyze-sources.md` — recruiter lens, entry templates, META-INSTRUCCIÓN writing guide, minor contribution handling.
+- Workers apply all rules from `modes/analyze-sources.md` — recruiter lens, formatted CV entry templates, minor contribution handling.
 - Workers NEVER write to `config/profile.md`. The conductor writes only on explicit user approval per entry.
 - If a worker detects a thin contribution ("one team member among fifteen, no defined deliverable"), it returns `confidence: low` and surfaces the options from `modes/analyze-sources.md §Minor contribution handling` as part of its notes.
 - Language rule: entries are written in the language of `config/profile.md`, consistent with the existing content.

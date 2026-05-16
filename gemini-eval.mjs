@@ -4,7 +4,7 @@
  *
  * A free-tier alternative to the Claude-based pipeline.
  * Reads evaluation logic from modes/offer-analysis.md + modes/_shared.md,
- * reads the user's resume from cv.md, and evaluates a Job Description
+ * reads the user's resume from config/profile.md, and evaluates a Job Description
  * passed as a command-line argument.
  *
  * Usage:
@@ -44,7 +44,7 @@ const PATHS = {
   offerAnalysis: join(ROOT, 'modes', 'offer-analysis.md'),
   // Canonical skill path referenced in Issue #344
   evaluate: join(ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
-  cv:       join(ROOT, 'config', 'cv.md'),
+  cv:       join(ROOT, 'config', 'profile.md'),
   reports:  join(ROOT, 'reports'),
   tracker:  join(ROOT, 'data', 'applications.md'),
 };
@@ -165,7 +165,7 @@ console.log('\n📂  Loading context files...');
 
 const sharedContext  = readFile(PATHS.shared,   'modes/_shared.md');
 const offerAnalysisLogic = readFile(PATHS.offerAnalysis, 'modes/offer-analysis.md');
-const cvContent      = readFile(PATHS.cv,       'cv.md');
+const cvContent      = readFile(PATHS.cv,       'config/profile.md');
 
 // ---------------------------------------------------------------------------
 // Build the system prompt (mirrors the Claude skill router logic)
@@ -186,7 +186,7 @@ EVALUATION MODE (offer-analysis.md)
 ${offerAnalysisLogic}
 
 ═══════════════════════════════════════════════════════
-CANDIDATE RESUME (cv.md)
+CANDIDATE RESUME (config/profile.md)
 ═══════════════════════════════════════════════════════
 ${cvContent}
 

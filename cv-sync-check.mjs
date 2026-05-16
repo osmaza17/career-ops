@@ -4,10 +4,9 @@
  * cv-sync-check.mjs — Validates that the career-ops setup is consistent.
  *
  * Checks:
- * 1. cv.md exists
- * 2. config/profile.md exists and has required fields
- * 3. No hardcoded metrics in _shared.md or batch/batch-prompt.md
- * 4. profile.md freshness (if exists)
+ * 1. config/profile.md exists and has required fields
+ * 2. No hardcoded metrics in _shared.md or batch/batch-prompt.md
+ * 3. profile.md freshness (if exists)
  */
 
 import { readFileSync, existsSync, statSync } from 'fs';
@@ -20,18 +19,7 @@ const projectRoot = __dirname;
 const warnings = [];
 const errors = [];
 
-// 1. Check cv.md exists
-const cvPath = join(projectRoot, 'config', 'cv.md');
-if (!existsSync(cvPath)) {
-  errors.push('config/cv.md not found. Create it with your CV in markdown format.');
-} else {
-  const cvContent = readFileSync(cvPath, 'utf-8');
-  if (cvContent.trim().length < 100) {
-    warnings.push('config/cv.md seems too short. Make sure it contains your full CV.');
-  }
-}
-
-// 2. Check profile.md exists
+// 1. Check profile.md exists
 const profilePath = join(projectRoot, 'config', 'profile.md');
 if (!existsSync(profilePath)) {
   errors.push('config/profile.md not found. Copy from templates/profile.template.md and fill in your details, or run the onboarding flow.');
@@ -46,7 +34,7 @@ if (!existsSync(profilePath)) {
   }
 }
 
-// 3. Check for hardcoded metrics in prompt files
+// 2. Check for hardcoded metrics in prompt files
 const filesToCheck = [
   { path: join(projectRoot, 'modes', '_shared.md'), name: '_shared.md' },
   { path: join(projectRoot, 'batch', 'batch-prompt.md'), name: 'batch-prompt.md' },
@@ -66,12 +54,12 @@ for (const { path, name } of filesToCheck) {
     if (line.includes('NEVER hardcode') || line.startsWith('#') || line.startsWith('<!--')) continue;
     const matches = line.match(metricPattern);
     if (matches) {
-      warnings.push(`${name}:${i + 1} — Possible hardcoded metric: "${matches[0]}". Should this be read from config/cv.md or config/profile.md?`);
+      warnings.push(`${name}:${i + 1} — Possible hardcoded metric: "${matches[0]}". Should this be read from config/profile.md?`);
     }
   }
 }
 
-// 4. Check profile.md freshness
+// 3. Check profile.md freshness
 const digestPath = join(projectRoot, 'config', 'profile.md');
 if (existsSync(digestPath)) {
   const stats = statSync(digestPath);

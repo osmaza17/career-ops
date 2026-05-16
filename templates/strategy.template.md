@@ -32,16 +32,16 @@
 
 <!-- Map YOUR projects to each archetype. Example:
      | Platform / LLMOps | My monitoring dashboard project | config/profile.md |
-     | Agentic | My chatbot with HITL escalation | cv.md section 3 | -->
+     | Agentic | My chatbot with HITL escalation | config/profile.md — Projects | -->
 
 | If the role is... | Emphasize about you... | Proof point sources |
 |-------------------|------------------------|---------------------|
-| Platform / LLMOps | Production systems builder, observability, evals | config/profile.md + cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability | config/profile.md + cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics | cv.md + config/profile.md |
-| Solutions Architect | System design, integrations, enterprise-ready | config/profile.md + cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md + config/profile.md |
-| AI Transformation Lead | Change management, team enablement, adoption | cv.md + config/profile.md |
+| Platform / LLMOps | Production systems builder, observability, evals | config/profile.md |
+| Agentic / Automation | Multi-agent orchestration, HITL, reliability | config/profile.md |
+| Technical AI PM | Product discovery, PRDs, metrics | config/profile.md |
+| Solutions Architect | System design, integrations, enterprise-ready | config/profile.md |
+| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | config/profile.md |
+| AI Transformation Lead | Change management, team enablement, adoption | config/profile.md |
 
 ## Your Exit Narrative
 

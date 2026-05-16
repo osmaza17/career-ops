@@ -22,7 +22,7 @@ Table with:
 
 ## Block B — CV Match
 
-Read `config/cv.md`. Create a table mapping each JD requirement to exact lines from the CV.
+Read `config/profile.md` (CV sections in the body). Create a table mapping each JD requirement to exact lines from the CV.
 
 **Adapted to archetype:**
 - If Consultant → prioritize client-facing proof points, structured recommendations, project leadership

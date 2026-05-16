@@ -56,7 +56,7 @@ Identify ALL visible questions:
 
 Classify each question:
 - **Already answered in Section G** → adapt the existing response
-- **New question** → generate response from the report + config/cv.md
+- **New question** → generate response from the report + config/profile.md
 
 ## Step 5 — Generate responses
 

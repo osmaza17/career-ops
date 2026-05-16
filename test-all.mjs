@@ -63,7 +63,7 @@ for (const f of mjsFiles) {
 console.log('\n2. Script execution (graceful on empty data)');
 
 const scripts = [
-  { name: 'cv-sync-check.mjs', expectExit: 1, allowFail: true }, // fails without cv.md (normal in repo)
+  { name: 'cv-sync-check.mjs', expectExit: 1, allowFail: true }, // fails without config/profile.md (normal in repo)
   { name: 'verify-pipeline.mjs', expectExit: 0 },
   { name: 'normalize-statuses.mjs', expectExit: 0 },
   { name: 'dedup-tracker.mjs', expectExit: 0 },
@@ -173,7 +173,7 @@ for (const f of systemFiles) {
 
 // Check user files are NOT tracked (gitignored)
 const userFiles = [
-  'config/profile.md', 'config/strategy.md', 'config/portals.yml',
+  'config/profile.md', 'config/portals.yml',
 ];
 for (const f of userFiles) {
   const tracked = run('git', ['ls-files', f]);
@@ -253,7 +253,7 @@ const expectedModes = [
   '_shared.md', 'offer-analysis.md', 'pdf.md', 'scan.md',
   'batch.md', 'apply.md', 'auto-pipeline.md', 'contact.md', 'deep.md',
   'offers-comparison.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
-  'patterns.md', 'followup.md', 'ingest.md', 'latex.md', 'interview-prep.md', 'analyze-sources.md',
+  'patterns.md', 'followup.md', 'latex.md', 'interview-prep.md', 'analyze-sources.md',
 ];
 
 for (const mode of expectedModes) {
@@ -264,12 +264,12 @@ for (const mode of expectedModes) {
   }
 }
 
-// Check _shared.md references config/strategy.md
+// Check _shared.md references config/profile.md (strategy content now lives there)
 const shared = readFile('modes/_shared.md');
-if (shared.includes('config/strategy.md')) {
-  pass('_shared.md references config/strategy.md');
+if (shared.includes('config/profile.md')) {
+  pass('_shared.md references config/profile.md');
 } else {
-  fail('_shared.md does NOT reference config/strategy.md');
+  fail('_shared.md does NOT reference config/profile.md');
 }
 
 // ── 9. AGENTS.md INTEGRITY ──────────────────────────────────────

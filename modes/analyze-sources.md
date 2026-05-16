@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Transform raw academic documents (project reports, internship descriptions, student association files, competition submissions) stored in `sources/` into structured entries ready to append to `config/profile.md`. These entries feed the `ingest` pipeline that generates `cv.md`.
+Transform raw academic documents (project reports, internship descriptions, student association files, competition submissions) stored in `sources/` into formatted, CV-ready entries appended directly to `config/profile.md`. `profile.md` is the single source of truth — what you write here is what goes into the `.tex` CV. There is no intermediate step.
 
 This mode applies a **recruiter/manager lens** throughout: it extracts what a non-specialist evaluating a profile would find meaningful — scale, outcomes, named clients, decisions, concrete deliverables — and discards technical minutiae that adds no signal to someone who hasn't read the source document.
 
@@ -30,15 +30,15 @@ List all files in `sources/` (excluding `README.md`).
 
 ### 1b. Deduplication check — two-pass
 
-**Pass 1 — Fuente match (exact):**
-Read `config/profile.md` and collect every `**Fuente:**` field value. If a source filename appears there, that experience is already analyzed.
+**Pass 1 — Key match (exact):**
+Read `config/profile.md`. For each YAML array (`experience`, `student_life`, `projects`, `competitions`, `additional_training`), collect every `company:` or `title:` value. If a source file clearly corresponds to an existing entry (matching company name, project title, or organization name), that experience is already covered — flag it as `ALREADY ANALYZED`.
 
-**Pass 2 — Content match (fallback for legacy entries without a Fuente field):**
-For any source file with no Fuente match, scan profile.md entry titles (`### …`) and company/organization names for a likely match to the source document. If found, flag as `PROBABLE MATCH (legacy entry, no Fuente field)` — do not proceed automatically; confirm with the user first.
+**Pass 2 — Content match (fuzzy fallback):**
+For any source file with no key match, scan bullet text and date values across all arrays for a likely match to the source document. If found, flag as `PROBABLE MATCH` — do not proceed automatically; confirm with the user first.
 
 ### 1c. Multi-file grouping
 
-If multiple source files clearly describe the same experience (e.g., `2024-06_internship_airfrance-brief.pdf` and `2024-12_internship_airfrance-final-report.pdf`), group them as one entry. Process together: the brief provides context, the final report provides outcomes and metrics. The resulting entry has one `**Fuente:**` listing both filenames.
+If multiple source files clearly describe the same experience (e.g., `2024-06_internship_airfrance-brief.pdf` and `2024-12_internship_airfrance-final-report.pdf`), group them as one entry. Process together: the brief provides context, the final report provides outcomes and metrics. Note both filenames in the review loop so the user knows which sources were used.
 
 ### 1d. Report
 
@@ -46,8 +46,8 @@ If multiple source files clearly describe the same experience (e.g., `2024-06_in
 Sources found:
 1. [filename] — [type] — NEW
 2. [filename] + [filename] — [type] — GROUPED (same experience, will merge)
-3. [filename] — [type] — ALREADY ANALYZED (Fuente match → entry: "[title]", SECCIÓN X)
-4. [filename] — [type] — PROBABLE MATCH (legacy entry "[title]" — confirm before proceeding)
+3. [filename] — [type] — ALREADY ANALYZED (matches entry: "[title/company]" in [yaml_key])
+4. [filename] — [type] — PROBABLE MATCH (matches "[title/company]" — confirm before proceeding)
 
 Which file would you like to process first?
 ```
@@ -75,17 +75,17 @@ Classification signals: academic semester dates → project; company name + role
 
 **If classification is uncertain:** state your best guess and why, then ask the user to confirm before proceeding.
 
-**Target section by type:**
+**Target YAML array by type:**
 
-| Type | Default SECCIÓN |
-|------|----------------|
-| Experience | SECCIÓN 4 — Experiencia Profesional |
-| Association | SECCIÓN 5 — Vida Asociativa |
-| Project | SECCIÓN 6 — Proyectos e Innovación |
-| Competition | SECCIÓN 7 — Concursos y Hackathones |
-| Training | SECCIÓN 8 — Formación Complementaria |
+| Type | Target key in profile.md |
+|------|--------------------------|
+| Experience | `experience` |
+| Association | `student_life` |
+| Project | `projects` |
+| Competition | `competitions` |
+| Training | `additional_training` |
 
-Always verify the section exists in the current `profile.md` before inserting. If a section is missing, create it using the standard header format.
+Always verify the array key exists in `profile.md` before appending. If it's missing (common for `additional_training`), create it after the `competitions:` block with an empty list, then append.
 
 ---
 
@@ -224,7 +224,7 @@ Based on the document, your specific role is unclear or limited.
 Options:
 A) Confirm — was your contribution larger than described? (documents often under-represent individual roles)
 B) Fold — use this as supporting context in another existing entry that covers similar work
-C) Archive — add to SECCIÓN 9 as a narrative reserve, not a primary entry
+C) Archive — note it in the session for future reference; do not add to profile.md
 
 Which?
 ```
@@ -274,169 +274,109 @@ Ask blocking questions first. If none are blocking, ask up to 2 enhancing questi
 
 ---
 
-## Step 6 — Draft Entries
+## Step 6 — Draft YAML Entry
 
-Write entries in **the language of `config/profile.md`**. Use the templates below.
+Write entries in **English** always. Apply all writing rules from `modes/writing.md` — bullet ordering, Specificity Standard, vocabulary bans.
 
-**Writing conventions:** When drafting bullets, summaries, or any prose destined for `config/profile.md`, apply the rules in `modes/writing.md` (bullet ordering, bold, parentheses, colon, middle-dot, Specificity Standard, vocabulary bans, etc.).
+Entries are YAML objects appended to the appropriate array in `config/profile.md`. What you draft here is what goes directly into the `.tex` output. One strong bullet beats two weak ones. Never pad.
 
-All entries end with a `[META-INSTRUCCIÓN]` block — see §META-INSTRUCCIÓN Writing Guide.
+### Entry template: Professional Experience → `experience` array
 
-### Entry template: Professional Experience → SECCIÓN 4
-
-```markdown
-### [Company]
-
-**Fuente:** [filename(s) from sources/]
-**Tipo:** Experiencia profesional — [stage / prácticas / rol a tiempo parcial]
-**Período:** [mes AAAA] – [mes AAAA]
-**Puesto:** [Título exacto]
-**País:** [País]
-
-**Contexto:**
-[1–2 frases: sector de la empresa, tamaño/tipo si es relevante, propósito de la misión]
-
-**Contribución personal:**
-- [Lo que hice concretamente — 3–5 puntos factuales, no el propósito del cargo]
-
-**Entregables:**
-- [Qué produje: informe, herramienta, modelo, recomendación, diseño]
-
-**Resultados:**
-- [Cualquier métrica o señal cuantificable: ahorro, volumen, impacto, feedback recibido]
-- [Si no hay métrica: señal de calidad — herramienta adoptada permanentemente, recomendación implementada, solicitud de seguimiento]
-
-**Competencias con señal para RRHH:**
-[Solo competencias transferibles: gestión autónoma, interacción con cliente, entrega técnica, análisis cuantitativo]
-
-> **[META-INSTRUCCIÓN]** [Ver §META-INSTRUCCIÓN Writing Guide]
+```yaml
+- company: "[Company name]"
+  post: "[Role in X domain — e.g., 'Operations Research Intern, Supply Chain']"
+  country: "[Country only, no city]"
+  date: "[mon. YYYY] -- [mon. YYYY]"
+  bullets:
+    - "[Bullet 1 — strongest outcome or deliverable, verb-first]"
+    - "[Bullet 2]"
+    - "[Bullet 3 — max 3 total]"
 ```
+
+→ LaTeX command: `\cventry{Company}{Post}{Country}{Date}`
+
+Rules:
+- **post** = role and domain. E.g., "Stage Génie Civil", "Consultant Opérations, Supply Chain".
+- Reverse chronological within the array.
+- Maximum 3 bullets. Minimum 1 strong bullet.
 
 ---
 
-### Entry template: Academic Project → SECCIÓN 6
+### Entry template: Academic Project → `projects` array
 
-```markdown
-### [Tipo de estudio] · [Cliente o contexto]
-
-**Fuente:** [filename(s) from sources/]
-**Tipo:** [Proyecto académico / Estudio de consultoría / Estudio técnico]
-**Marco:** [Asignatura o programa — institución]
-**Período:** [mes AAAA] – [mes AAAA]
-**Cliente:** [Nombre real, o "ejercicio académico sin cliente externo"]
-**Equipo:** [N estudiantes — composición breve si es relevante]
-
-**Objetivo:**
-[1–2 frases: qué problema se resolvía, para quién, qué decisión debía tomar el cliente]
-
-**Mi contribución específica:**
-- [Lo que yo hice, diferenciado de lo que hizo el equipo — específico, no "participé en"]
-
-**Resultados e impacto:**
-- [Recomendación adoptada, calificación, premio, métrica alcanzada — lo que sea verificable]
-- [Si no hay métrica: calidad de la recomendación, feedback del cliente, diferencial del enfoque]
-
-**Señal diferenciadora:**
-- [Lo que hace este proyecto más riguroso o difícil de replicar que el ejercicio estándar]
-
-> **[META-INSTRUCCIÓN]** [Ver §META-INSTRUCCIÓN Writing Guide]
+```yaml
+- title: "[Title ≤ 45 chars]"
+  subtitle: "[Relevant clarification — client, framework, or differentiator. No tools. No country.]"
+  date: "[mon. YYYY]"
+  bullets:
+    - "[Bullet 1 — most impressive outcome or contribution, verb-first]"
+    - "[Bullet 2]"
+    - "[Bullet 3 — max 3 total]"
 ```
+
+→ LaTeX command: `\cventryprojet{Title}{Subtitle}{Date}` (title ≤ 45 chars — right-column limit)
+
+Rules:
+- **title** ≤ 45 characters. Apply title pattern from `modes/writing.md §19.1`.
+- **subtitle** = apply pattern from `modes/writing.md §19.2`. No tools. No country.
+- Position within array: decreasing interest to the interviewer — never by date.
 
 ---
 
-### Entry template: Student Association → SECCIÓN 5
+### Entry template: Student Association → `student_life` array
 
-```markdown
-### [Organización] — [Rol/Cargo]
-
-**Fuente:** [filename(s) from sources/]
-**Tipo:** Vida asociativa — [cargo de dirección / miembro / responsable de área]
-**Período:** [mes AAAA] – [mes AAAA]
-**Cargo exacto:** [Título preciso]
-
-**Escala:**
-- [Número de miembros gestionados, presupuesto, eventos organizados, participantes alcanzados]
-
-**Lo que hice concretamente:**
-- [Tareas y responsabilidades reales — no el propósito de la asociación]
-- [Segunda tarea si existe]
-- [Tercera tarea si existe]
-
-**Logro más destacable:**
-- [Un hecho concreto, verificable, que mencionarías en 30 segundos en una entrevista]
-
-> **[META-INSTRUCCIÓN]** [Ver §META-INSTRUCCIÓN Writing Guide]
+```yaml
+- title: "[Role, Organization]"
+  date: "[mon. YYYY] -- [mon. YYYY]"
+  bullets:
+    - "[Bullet 1 — scale or concrete achievement]"
+    - "[Bullet 2]"
+    - "[Bullet 3 — max 3 total]"
 ```
+
+→ LaTeX command: `\cventryassociatif{Title}{Date}`
+
+Rules:
+- **title** = role and organization separated by a comma. E.g., "Secretary General, BDI". No `·`.
+- No subtitle, no country.
 
 ---
 
-### Entry template: Competition / Hackathon → SECCIÓN 7
+### Entry template: Competition / Hackathon → `competitions` array
 
-```markdown
-### [Resultado] · [Nombre del concurso]
-
-**Fuente:** [filename(s) from sources/]
-**Tipo:** Concurso / Hackathon / Competición académica
-**Organizador:** [Entidad — añade contexto de credibilidad: fundación, empresa, institución]
-**Fecha:** [mes AAAA]
-**Equipo:** [N participantes, si aplica]
-
-**El resultado:**
-- [Ranking o premio exacto — lidera siempre]
-
-**El problema:**
-- [1–2 frases: qué se pedía y cuál fue el enfoque del equipo]
-
-**Mi contribución:**
-- [Qué aportaste tú específicamente]
-
-**Overlap:**
-- [¿Existe ya un entry de Proyectos para este trabajo? → Indicar si es el mismo ángulo o diferente]
-
-> **[META-INSTRUCCIÓN]** [Ver §META-INSTRUCCIÓN Writing Guide]
+```yaml
+- title: "[Position, Contest Name]"
+  subtitle: "[Organizer — context: foundation, company, institution. Include team count.]"
+  date: "[mon. YYYY]"
+  bullets:
+    - "[Bullet 1 — result leads always]"
+    - "[Bullet 2 — max 2 total]"
 ```
+
+→ LaTeX command: `\cventrycontest{Title}{Subtitle}{Date}`
+
+Rules:
+- Include only if the result is externally verifiable (ranking, jury, prize).
+- Do not duplicate content from a Projects entry covering the same work.
 
 ---
 
-### Entry template: Training / Program → SECCIÓN 8
+### Entry template: Training / Program → `additional_training` array
 
-Entries in SECCIÓN 8 are ordered **reverse chronologically** (most recent first). Append the new entry at the top of the section if it is the most recent, or insert it at the correct chronological position otherwise.
+Entries in this array are ordered **reverse chronologically** (most recent first).
 
-```markdown
-### [Nombre del programa] — [Organizador]
-
-**Fuente:** [filename(s) from sources/]
-**Tipo:** Formación complementaria — [programa ejecutivo / certificación / programa competitivo]
-**Período:** [mes AAAA] [– mes AAAA si aplica]
-
-**Contexto:**
-[1–2 frases: quién organiza, a quién va dirigido, cómo se accede — especialmente si el acceso fue selectivo]
-
-**Contenidos con señal:**
-- [Solo módulos o sesiones con valor recruiter: exposición sectorial, interacción con ejecutivos, marco estratégico]
-
-**Señal diferenciadora:**
-- [Lo que distingue este programa: acceso competitivo, perfil de participantes, interlocutores de nivel]
-
-> **[META-INSTRUCCIÓN]** [Ver §META-INSTRUCCIÓN Writing Guide]
+```yaml
+- title: "[Program Name] — [Organizer]"
+  date: "[mon. YYYY]"
+  bullets:
+    - "[Bullet 1 — access/selection signal or most differentiating content]"
+    - "[Bullet 2 — max 2 total]"
 ```
 
----
-
-## META-INSTRUCCIÓN Writing Guide
-
-Every entry ends with a `[META-INSTRUCCIÓN]` block. Write it as a behavioral directive for the `ingest` mode — not as a description of the content. It is invisible in the final CV.
-
-Include:
-1. **What to lead with** — which fact or bullet should open the entry in the CV
-2. **Which roles will value it most** — so `ingest` can weight it differently per JD
-3. **Any pairing** — if this entry must appear adjacent to another
-4. **Anything to suppress** — details that should never appear in cv.md even if present in profile.md
-
-Example:
-```
-> **[META-INSTRUCCIÓN]** Liderar con la recomendación aceptada por el cliente, no con la metodología. Valor especial ante roles de consultoría, supply chain y operaciones. Si el CV incluye el proyecto de Air Liquide, colocar este entry inmediatamente después — refuerzan la misma narrativa cuantitativa.
-```
+Rules:
+- Include only if it adds a differentiating signal not covered by main education.
+- Lead with the access signal (competitive selection, executive interaction) if present.
+- If `additional_training:` key does not exist in profile.md, create it after `competitions:`.
 
 ---
 
@@ -448,11 +388,11 @@ After drafting the entry, present it in full and enter the review loop. **Nothin
 
 **Round 1 — Present the draft:**
 ```
-Here's the draft entry for [filename] → SECCIÓN X:
+Here's the draft entry for [filename] → [yaml_key]:
 
----
-[Full entry, formatted exactly as it would appear in profile.md]
----
+```yaml
+[Full YAML entry object]
+```
 
 Tell me what to change, or say "add it" to write it to profile.md.
 ```
@@ -463,9 +403,9 @@ Apply the user's requested changes. Show the full revised entry again — never 
 ```
 Revised:
 
----
+```yaml
 [Full revised entry]
----
+```
 
 Anything else to change, or ready to add?
 ```
@@ -473,18 +413,16 @@ Anything else to change, or ready to add?
 Repeat until the user gives explicit approval. Approval phrases: "add it", "looks good", "yes", "go ahead", "write it", or any clear affirmative that signals the review is done.
 
 **On approval — write to profile.md:**
-Run the Quality Check (§Quality Check Before Appending) on the approved version. If it passes, append the entry to the correct SECCIÓN in `config/profile.md`. Never touch any other content in the file.
+Run the Quality Check (§Quality Check Before Appending) on the approved version. If it passes, append the YAML object to the correct array in `config/profile.md`. Never touch any other array or key.
 
 ```
-Added to profile.md → SECCIÓN X.
+Added to profile.md → [yaml_key] array.
 
-[If YAML update is warranted, proceed to §YAML Frontmatter Updates]
+[If metadata update is warranted, proceed to §Profile Metadata Updates]
 ```
 
-After writing the entry (and any YAML update), ask:
-> "Want me to regenerate your CV now with the updated profile?"
-
-Run `modes/ingest.md` only if the user confirms. If they decline, do nothing — they can trigger it later.
+After writing the entry (and any YAML update), tell the user:
+> "Entry added. Run `/career-ops pdf` with a job description to generate an updated CV."
 
 ### Rules
 - Never write to `profile.md` during the review loop — only after explicit approval.
@@ -495,11 +433,11 @@ Run `modes/ingest.md` only if the user confirms. If they decline, do nothing —
 
 ## Improvement Mode for Already-Analyzed Sources
 
-Triggered when a source file matches an existing `**Fuente:**` field in `profile.md` (or is confirmed as a probable match for a legacy entry).
+Triggered when a source file matches an existing entry in `profile.md` by title, company name, or content match (see Step 1b).
 
 ### Step A — Locate the existing entry
 
-Find the full entry in `profile.md` (title, all fields, bullets, META-INSTRUCCIÓN). Extract it verbatim.
+Find the full entry in `profile.md` (title, fields, bullets). Extract it verbatim.
 
 ### Step B — Re-read the source document
 
@@ -507,14 +445,12 @@ Apply the reading strategy from Step 2.5. Look specifically for:
 - Facts, metrics, or details present in the source but missing from the existing entry
 - Framing that is no longer the strongest angle
 - Recruiter-lens violations in the existing entry (technical minutiae that crept in, buried lead)
-- META-INSTRUCCIÓN that could be more actionable
 
 ### Step C — Decide if improvement is warranted
 
 Only propose an improvement if there is a genuine reason:
 - A metric or outcome in the source that is absent from the existing entry
 - A recruiter-lens violation in the current text
-- A META-INSTRUCCIÓN that is missing or weak
 - The title or role description doesn't match the source
 
 Do NOT propose purely cosmetic rewrites or paraphrasing with no new information. If no genuine improvement exists, say so explicitly: "The existing entry already captures everything useful in this document. No changes proposed."
@@ -527,14 +463,14 @@ Show the current entry and the proposed improvement side by side, then enter the
 ## Already analyzed: [filename]
 
 **Current entry in profile.md:**
----
+```yaml
 [Full current entry, verbatim]
----
+```
 
 **Proposed improved version:**
----
+```yaml
 [Full proposed entry]
----
+```
 
 **What changed and why:**
 - [Specific change]: [reason]
@@ -547,15 +483,16 @@ On each revision round, show the full proposed entry again. Never show only the 
 ### Step E — Apply on explicit approval
 
 Only when the user gives explicit approval ("replace it", "looks good", "go ahead"):
-- Replace only the entry block in `profile.md` (from its `### [Title]` heading to the next `---` separator). Never touch anything outside that block.
+- Locate the matching YAML object in the correct array by its `title:` or `company:` key value.
+- Replace only that object. Never touch other objects in the same array or any other key.
 
 If the user says "keep the current version" or "no changes" — do nothing.
 
 ---
 
-## YAML Frontmatter Updates
+## Profile Metadata Updates
 
-After any entry is confirmed and appended to `config/profile.md`, check whether the YAML frontmatter should also be extended. This is optional — only offer when the new entry contains a genuinely strong proof point or competition result not yet in the YAML.
+After any entry is confirmed and appended to `config/profile.md`, check whether the identity/narrative section at the top should also be extended. This is optional — only offer when the new entry contains a genuinely strong proof point or competition result not yet captured there.
 
 ### When to offer a YAML update
 
@@ -565,11 +502,11 @@ After any entry is confirmed and appended to `config/profile.md`, check whether 
 | Competition with external prize | `awards_and_competitions` | If the award is not already listed |
 | New experience that changes the narrative | `narrative.headline` or `narrative.exit_story` | Only if the user explicitly requests it |
 
-### How to update the YAML frontmatter
+### How to update the metadata
 
-1. Read the full YAML frontmatter block from `config/profile.md` (between the `---` delimiters).
-2. Modify only the target key — do not touch any other key.
-3. Write the updated frontmatter back to the file, replacing only the block between the `---` delimiters. The markdown body must remain untouched.
+1. Read the full `config/profile.md`.
+2. Modify only the target key — do not touch any other key or array.
+3. Write the updated file back. The CV section arrays (`education`, `experience`, `projects`, etc.) must remain untouched.
 
 ### Format for a new proof_point entry
 
@@ -590,17 +527,17 @@ After any entry is confirmed and appended to `config/profile.md`, check whether 
 
 ### Offer format
 
-After an entry is written to `profile.md`, if a YAML update is warranted:
+After an entry is written to `profile.md`, if a metadata update is warranted:
 
 ```
 Entry added to profile.md.
 
-This result is strong enough to add to your YAML profile summary.
+This result is strong enough to add to your profile summary.
 Proposed addition to [narrative.proof_points / awards_and_competitions]:
 
 [formatted YAML block]
 
-Tell me what to adjust, or say "add it" to update the YAML.
+Tell me what to adjust, or say "add it" to update.
 ```
 
 Same iterative rule applies: show the proposed YAML, accept changes, only write on explicit approval.
@@ -614,11 +551,10 @@ For each entry, verify before writing to `profile.md`:
 
 1. Every fact passes the recruiter lens — no technical minutiae, no methodology for its own sake
 2. Personal contribution is explicitly separated from team work
-3. At least one concrete, verifiable signal (metric, name, ranking, deliverable) per entry — if none exists, "Resultados" section notes a qualitative signal (adoption, follow-up, feedback) instead of being empty
-4. META-INSTRUCCIÓN is a directive, not a description — it tells `ingest` what to do, not what the entry contains
-5. Language is Spanish throughout, consistent with profile.md style; technical terms may remain in their original language in parentheses
-6. Target SECCIÓN exists in the current profile.md
-7. `**Fuente:**` field is present with the exact filename(s) from `sources/`
-8. SECCIÓN 8 entries are in reverse chronological order within the section
+3. At least one concrete, verifiable signal (metric, name, ranking, deliverable) per bullet — if none exists, use a qualitative signal (adoption, follow-up, feedback)
+4. Language and writing style match the rest of the profile.md CV sections (verb-first bullets, no first person, no em-dashes); technical terms may remain in their original language in parentheses
+5. Target array key (`experience`, `projects`, etc.) exists in the current profile.md; if `additional_training` is missing, it was created before appending
+6. Entry format matches the YAML template for its type (correct keys, max bullets respected, title ≤ 45 chars for `projects` and `competitions`)
+7. `additional_training` entries are in reverse chronological order within the array
 
 Any failure → fix before appending.
