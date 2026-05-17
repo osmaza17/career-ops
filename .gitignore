@@ -2,10 +2,12 @@
 data/applications.md
 data/pipeline.md
 data/scan-history.tsv
-reports/*.md
-!reports/.gitkeep
-output/*
-!output/.gitkeep
+output/reports/**
+!output/reports/.gitkeep
+output/CVs/**
+!output/CVs/.gitkeep
+output/interview-prep/**
+!output/interview-prep/.gitkeep
 batch/logs/*
 !batch/logs/.gitkeep
 batch/batch-state.tsv

@@ -18,7 +18,7 @@ Track follow-up cadence for active applications. Flag overdue follow-ups, extrac
 |------|---------|
 | `data/applications.md` | Application tracker |
 | `data/follow-ups.md` | Follow-up history (created on first use) |
-| `reports/` | Evaluation reports (for company context in drafts) |
+| `output/reports/` | Evaluation reports (for company context in drafts) |
 | `config/profile.md` | Identity, proof points, CV sections |
 
 </reference>

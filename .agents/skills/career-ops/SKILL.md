@@ -87,7 +87,7 @@ Read `modes/{mode}.md`
 Applies to: `tracker`, `interview-prep`, `patterns`, `followup`, `intel-sweep`, `linkedin-optimizer`
 
 ### Modes delegated to subagent:
-For `scan`, `apply` (with Playwright), and `pipeline` (3+ URLs): launch as Agent with the content of `_shared.md` + `modes/{mode}.md` injected into the subagent prompt.
+For `scan`, `apply` (with Playwright), `pipeline`, and `auto-pipeline`: always launch one Agent per URL (Agent tool, `run_in_background: true`) with the content of `_shared.md` + `modes/offer-analysis.md` + `modes/pdf.md` injected into the subagent prompt. Never process URLs inline.
 
 ```
 Agent(

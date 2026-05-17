@@ -13,7 +13,7 @@ Analyze all tracked applications to find patterns in outcomes and surface action
 ## Inputs
 
 - `data/applications.md` — application tracker
-- `reports/` — individual evaluation reports
+- `output/reports/` — individual evaluation reports
 - `config/profile.md` — user profile and `strategy.*` keys
 - `config/portals.yml` — portal config (for filter update recommendations)
 
@@ -71,7 +71,7 @@ If the script returns `error`, display the error message and exit.
 
 <step id="3" name="Generate Report">
 <agent_instruction>
-Write the report to `reports/pattern-analysis-{YYYY-MM-DD}.md`.
+Write the report to `output/reports/pattern-analysis-{YYYY-MM-DD}.md`.
 </agent_instruction>
 
 <format>
@@ -142,7 +142,7 @@ Key findings:
 - {finding 2}
 - {finding 3}
 
-Full report: `reports/pattern-analysis-{YYYY-MM-DD}.md`"
+Full report: `output/reports/pattern-analysis-{YYYY-MM-DD}.md`"
 </user_prompt>
 
 <agent_instruction>

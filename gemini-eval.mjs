@@ -45,7 +45,7 @@ const PATHS = {
   // Canonical skill path referenced in Issue #344
   evaluate: join(ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
   cv:       join(ROOT, 'config', 'profile.md'),
-  reports:  join(ROOT, 'reports'),
+  reports:  join(ROOT, 'output', 'reports'),
   tracker:  join(ROOT, 'data', 'applications.md'),
 };
 
@@ -70,7 +70,7 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   OPTIONS
     --file <path>    Read JD from a file instead of inline text
     --model <name>   Gemini model to use (default: gemini-2.0-flash)
-    --no-save        Do not save report to reports/ directory
+    --no-save        Do not save report to output/reports/ directory
     --help           Show this help
 
   SETUP
@@ -304,11 +304,11 @@ ${evaluationText.replace(/---SCORE_SUMMARY---[\s\S]*?---END_SUMMARY---/, '').tri
 `;
 
     writeFileSync(reportPath, reportContent, 'utf-8');
-    console.log(`\n✅  Report saved: reports/${filename}`);
+    console.log(`\n✅  Report saved: output/reports/${filename}`);
 
     // Append tracker entry reminder
     console.log(`\n📊  Tracker entry (add to data/applications.md):`);
-    console.log(`    | ${num} | ${today} | ${company} | ${role} | ${score} | Evaluated | ❌ | [${num}](reports/${filename}) |`);
+    console.log(`    | ${num} | ${today} | ${company} | ${role} | ${score} | Evaluated | ❌ | [${num}](output/reports/${filename}) |`);
   } catch (err) {
     console.warn(`⚠️   Could not save report: ${err.message}`);
   }

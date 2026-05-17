@@ -105,8 +105,8 @@ id	url	status	started_at	completed_at	report_num	score	error	retries
 
 <output>
 Each worker produces:
-1. `.md` report → `reports/`
-2. PDF → `output/`
+1. `.md` report → `output/reports/`
+2. PDF → `output/CVs/`
 3. Tracker TSV line → `batch/tracker-additions/{id}.tsv`
 4. Result JSON via stdout
 </output>

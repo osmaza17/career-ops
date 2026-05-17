@@ -6,7 +6,7 @@ Compare two or more job offers side-by-side using a weighted 10-dimension scorin
 
 <rules>
 - Require at least 2 offers before proceeding.
-- Accept offers as plain text, URLs, or references to existing reports in `reports/`.
+- Accept offers as plain text, URLs, or references to existing reports in `output/reports/`.
 - Never repeat scoring logic already used in `offer-analysis` — re-use scores from existing reports when available.
 - Base comp estimates on market data from `config/profile.md` (`compensation` key); never fabricate figures.
 - Final recommendation must name one winner and explain the reasoning in ≤ 3 sentences.
@@ -42,7 +42,7 @@ Score each dimension 1–5, multiply by weight, sum for a weighted total out of 
 
 <step id="2" name="Load existing scores">
 <agent_instruction>
-For each offer already in `reports/`, read the existing report and extract Block A scores rather than re-scoring from scratch. For new offers, score all 10 dimensions inline.
+For each offer already in `output/reports/`, read the existing report and extract Block A scores rather than re-scoring from scratch. For new offers, score all 10 dimensions inline.
 </agent_instruction>
 </step>
 

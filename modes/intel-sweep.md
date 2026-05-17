@@ -6,7 +6,7 @@ Research N companies simultaneously, one agent per company. Each agent runs WebS
 
 <rules>
 - Workers use WebSearch only — no Playwright, no TSV, no tracker updates.
-- Research docs are saved to `reports/` with the `intel-` prefix (e.g. `intel-acme-2026-05-17.md`).
+- Research docs are saved to `output/reports/` with the `intel-` prefix (e.g. `intel-acme-2026-05-17.md`).
 - `fit_score` is a directional company-to-archetype signal, not an apply/don't-apply decision.
 - If a company appears in `config/portals.yml`, the worker may also check its known job listings for context.
 </rules>
@@ -83,7 +83,7 @@ TASK:
 2. Run WebSearch for each axis above. Use the sector-specific lens for Axis 1 and 4.
    Do NOT output a prompt template — answer from search results.
 3. Write the full research doc to:
-     reports/intel-{company-slug}-{YYYY-MM-DD}.md
+     output/reports/intel-{company-slug}-{YYYY-MM-DD}.md
 4. Return a JSON summary:
    {
      "company": "{company}",
@@ -93,7 +93,7 @@ TASK:
      "fit_rationale": "{one sentence}",
      "top_signal": "{strongest reason to apply}",
      "red_flag": "{biggest concern, or null}",
-     "report": "reports/intel-{company-slug}-{date}.md"
+     "report": "output/reports/intel-{company-slug}-{date}.md"
    }
 
 fit_score rubric:
@@ -131,7 +131,7 @@ Role targeted: {role}
 **Research before deciding (fit 3):** {list}
 **Low priority (fit ≤ 2):** {list}
 
-Full research docs saved to reports/intel-{slug}-{date}.md for each company.
+Full research docs saved to output/reports/intel-{slug}-{date}.md for each company.
 </output>
 
 <completion>

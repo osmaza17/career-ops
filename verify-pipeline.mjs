@@ -24,7 +24,7 @@ const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
   : join(CAREER_OPS, 'applications.md');
 const ADDITIONS_DIR = join(CAREER_OPS, 'batch/tracker-additions');
-const REPORTS_DIR = join(CAREER_OPS, 'reports');
+const REPORTS_DIR = join(CAREER_OPS, 'output/reports');
 const STATES_FILE = join(CAREER_OPS, 'states.yml');
 
 // Ensure required directories exist (fresh setup)

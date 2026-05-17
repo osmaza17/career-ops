@@ -1,13 +1,14 @@
 # Mode: pipeline — URL Inbox
 
 <purpose>
-Process offer URLs accumulated in `data/pipeline.md`. The user adds URLs at will; `/career-ops pipeline` processes them all in batch.
+Process offer URLs accumulated in `data/pipeline.md`. The user adds URLs at will; `/career-ops pipeline` processes them all — always one background agent per URL, regardless of count.
 </purpose>
 
 <rules>
 - Never skip `- [ ]` items in the Pending section without marking them.
 - Inaccessible URLs → mark `- [!]` with a note; continue to next item.
-- Use parallel agents (Agent tool, `run_in_background`) when 3+ URLs are pending.
+- Always spawn one background agent per URL (Agent tool, `run_in_background`) — even for a single pending URL.
+- Pre-assign all report numbers before spawning any agent — prevents numbering conflicts.
 - Run `node cv-sync-check.mjs` before processing any URL; warn the user if out of sync.
 - PDF only if score >= 3.0.
 - Never trust WebSearch/WebFetch alone for offer liveness — prefer Playwright.
@@ -23,42 +24,41 @@ Run `node cv-sync-check.mjs`. If out of sync, warn the user before continuing.
 </agent_instruction>
 </step>
 
-<step id="2" name="Load pending URLs">
+<step id="2" name="Load pending URLs and pre-assign report numbers">
 <agent_instruction>
 Read `data/pipeline.md` → collect all `- [ ]` items from the Pending section.
-If 3+ items are pending, launch one agent per URL in parallel (Agent tool, `run_in_background`).
+List files in `output/reports/`, find the current max numeric prefix, and assign sequential REPORT_NUMs (max+1, max+2, …) — one per URL. Do this before spawning any agent.
 </agent_instruction>
 </step>
 
-<step id="3" name="Assign report number">
+<step id="3" name="Spawn one agent per URL">
 <agent_instruction>
-For each URL: list files in `reports/`, extract the numeric prefix (e.g. `142-…` → 142), set REPORT_NUM = max + 1.
+For each pending URL, launch a background agent (Agent tool, `run_in_background: true`). Fill all placeholders before spawning.
 </agent_instruction>
+
+<format>
+```
+Agent(
+  subagent_type="general-purpose",
+  run_in_background=True,
+  prompt="[content of modes/_shared.md]\n\n[content of modes/offer-analysis.md]\n\n[content of modes/pdf.md]\n\nYour assigned report number is {REPORT_NUM}. Process this job:\n\nURL: {url}\n\nRun the full pipeline:\n1. Extract JD (Playwright → WebFetch → WebSearch). If inaccessible, return {url} as failed.\n2. Evaluate Blocks A–G (offer-analysis.md)\n3. Save report to output/reports/{REPORT_NUM}-{company-slug}-{date}.md\n4. Generate PDF (pdf.md) if score >= 3.0\n5. Write tracker TSV to batch/tracker-additions/{REPORT_NUM}-{company-slug}.tsv",
+  description="pipeline #{REPORT_NUM}: {url}"
+)
+```
+</format>
 </step>
 
-<step id="4" name="Extract JD">
+<step id="4" name="Wait and merge">
 <agent_instruction>
-Attempt extraction in order:
-1. Playwright: `browser_navigate` + `browser_snapshot` (preferred; works with SPAs).
-2. WebFetch: fallback for static pages or when Playwright is unavailable.
-3. WebSearch: last resort — search secondary portals that index the JD.
-
-Special cases:
-- **LinkedIn**: may require login → mark `[!]`, ask user to paste the text.
-- **PDF URL**: read directly with the Read tool.
-- **`local:` prefix**: read the local file (e.g. `local:jds/file.md` → read `jds/file.md`).
-
-If URL is not accessible → mark `- [!]` with a brief note; skip to next item.
+After all agents complete, run:
+```bash
+node merge-tracker.mjs
+```
+Mark each URL in `data/pipeline.md` as processed or failed based on agent results.
 </agent_instruction>
 </step>
 
-<step id="5" name="Evaluate and produce outputs">
-<agent_instruction>
-Run the full auto-pipeline per `modes/offer-analysis.md`: Blocks A–F → Report .md → PDF (if score ≥ 3.0) → Tracker TSV.
-</agent_instruction>
-</step>
-
-<step id="6" name="Update pipeline.md">
+<step id="5" name="Update pipeline.md">
 <agent_instruction>
 Move the item from Pending to Processed using the format below.
 </agent_instruction>
@@ -70,7 +70,7 @@ Move the item from Pending to Processed using the format below.
 </format>
 </step>
 
-<step id="7" name="Summary">
+<step id="6" name="Summary">
 <completion>
 Show summary table after all items are processed:
 

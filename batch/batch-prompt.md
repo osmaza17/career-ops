@@ -105,16 +105,6 @@ Comp score (1-5): 5=top quartile, 4=above market, 3=median, 2=slightly below, 1=
 
 Top 5 CV changes + Top 5 LinkedIn changes.
 
-#### Block F — Interview Plan
-
-6-10 STAR stories mapped to JD requirements:
-
-| # | JD Requirement | STAR Story | S | T | A | R |
-
-**Selection adapted to archetype.** Also include:
-- 1 recommended case study (which project to present and how)
-- Red-flag questions and how to answer them
-
 #### Block G — Posting Legitimacy
 
 Analyze posting signals to assess whether this is a real, active opening.
@@ -146,7 +136,7 @@ Analyze posting signals to assess whether this is a real, active opening.
 
 Save full evaluation in:
 ```
-reports/{{REPORT_NUM}}-{company-slug}-{{DATE}}.md
+output/reports/{{REPORT_NUM}}-{company-slug}-{{DATE}}.md
 ```
 
 Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens.
@@ -162,7 +152,7 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 **Legitimacy:** {High Confidence | Proceed with Caution | Suspicious}
 **Verification:** unconfirmed (batch mode)
 **URL:** {original offer URL}
-**PDF:** career-ops/output/cv-candidate-{company-slug}-{{DATE}}.pdf
+**PDF:** career-ops/output/CVs/cv-candidate-{company-slug}-{{DATE}}.pdf
 **Batch ID:** {{ID}}
 
 ---
@@ -180,9 +170,6 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 (full content)
 
 ## E) Personalization Plan
-(full content)
-
-## F) Interview Plan
 (full content)
 
 ## G) Posting Legitimacy
@@ -207,12 +194,12 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 9. Build competency grid (6-8 keyword phrases)
 10. Inject keywords into existing achievements (**NEVER invent**)
 11. Generate the `.tex` file following the instructions in `modes/pdf.md`
-12. Write to `output/cv-candidate-{company-slug}-{{DATE}}.tex`
+12. Write to `output/CVs/cv-candidate-{company-slug}-{{DATE}}.tex`
 13. Run:
 ```bash
 node generate-pdf.mjs \
-  output/cv-candidate-{company-slug}-{{DATE}}.tex \
-  output/cv-candidate-{company-slug}-{{DATE}}.pdf
+  output/CVs/cv-candidate-{company-slug}-{{DATE}}.tex \
+  output/CVs/cv-candidate-{company-slug}-{{DATE}}.pdf
 ```
 14. Report: PDF path, size, keyword coverage %
 
@@ -227,7 +214,7 @@ batch/tracker-additions/{{ID}}.tsv
 
 TSV format (single line, no header, 9 tab-separated columns):
 ```
-{next_num}\t{{DATE}}\t{company}\t{role}\t{status}\t{score}/5\t{pdf_emoji}\t[{{REPORT_NUM}}](reports/{{REPORT_NUM}}-{company-slug}-{{DATE}}.md)\t{one_sentence_note}
+{next_num}\t{{DATE}}\t{company}\t{role}\t{status}\t{score}/5\t{pdf_emoji}\t[{{REPORT_NUM}}](output/reports/{{REPORT_NUM}}-{company-slug}-{{DATE}}.md)\t{one_sentence_note}
 ```
 
 **TSV Columns (exact order):**
@@ -241,7 +228,7 @@ TSV format (single line, no header, 9 tab-separated columns):
 | 5 | status | canonical | `Evaluated` | MUST be canonical (see states.yml) |
 | 6 | score | X.XX/5 | `4.55/5` | Or `N/A` if not evaluable |
 | 7 | pdf | emoji | `✅` or `❌` | Whether PDF was generated |
-| 8 | report | md link | `[647](reports/647-...)` | Link to report |
+| 8 | report | md link | `[647](output/reports/647-...)` | Link to report |
 | 9 | notes | string | `APPLY HIGH...` | 1-sentence summary |
 
 **IMPORTANT:** TSV order has status BEFORE score (col 5→status, col 6→score). In applications.md the order is reversed (col 5→score, col 6→status). merge-tracker.mjs handles the conversion.

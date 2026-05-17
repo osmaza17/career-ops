@@ -118,8 +118,9 @@ async function main() {
     checkProfile(),
     checkPortals(),
     checkAutoDir('data'),
-    checkAutoDir('output'),
-    checkAutoDir('reports'),
+    checkAutoDir('output/reports'),
+    checkAutoDir('output/CVs'),
+    checkAutoDir('output/interview-prep'),
   ];
 
   let failures = 0;

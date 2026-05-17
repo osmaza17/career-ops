@@ -22,7 +22,7 @@ All scripts live in the project root as `.mjs` modules and are exposed via `npm 
 
 ## doctor
 
-Validates that all prerequisites are in place: Node.js >= 18, dependencies installed, Playwright chromium, required files (`config/profile.md`, `config/portals.yml`), fonts directory, and auto-creates `data/`, `output/`, `reports/` if missing.
+Validates that all prerequisites are in place: Node.js >= 18, dependencies installed, Playwright chromium, required files (`config/profile.md`, `config/portals.yml`), fonts directory, and auto-creates `data/`, `output/reports/`, `output/CVs/`, `output/interview-prep/` if missing.
 
 ```bash
 npm run doctor

@@ -19,7 +19,7 @@ Evaluate a job offer end-to-end. When the candidate pastes a URL or JD text, del
 <agent_instruction>
 1. Read `config/profile.md` (YAML frontmatter + CV body sections).
 2. Check `strategy.score_threshold` — note the user's minimum score; surface a warning at end of evaluation if final score falls below it.
-3. Classify the offer into one of the 6 archetypes (see `_shared.md` → Archetype Detection). If hybrid, identify the 2 closest. This determines proof-point priority in Block B, summary framing in Block E, and STAR stories in Block F.
+3. Classify the offer into one of the 6 archetypes (see `_shared.md` → Archetype Detection). If hybrid, identify the 2 closest. This determines proof-point priority in Block B and summary framing in Block E.
 4. First evaluation of the session: run `node cv-sync-check.mjs`. Notify user if warnings.
 </agent_instruction>
 
@@ -93,27 +93,6 @@ Top 5 CV changes + Top 5 LinkedIn changes to maximize match.
 
 ---
 
-## Block F — Interview Plan
-
-<agent_instruction>
-Select 6–10 STAR+R stories mapped to JD requirements. Use the archetype framing from `_shared.md` → Archetype Detection (and `config/profile.md` key `strategy.adaptive_framing`) to select and frame stories.
-
-Story bank: if `interview-prep/story-bank.md` exists, check for duplicates first. Append new stories that aren't already there. Over time this builds a reusable bank of 5–10 master stories adaptable to any interview question.
-</agent_instruction>
-
-<format>
-| # | JD Requirement | STAR+R Story | S | T | A | R | Reflection |
-|---|---------------|--------------|---|---|---|---|------------|
-
-**Reflection column** — what was learned or what would be done differently. This signals seniority: junior candidates describe what happened; senior candidates extract lessons.
-
-Also include:
-- 1 recommended case study (which project to present and how)
-- Red-flag questions and how to answer them (e.g. "why did you sell your company?", "do you have direct reports?")
-</format>
-
----
-
 ## Block G — Posting Legitimacy
 
 <agent_instruction>
@@ -162,7 +141,7 @@ Always execute both steps below after generating blocks A–G.
 ### 1. Save Report
 
 <mapping>
-Save full evaluation to `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
+Save full evaluation to `output/reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 - `{###}` = next sequential number (3-digit zero-padded, max existing + 1)
 - `{company-slug}` = company name lowercase with hyphens
 - `{YYYY-MM-DD}` = current date
@@ -186,7 +165,6 @@ Save full evaluation to `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 ## C) Level and Strategy
 ## D) Comp and Demand
 ## E) Personalization Plan
-## F) Interview Plan
 ## G) Posting Legitimacy
 ## H) Draft Application Answers
 (only if score >= 4.5)
@@ -204,7 +182,7 @@ Save full evaluation to `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 Write one TSV line to `batch/tracker-additions/{num}-{company-slug}.tsv`:
 
 ```
-{num}\t{YYYY-MM-DD}\t{company}\t{role}\tEvaluated\t{X.X}/5\t❌\t[{num}](reports/{num}-{slug}-{date}.md)\t{one-line note}
+{num}\t{YYYY-MM-DD}\t{company}\t{role}\tEvaluated\t{X.X}/5\t❌\t[{num}](output/reports/{num}-{slug}-{date}.md)\t{one-line note}
 ```
 
 Column order: num · date · company · role · **status** · score · pdf · report · notes

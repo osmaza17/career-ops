@@ -59,11 +59,11 @@ Extract 15–20 keywords from the JD. Detect JD language → set CV language. De
 
 <step id="5" name="generate-tex">
 Generate the `.tex` file using the preamble in §3 and section structure in §7. Write to:
-`output/cv-{candidate}-{company}-{YYYY-MM-DD}.tex`
+`output/CVs/cv-{candidate}-{company}-{YYYY-MM-DD}.tex`
 </step>
 
 <step id="6" name="compile">
-Run: `node generate-pdf.mjs output/cv-{candidate}-{company}-{YYYY-MM-DD}.tex output/cv-{candidate}-{company}-{YYYY-MM-DD}.pdf`
+Run: `node generate-pdf.mjs output/CVs/cv-{candidate}-{company}-{YYYY-MM-DD}.tex output/CVs/cv-{candidate}-{company}-{YYYY-MM-DD}.pdf`
 
 **Requires:** `tectonic` (preferred — `brew install tectonic`) or `pdflatex` (MiKTeX / TeX Live) on PATH.
 </step>
@@ -772,13 +772,13 @@ a. `export-design` the duplicate as PDF (format: `a4` or `letter` based on JD lo
 b. Download immediately:
 
 ```bash
-curl -sL -o "output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf" "{download_url}"
+curl -sL -o "output/CVs/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf" "{download_url}"
 ```
 
 c. Verify:
 
 ```bash
-file output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf
+file output/CVs/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf
 ```
 
 Must show "PDF document". If XML/HTML → URL expired; re-export and retry.
@@ -788,11 +788,11 @@ Must show "PDF document". If XML/HTML → URL expired; re-export and retry.
 </process>
 
 <output>
-- `output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf`
+- `output/CVs/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf`
 - Canva design URL (for manual tweaking)
 - File size confirmation
 </output>
 
 <completion>
-PDF saved to `output/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf` ({size}). Canva design: {url} — open it anytime for manual adjustments.
+PDF saved to `output/CVs/cv-{candidate}-{company}-canva-{YYYY-MM-DD}.pdf` ({size}). Canva design: {url} — open it anytime for manual adjustments.
 </completion>

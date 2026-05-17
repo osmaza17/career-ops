@@ -38,7 +38,7 @@ Take a Playwright snapshot of the active tab (title, URL, visible content). If P
 
 <agent_instruction>
 1. Extract company name and role title from the page.
-2. Search `reports/` for a matching report (case-insensitive).
+2. Search `output/reports/` for a matching report (case-insensitive).
 3. If found → load full report and any existing Section G draft answers.
 4. If not found → notify the candidate and offer to run auto-pipeline first.
 </agent_instruction>
@@ -84,7 +84,7 @@ If the form has more questions below the fold, request a scroll/screenshot and p
 
 <agent_instruction>
 For each question:
-1. Draw proof points from report Block B, STAR stories from Block F.
+1. Draw proof points from report Block B.
 2. Use existing Section G draft as a base if available, then refine.
 3. Reference something specific from the visible JD.
 4. Use the "I'm choosing you" tone from the auto-pipeline framework.

@@ -4,17 +4,31 @@
 
 ## Data Contract (CRITICAL)
 
-There are two layers. Read `DATA_CONTRACT.md` for the full list.
+**`config/profile.md` is the only source of truth about the user.** Every piece of personal data — identity, targets, compensation, narrative, strategy, CV sections — lives there and only there. All other files are system files.
 
-**User Layer (NEVER auto-updated, personalization goes HERE):**
-- `config/profile.md`, `config/portals.yml`
-- `data/*`, `reports/*`, `output/*`, `interview-prep/*`
+There are two layers:
 
-**System Layer (auto-updatable, DON'T put user data here):**
-- `modes/_shared.md`, `modes/offer-analysis.md`, all other modes
-- `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `dashboard/*`, `batch/*`
+**User Layer (NEVER auto-updated — all personal data lives here):**
 
-**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` for user-specific content.** This ensures system updates don't overwrite their customizations.
+| File/Path | What it holds |
+|---|---|
+| `config/profile.md` | Identity, target roles, compensation, narrative, strategy, and all formatted CV sections. The single source of truth. |
+| `config/portals.yml` | Customized company and portal list |
+| `data/applications.md` | Application tracker |
+| `data/pipeline.md` | URL inbox |
+| `data/scan-history.tsv` | Scanner dedup history |
+| `data/follow-ups.md` | Follow-up history |
+| `sources/*` | Raw academic documents (read only by `analyze-sources`) |
+| `output/reports/*` | Evaluation reports |
+| `output/interview-prep/*` | Interview intel reports |
+| `output/CVs/*` | Generated .tex and PDF files |
+| `jds/*` | Saved job descriptions |
+
+**System Layer (safe to auto-update — no user data here):**
+- All files in `modes/`, `batch/`, `dashboard/`, `docs/`, `.claude/skills/`
+- `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `states.yml`
+
+**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` or any system file for user-specific content.** This ensures system updates never overwrite their customizations.
 
 ## What is career-ops
 
@@ -30,8 +44,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
 | `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + formatted CV sections (education, experience, projects, skills, languages). Created by `onboard`, populated by `analyze-sources`, read by every mode and by `pdf` to generate `.tex` CVs. |
-| `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
-| `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
+| `output/interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                  |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
 | `followup-cadence.mjs`               | Follow-up cadence calculator (JSON output)                                                                                                          |
 | `data/follow-ups.md`                 | Follow-up history tracker                                                                                                                           |
@@ -39,7 +52,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `scan.mjs`                           | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost                                                                |
 | `check-liveness.mjs`                 | Job posting liveness checker                                                                                                                        |
 | `liveness-core.mjs`                  | Shared liveness logic (expired signals win over generic Apply text)                                                                                 |
-| `reports/`                           | Evaluation reports (format: `{###}-{company-slug}-{YYYY-MM-DD}.md`). Blocks A-F + G (Posting Legitimacy). Header includes `**Legitimacy:** {tier}`. |
+| `output/reports/`                    | Evaluation reports (format: `{###}-{company-slug}-{YYYY-MM-DD}.md`). Blocks A-F + G (Posting Legitimacy). Header includes `**Legitimacy:** {tier}`. |
 
 ### First Run — Onboarding (IMPORTANT)
 
@@ -189,7 +202,7 @@ When spawning headless workers for batch processing, use the appropriate command
 
 - Node.js (mjs modules), Playwright (scraping + offer verification), YAML (config), LaTeX (CV template), Markdown (data), Canva MCP (optional visual CV)
 - Scripts in `.mjs`, configuration in YAML
-- Output in `output/` (gitignored), Reports in `reports/`
+- CVs in `output/CVs/` (gitignored), Reports in `output/reports/`, Interview prep in `output/interview-prep/`
 - JDs in `jds/` (referenced as `local:jds/{file}` in pipeline.md)
 - Batch in `batch/` (gitignored except scripts and prompt)
 - Report numbering: sequential 3-digit zero-padded, max existing + 1
@@ -201,7 +214,7 @@ When spawning headless workers for batch processing, use the appropriate command
 Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slug}.tsv`. Single line, 9 tab-separated columns:
 
 ```
-{num}\t{date}\t{company}\t{role}\t{status}\t{score}/5\t{pdf_emoji}\t[{num}](reports/{num}-{slug}-{date}.md)\t{note}
+{num}\t{date}\t{company}\t{role}\t{status}\t{score}/5\t{pdf_emoji}\t[{num}](output/reports/{num}-{slug}-{date}.md)\t{note}
 ```
 
 **Column order (IMPORTANT -- status BEFORE score):**
@@ -212,7 +225,7 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 5. `status` -- canonical status (e.g., `Evaluated`)
 6. `score` -- format `X.X/5` (e.g., `4.2/5`)
 7. `pdf` -- `✅` or `❌`
-8. `report` -- markdown link `[num](reports/...)`
+8. `report` -- markdown link `[num](output/reports/...)`
 9. `notes` -- one-line summary
 
 **Note:** In applications.md, score comes BEFORE status. The merge script handles this column swap automatically.
