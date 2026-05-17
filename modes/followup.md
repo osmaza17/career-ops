@@ -6,7 +6,7 @@ Track follow-up cadence for active applications. Flag overdue follow-ups, extrac
 
 <rules>
 - Never record a follow-up draft as sent — only record ones the user confirms they sent.
-- Never generate another follow-up for cold entries (followupCount >= 2); suggest closing instead.
+- Never generate another follow-up for **Applied** entries marked cold (followupCount >= 2); suggest closing instead. Responded and Interview entries have no hard cap — use judgment based on context.
 - Never use "just checking in", "just following up", "touching base", or "circling back" in any draft.
 - Lead with value, not with the ask. Keep all email drafts under 150 words.
 - Read candidate name, proof points, and identity from `config/profile.md` at draft time — never hardcode.

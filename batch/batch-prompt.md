@@ -105,6 +105,20 @@ Comp score (1-5): 5=top quartile, 4=above market, 3=median, 2=slightly below, 1=
 
 Top 5 CV changes + Top 5 LinkedIn changes.
 
+#### Block F — Red Flags
+
+Identify blockers, deal-breakers, and concerns not covered in Blocks B–E. Read `config/profile.md` key `strategy.deal_breakers` for the user's hard stops (if present).
+
+Check for: hard deal-breakers (relocation required, visa unavailable, comp below minimum), contract red flags (unusual non-competes, IP clauses), role red flags (scope mismatch, understaffed signals), company red flags (recent layoffs in relevant dept, funding concerns), process red flags (extreme urgency, salary secrecy in regulated jurisdictions).
+
+**Scoring impact:** Severe flags cap global score at 2.5 max. Moderate flags apply −0.3 to −0.5. Minor flags noted only.
+
+Output format: `| Flag | Severity (Hard / Moderate / Minor) | Impact | Source |`
+
+If no significant red flags: "No significant red flags identified."
+
+---
+
 #### Block G — Posting Legitimacy
 
 Analyze posting signals to assess whether this is a real, active opening.
@@ -126,9 +140,9 @@ Analyze posting signals to assess whether this is a real, active opening.
 | Dimension | Score |
 |-----------|-------|
 | CV Match | X/5 |
-| North Star Alignment | X/5 |
+| Level and Strategy fit | X/5 |
 | Comp | X/5 |
-| Cultural Signals | X/5 |
+| Personalization fit | X/5 |
 | Red flags | -X (if any) |
 | **Global** | **X/5** |
 

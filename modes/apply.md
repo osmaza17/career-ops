@@ -57,7 +57,7 @@ Compare the role on screen against the evaluated role. If different, pause and n
 
 <agent_instruction>
 - **Adapt**: Adjust responses without re-evaluating.
-- **Re-evaluate**: Run full A–F pipeline, update report, regenerate Section G. Update role title in `applications.md` if applicable.
+- **Re-evaluate**: Run full A–G pipeline, update report. Update role title in `applications.md` if applicable.
 </agent_instruction>
 </step>
 
@@ -143,5 +143,5 @@ Present all responses and STOP. Do not click Apply, Submit, or Send. The candida
 
 <output>
 - Formatted copy-paste responses for each visible form field
-- (Post-submit) Updated status in `applications.md` and Section G in the report
+- (Post-submit) Updated status via TSV → merge-tracker pipeline and Section G in the report
 </output>

@@ -63,11 +63,13 @@ node merge-tracker.mjs
 </step>
 
 <step id="5" name="Summary">
+<agent_instruction>
+Collect each agent's JSON output (status, company, role, score, pdf path, report path). Populate one row per processed job in the table below. For failed jobs, write "—" for score and PDF, and note the error in the Report column.
+</agent_instruction>
 <completion>
-Show one row per processed job:
-
 | # | Company | Role | Score | PDF | Report |
 |---|---------|------|-------|-----|--------|
+| {REPORT_NUM} | {company} | {role} | {score}/5 | ✅/❌ | [{REPORT_NUM}](output/reports/...) |
 </completion>
 </step>
 

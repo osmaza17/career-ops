@@ -41,7 +41,7 @@ For each pending URL, launch a background agent (Agent tool, `run_in_background:
 Agent(
   subagent_type="general-purpose",
   run_in_background=True,
-  prompt="[content of modes/_shared.md]\n\n[content of modes/offer-analysis.md]\n\n[content of modes/pdf.md]\n\nYour assigned report number is {REPORT_NUM}. Process this job:\n\nURL: {url}\n\nRun the full pipeline:\n1. Extract JD (Playwright → WebFetch → WebSearch). If inaccessible, return {url} as failed.\n2. Evaluate Blocks A–G (offer-analysis.md)\n3. Save report to output/reports/{REPORT_NUM}-{company-slug}-{date}.md\n4. Generate PDF (pdf.md) if score >= 3.0\n5. Write tracker TSV to batch/tracker-additions/{REPORT_NUM}-{company-slug}.tsv",
+  prompt="[content of modes/_shared.md]\n\n[content of modes/offer-analysis.md]\n\n[content of modes/pdf.md]\n\nYour assigned report number is {REPORT_NUM}. Process this job:\n\nURL: {url}\n\nIf the URL starts with 'local:jds/', read the file at that path (e.g. local:jds/acme-pm.md → read jds/acme-pm.md) instead of fetching a URL.\n\nRun the full pipeline:\n1. Extract JD (Playwright → WebFetch → local file). If inaccessible, return {url} as failed.\n2. Evaluate Blocks A–G (offer-analysis.md)\n3. Save report to output/reports/{REPORT_NUM}-{company-slug}-{date}.md\n4. Generate PDF (pdf.md) if score >= 3.0\n5. Write tracker TSV to batch/tracker-additions/{REPORT_NUM}-{company-slug}.tsv",
   description="pipeline #{REPORT_NUM}: {url}"
 )
 ```

@@ -348,7 +348,7 @@ Designed a proprietary dispatch heuristic with a multi-component cost function (
 
 ### 14.3 Globally banned vocabulary
 
-`passionate about` · `results-driven` · `results-oriented` · `proven track record` · `team player` · `leveraged` · `spearheaded` · `facilitated` · `synergy` · `go-getter` · `in order to` · `so as to` · `robust` · `seamless` · `cutting-edge` · `innovative` · `demonstrated ability to` · `best practices`
+`passionate` · `passionate about` · `results-driven` · `results-oriented` · `proven track record` · `team player` · `leveraged` · `spearheaded` · `facilitated` · `synergy` · `go-getter` · `in order to` · `so as to` · `robust` · `seamless` · `cutting-edge` · `innovative` · `demonstrated ability to` · `best practices`
 
 ### 14.4 Banned grandiose verbs
 

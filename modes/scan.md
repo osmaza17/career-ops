@@ -67,7 +67,7 @@ For each `tracked_companies` entry with `enabled: true` and a defined `api:`:
 |---|---|---|
 | Greenhouse | `https://boards-api.greenhouse.io/v1/boards/{company}/jobs` | `jobs[].title`, `jobs[].absolute_url` |
 | Ashby | GET `https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` | `jobs[].title`, `jobs[].jobUrl` |
-| Lever | `https://api.lever.co/v0/postings/{company}?mode=json` | `[].text`, `[].hostedUrl` (fallback `applyUrl`) |
+| Lever | `https://api.lever.co/v0/postings/{company}?mode=json` | `[].text`, `[].hostedUrl` |
 </agent_instruction>
 
 ### Level 3 — WebSearch (BROAD DISCOVERY)
@@ -175,11 +175,11 @@ For private/non-public URLs:
 `data/scan-history.tsv` tracks all seen URLs:
 
 ```
-url	first_seen	portal	title	company	location	status
-https://...	2026-02-10	Ashby	Supply Chain Analyst	Acme Logistics	Paris	added
-https://...	2026-02-10	Greenhouse	Junior Dev	BigCo		skipped_title
-https://...	2026-02-10	Ashby	OR Engineer	OldCo		skipped_dup
-https://...	2026-02-10	WebSearch	Consultant Ops	ClosedCo		skipped_expired
+url	first_seen	portal	title	company	status	location
+https://...	2026-02-10	Ashby	Supply Chain Analyst	Acme Logistics	added	Paris
+https://...	2026-02-10	Greenhouse	Junior Dev	BigCo	skipped_title	
+https://...	2026-02-10	Ashby	OR Engineer	OldCo	skipped_dup	
+https://...	2026-02-10	WebSearch	Consultant Ops	ClosedCo	skipped_expired	
 ```
 
 ## careers_url Management

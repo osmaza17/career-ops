@@ -147,7 +147,7 @@ Header:
 **Researched:** {YYYY-MM-DD}
 **Sources:** {N} Glassdoor reviews, {N} Blind posts, {N} other
 ```
-Followed by all sections from Steps 2–7.
+Followed by all sections from Steps 2–6.
 </mapping>
 
 ## Post-Delivery

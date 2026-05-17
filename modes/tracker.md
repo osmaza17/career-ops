@@ -18,11 +18,10 @@ Read `data/applications.md` and display the pipeline status with summary statist
 </reference>
 
 <reference id="status-flow">
-`Evaluated` → `Applied` → `Responded` / `Contact` → `Interview` → `Offer` / `Rejected` / `Discarded` / `SKIP`
+`Evaluated` → `Applied` → `Responded` → `Interview` → `Offer` / `Rejected` / `Discarded` / `SKIP`
 
 - `Applied` — candidate sent the application
-- `Responded` — recruiter/company reached out; candidate responded (inbound)
-- `Contact` — candidate proactively reached out (outbound, e.g. LinkedIn message)
+- `Responded` — company has responded (not yet interview)
 </reference>
 
 <process>

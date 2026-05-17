@@ -83,7 +83,7 @@ modes/pdf.md             →  PDF generation instructions (LaTeX pipeline + Canv
 ## File Naming Conventions
 
 - Reports: `{###}-{company-slug}-{YYYY-MM-DD}.md` (3-digit zero-padded)
-- PDFs: `cv-candidate-{company-slug}-{YYYY-MM-DD}.pdf`
+- PDFs: `output/CVs/cv-{candidate}-{company}-{YYYY-MM-DD}.tex/.pdf`
 - Tracker TSVs: `batch/tracker-additions/{id}.tsv`
 
 ## Pipeline Integrity

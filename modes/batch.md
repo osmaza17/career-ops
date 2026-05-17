@@ -85,8 +85,9 @@ Options:
 - `--start-from N` — start from ID N
 - `--parallel N` — N workers in parallel
 - `--max-retries N` — attempts per job (default: 2)
+- `--min-score N` — skip PDF generation for jobs scoring below N (default: 0 = generate all PDFs)
 
-<agent_instruction>After `batch-runner.sh` completes, the user must run `node merge-tracker.mjs` manually. Remind them if they forget.</agent_instruction>
+<agent_instruction>`merge-tracker.mjs` runs automatically after `batch-runner.sh` completes. If the script fails mid-run, the user can run `node merge-tracker.mjs` manually to merge any completed tracker additions.</agent_instruction>
 
 ## batch-state.tsv Format
 
@@ -95,8 +96,10 @@ Options:
 id	url	status	started_at	completed_at	report_num	score	error	retries
 1	https://...	completed	2026-...	2026-...	002	4.2	-	0
 2	https://...	failed	2026-...	2026-...	-	-	Error msg	1
-3	https://...	pending	-	-	-	-	-	0
+3	https://...	processing	2026-...	-	-	-	-	0
 ```
+
+Status values written by `batch-runner.sh`: `processing` (worker running), `completed`, `failed`, `skipped` (below min-score). Jobs not yet started have no row — they are not pre-populated as `pending`.
 </format>
 
 ## Workers (headless mode)

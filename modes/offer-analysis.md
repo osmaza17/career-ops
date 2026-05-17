@@ -192,7 +192,9 @@ Save full evaluation to `output/reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 ## F) Red Flags
 ## G) Posting Legitimacy
 ## H) Draft Application Answers
-(only if score >= 4.5)
+(only if score >= 4.5 — skip entirely if below threshold)
+
+For each visible application form question (from the JD or known ATS): draft a 2–4 sentence answer using the candidate's proof points from `config/profile.md`. Lead with a specific achievement. Never exceed the visible character/word limit. Mark each answer with the form field name. Do NOT fabricate experience.
 
 ---
 

@@ -33,14 +33,14 @@ Shared reference file loaded by every career-ops mode. Contains scoring rubrics,
 
 <scoring>
 
-The evaluation uses 6 blocks (A-F) plus Block G (legitimacy), with a global score of 1-5:
+The evaluation uses 7 blocks (A-G), with a global score of 1-5:
 
 | Block | Dimension | What it measures |
 |-------|-----------|-----------------|
 | B | CV Match | Skills, experience, proof points alignment |
-| C | North Star alignment | How well the role fits the user's target archetypes (from `config/profile.md`, key `target_roles.archetypes`) |
+| C | Level and Strategy | Seniority fit vs JD level; candidate's strategy for presenting as the right level |
 | D | Comp | Salary vs market (5=top quartile, 1=well below) |
-| E | Cultural signals | Company culture, growth, stability, remote policy |
+| E | Personalization fit | Cultural alignment, remote policy, company growth trajectory, and CV/LinkedIn tailoring scope |
 | F | Red flags | Blockers, deal-breakers, warnings (negative score adjustments) |
 | — | **Global** | Weighted average of B-E, adjusted by F |
 | G | Legitimacy | Separate qualitative tier — does not affect 1-5 score |

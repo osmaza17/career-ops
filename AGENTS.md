@@ -21,7 +21,7 @@ Files marked *(created on first use)* do not exist until the relevant mode runs 
 | `data/scan-history.tsv` | Scanner dedup history | `scan` *(created on first use)* |
 | `data/follow-ups.md` | Follow-up history | `followup` *(created on first use)* |
 | `data/linkedin.md` | LinkedIn profile context (saved by `linkedin-optimizer`, read each session) | `linkedin-optimizer` *(created on first use)* |
-| `sources/*` | Raw academic documents (read only by `analyze-sources`) | User-provided |
+| `sources/*` | Raw academic documents | User-provided (read by `onboard` for initial setup and `analyze-sources` for ongoing additions) |
 | `output/reports/*` | Evaluation reports | `offer-analysis` *(created on first use)* |
 | `output/interview-prep/*` | Interview intel reports | `interview-prep` *(created on first use)* |
 | `output/CVs/*` | Generated .tex and PDF files | `pdf` *(created on first use)* |
@@ -129,7 +129,7 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 
 | If the user...                                              | Mode                                              |
 | ----------------------------------------------------------- | ------------------------------------------------- |
-| Pastes JD or URL                                            | auto-pipeline (evaluate + report + PDF + tracker) |
+| Pastes JD or URL                                            | `auto-pipeline` (evaluate + report + PDF + tracker) |
 | Asks to evaluate offer                                      | `offer-analysis`                                  |
 | Asks to compare offers                                      | `offers-comparison`                               |
 | Wants LinkedIn outreach (messages to recruiters/contacts)   | `contact`                                         |
@@ -143,10 +143,9 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 | Batch processes offers                                      | `batch`                                           |
 | Asks about rejection patterns or wants to improve targeting | `patterns`                                        |
 | Asks about follow-ups or application cadence                | `followup`                                        |
-| Has raw academic documents to digest (project reports, internship descriptions, association activity files) | `analyze-sources` |
+| Has raw academic documents to digest (project reports, internship descriptions, association activity files) or new files in sources/ to process | `analyze-sources` |
 | Needs to create or complete config/profile.md              | `onboard`                                         |
 | Names 2+ companies to research, compare, rank, or build a target list from | `intel-sweep`  |
-| Has ONE or more new files in sources/ to process          | `analyze-sources`                                 |
 
 ### CV Source of Truth
 

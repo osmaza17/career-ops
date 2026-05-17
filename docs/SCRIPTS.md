@@ -14,6 +14,9 @@ All scripts live in the project root as `.mjs` modules and are exposed via `npm 
 | `npm run sync-check` | `cv-sync-check.mjs` | Validate CV/profile consistency |
 | `npm run liveness` | `check-liveness.mjs` | Test if job URLs are still active |
 | `npm run scan` | `scan.mjs` | Zero-token portal scanner |
+| `node generate-pdf.mjs {tex} {pdf}` | `generate-pdf.mjs` | LaTeX CV validator + pdflatex compiler |
+| `node analyze-patterns.mjs` | `analyze-patterns.mjs` | Pattern analysis (JSON output) |
+| `node followup-cadence.mjs` | `followup-cadence.mjs` | Follow-up cadence calculator (JSON output) |
 
 ---
 

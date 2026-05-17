@@ -76,6 +76,4 @@ Save hooks in `.claude/settings.json`.
 
 ## States (states.yml)
 
-The canonical states rarely need changing. If you add new states, update:
-1. `states.yml`
-2. `normalize-statuses.mjs` (alias mappings)
+The canonical states are defined in `states.yml` (a system file — do not edit directly). They rarely change. If you genuinely need a new status, open an issue on the project repo. `normalize-statuses.mjs` maps common aliases to canonical values automatically.
