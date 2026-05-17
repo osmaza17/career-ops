@@ -41,7 +41,7 @@ Confirm the list, or add/remove companies before we start.
 <step id="2" name="Read candidate context">
 
 <agent_instruction>
-Read `config/profile.md` (YAML frontmatter: `target_roles`, `narrative.proof_points`, `narrative.superpowers`, `strategy.adaptive_framing`). Extract the top 2–3 proof points and primary target archetype. Pass these to all workers so they can personalize Axis 7 (Candidate angle).
+Read `config/profile.md` (YAML frontmatter: `target_roles`, `narrative.superpowers`, `strategy.adaptive_framing`). Extract the top 2–3 superpowers and primary target archetype. Pass these to all workers so they can personalize Axis 7 (Candidate angle).
 </agent_instruction>
 
 </step>
@@ -61,9 +61,9 @@ You are a company research agent. Research {company} for a candidate targeting {
 CANDIDATE CONTEXT:
   Target role: {role}
   Primary archetype: {archetype}
-  Top proof points:
-    - {proof_point_1}
-    - {proof_point_2}
+  Top superpowers:
+    - {superpower_1}
+    - {superpower_2}
 
 RESEARCH AXES (answer from search results — do not output a prompt template):
   1. Business model: What does the company do, revenue model, size, ownership, geographies?

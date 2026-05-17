@@ -33,10 +33,9 @@ Before running any phase, silently read these files and use them to pre-populate
 | Interview question (Phase 1) | Source in `config/profile.md` |
 |------------------------------|-------------------------------|
 | Current role / institution | `candidate.*` + Education body |
-| Target role | `target_roles.primary` |
-| What makes you different | `narrative.superpowers` |
-| Measurable proof points | `narrative.proof_points` + project bullets |
-| Keyword targets | `target_roles.archetypes` + `strategy.adaptive_framing` keyword columns |
+| Target role | `target_roles` (dream entries) |
+| What makes you different / key achievements | `narrative.superpowers` + project bullets |
+| Keyword targets | `target_roles` + `strategy.adaptive_framing` keyword columns |
 | Exit narrative / story | `narrative.exit_story` |
 | Credibility signals | Education entries + awards in YAML |
 | Languages | `languages` array |
@@ -47,9 +46,8 @@ Before running any phase, silently read these files and use them to pre-populate
 <reference id="about-sources">
 Draft the About section from:
 - `narrative.exit_story` — adapt to the 5-part Hook/Value/Proof/Intent/CTA structure, first-person voice
-- `narrative.superpowers` — value proposition sentences
-- `narrative.proof_points` — proof bullets rewritten in first person
-- `target_roles.primary` — "What I'm looking for" paragraph
+- `narrative.superpowers` — value proposition sentences and achievement bullets rewritten in first person
+- `target_roles` (dream entries) — "What I'm looking for" paragraph
 
 The exit_story is already the right story — restructure it into LinkedIn format and soften from CV tone to conversational.
 </reference>
@@ -187,7 +185,7 @@ Kill list — never use: "Passionate", "Strategic Thinker", "Results-Driven", "G
 </reference>
 
 <agent_instruction>
-Generate 3 variants. If career-ops files exist, use `narrative.headline` as starting point and `target_roles.archetypes` to determine which keywords to front-load.
+Generate 3 variants. If career-ops files exist, use `narrative.headline` as starting point and `target_roles` to determine which keywords to front-load.
 </agent_instruction>
 
 </section>
@@ -212,7 +210,7 @@ Generate 3 variants. If career-ops files exist, use `narrative.headline` as star
 Rules: first person · short paragraphs (2–3 sentences) · avoid "passionate", "synergy", "leveraged", "thought leader" · show, don't claim.
 
 <agent_instruction>
-If career-ops files exist, draft from `narrative.exit_story` (restructured into the 5-part framework), `narrative.superpowers` (value prop), `narrative.proof_points` (bullets rewritten in first person). Do not copy-paste — rewrite in LinkedIn voice.
+If career-ops files exist, draft from `narrative.exit_story` (restructured into the 5-part framework) and `narrative.superpowers` (value prop and achievement bullets). Do not copy-paste — rewrite in LinkedIn voice.
 </agent_instruction>
 
 </section>
@@ -250,7 +248,7 @@ If career-ops files exist, read the corresponding entry in `config/profile.md` b
 Target 50+ skills (up to 100 supported). Pin top 3 to align with target role keywords. Order by relevance to target role.
 
 <agent_instruction>
-If career-ops files exist, seed from the Skills section in `config/profile.md` body, then expand to 50+ by adding adjacent searchable terms from `target_roles.archetypes` and `strategy.adaptive_framing` keyword columns.
+If career-ops files exist, seed from the Skills section in `config/profile.md` body, then expand to 50+ by adding adjacent searchable terms from `target_roles` and `strategy.adaptive_framing` keyword columns.
 </agent_instruction>
 
 </section>
@@ -350,9 +348,9 @@ Handle these naturally without running the full 4-phase flow:
 |-----------|--------|
 | "Fix my headline" | Read career-ops files + `data/linkedin.md`, generate 3 headline variants |
 | "Here's my LinkedIn PDF" | Read PDF, extract all sections, merge with career-ops data, focus on goals and differentiators |
-| "Rewrite my About" | Read career-ops files for source material, draft from `narrative.exit_story` + proof_points, ask for current About text to compare |
+| "Rewrite my About" | Read career-ops files for source material, draft from `narrative.exit_story` + `narrative.superpowers`, ask for current About text to compare |
 | "Audit my profile" | Run Phase 2 audit against Best Practices reference |
-| "Update my achievements" | Check `config/profile.md` for new proof_points first, then ask for anything not yet in the file |
+| "Update my achievements" | Check `config/profile.md` for new superpowers first, then ask for anything not yet in the file |
 | "I got a new job" | Update `data/linkedin.md`, rewrite headline and current role, offer to update `config/profile.md` |
 | "What changed since last time?" | Read `data/linkedin.md` Effectiveness Tracking and Optimization History, present summary |
 

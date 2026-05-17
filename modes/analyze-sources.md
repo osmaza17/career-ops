@@ -448,22 +448,21 @@ If user says "keep the current version" or "no changes" — do nothing.
 ## Profile Metadata Updates
 
 <agent_instruction>
-After any entry is confirmed and appended, check whether the identity/narrative section should also be extended. Only offer when the new entry contains a strong proof point or competition result not yet captured there.
+After any entry is confirmed and appended, check whether the identity/narrative section should also be extended. Only offer when the new entry contains a strong result or competition outcome not yet captured there.
 </agent_instruction>
 
 <reference id="metadata-update-rules">
 | Entry type | YAML key to update | Condition |
 |------------|-------------------|-----------|
-| Any entry with strong quantified outcome | `narrative.proof_points` | If outcome not already summarized there |
+| Any entry with a strong result or differentiator | `narrative.superpowers` | If not already captured there |
 | Competition with external prize | `awards_and_competitions` | If award not already listed |
 | New experience that changes the narrative | `narrative.headline` or `narrative.exit_story` | Only if user explicitly requests it |
 </reference>
 
 <format>
-**New proof_point entry:**
+**New superpower entry:**
 ```yaml
-- name: "[Short project name]"
-  hero_metric: "[One sentence: the most impressive verifiable outcome]"
+- "[What makes this notable — a differentiator, result, or achievement the user would want to talk about]"
 ```
 
 **New awards_and_competitions entry:**
@@ -481,7 +480,7 @@ After any entry is confirmed and appended, check whether the identity/narrative 
 Entry added to profile.md.
 
 This result is strong enough to add to your profile summary.
-Proposed addition to [narrative.proof_points / awards_and_competitions]:
+Proposed addition to [narrative.superpowers / awards_and_competitions]:
 
 [formatted YAML block]
 

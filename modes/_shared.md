@@ -91,7 +91,7 @@ Block G assesses whether a posting is likely a real, active opening. It does NOT
 
 ## Archetype Detection
 
-Classify every offer into one of these types (or hybrid of 2). Read `config/profile.md` (key `target_roles.archetypes` and `strategy.adaptive_framing`) for the user's specific archetypes — these defaults apply only when no override is present.
+Classify every offer into one of these types (or hybrid of 2). Read `config/profile.md` (key `target_roles` and `strategy.adaptive_framing`) for the user's specific roles — these defaults apply only when no override is present.
 
 | Archetype | Key signals in JD |
 |-----------|-------------------|
@@ -102,7 +102,7 @@ Classify every offer into one of these types (or hybrid of 2). Read `config/prof
 | Data / Quantitative Analyst | "analytics", "data", "Power BI", "SQL", "Python", "KPIs", "reporting", "forecasting", "dashboards", "business intelligence" |
 | Project / Programme Manager | "project management", "PMO", "milestones", "stakeholders", "budget", "programme", "risk management", "planning", "coordination" |
 
-After detecting archetype, read `config/profile.md` (key `strategy.adaptive_framing`) for the user's specific framing and proof points for that archetype.
+After detecting the role type, read `config/profile.md` (key `strategy.adaptive_framing`) for the user's specific framing and superpowers to lead with for that role.
 
 </reference>
 

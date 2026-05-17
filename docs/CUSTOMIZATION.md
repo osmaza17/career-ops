@@ -6,29 +6,34 @@ This is the single source of truth for career-ops. It has two layers: a YAML fro
 
 Key sections:
 - **candidate**: Name, email, phone, location, LinkedIn, portfolio
-- **target_roles**: Your North Star roles and archetypes
-- **narrative**: Your headline, exit story, superpowers, proof points
+- **target_roles**: Your target roles (dream, strong fit, stretch)
+- **narrative**: Your headline, exit story, superpowers
 - **compensation**: Target range, minimum, currency
 - **location**: Country, timezone, visa status, on-site availability
 
 ## Target Roles & Strategy (config/profile.md)
 
-The archetype table in `config/profile.md` (under `target_roles.archetypes` and `strategy.adaptive_framing`) determines how offers are scored and CVs are framed. Edit these keys to match YOUR career targets:
+The role list in `config/profile.md` (under `target_roles` and `strategy.adaptive_framing`) determines how offers are scored and CVs are framed. Edit these keys to match YOUR career targets:
 
 ```yaml
 target_roles:
-  archetypes:
-    - name: Your Role 1
-      thematic_axes: key skills
-      value_proposition: what they need
+  - name: Your Role 1
+    level: Junior
+    fit: dream
+    value_proposition: what the hiring manager needs
+    thematic_axes:
+      - key skill 1
+      - key skill 2
 
 strategy:
   adaptive_framing:
-    - archetype: Your Role 1
-      proof_points: [project A, project B]
+    - role: Your Role 1
+      highlights:
+        - "superpower or achievement to lead with"
+        - "another highlight specific to this role"
 ```
 
-Also update `strategy.cross_cutting_advantage` to map YOUR specific projects across archetypes.
+Also update `strategy.cross_cutting_advantage` to map YOUR specific projects across roles.
 
 ## Portals (config/portals.yml)
 

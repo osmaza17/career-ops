@@ -17,6 +17,7 @@ Two phases: **Phase 1** collects identity, roles, narrative, compensation, langu
 - `additional_training`: omit the key entirely if empty; reverse chronological order when present.
 - `projects`: ordered by decreasing impressiveness to the interviewer, not by date.
 - `cv.output_format: "latex"` must always be present in the written file.
+- **Prefer multiple-choice questions.** Whenever a question has a predictable answer set (role types, languages, skill categories, location preferences, deal-breakers, fit signals, visa status, etc.), present numbered options and allow the user to select several by listing the numbers (e.g. "1, 3, 5"). Always include an "Other — [describe]" option so the user can add anything not on the list. Reserve open-ended questions for fields that are inherently free-form (narratives, exact metrics, personal descriptions).
 
 </rules>
 
@@ -53,6 +54,54 @@ Use this table when the user names a target role. Match their role to the closes
 
 ---
 
+<pre_phase name="Sources Extraction">
+
+<agent_instruction>
+Before asking any question, silently check whether the `sources/` folder exists and contains files.
+
+**If `sources/` is empty or missing:** proceed directly to Phase 1, Group 1 with no mention of sources.
+
+**If files are found:** read every file in `sources/`. Extract all information that could pre-fill the profile, organized by section:
+
+| Section | What to extract |
+|---------|----------------|
+| Identity | Full name, emails, phone numbers, LinkedIn URL, current city/country |
+| Education | Institutions, degrees, specializations, dates, GPA if present, exchange programs |
+| Experience | Company names, roles, dates, responsibilities, quantified outcomes |
+| Projects | Names, context, tools used, results, scale/impact |
+| Competitions | Event name, organizer, date, ranking, team size, your role |
+| Associations / Student life | Organization, role, dates, what you did |
+| Skills | Programming languages, tools, methods, frameworks |
+| Languages | Languages spoken and level |
+| Narrative clues | Strong differentiators, unique achievements, anything that would make a recruiter stop |
+| Superpowers | Standout results, unique positions, quantified wins — anything the user would want to talk about |
+
+Store all extracted info as **internal context only** — do not write anything to `config/profile.md` yet.
+
+Then open with:
+
+> "I found [N] document(s) in your sources folder (`sources/`). I've read through them and extracted info that I'll use to pre-fill suggestions as we go — you'll confirm, correct, or add to everything before it's saved. Nothing gets written without your go-ahead.
+>
+> Ready to start?"
+
+Then proceed to Phase 1, Group 1.
+</agent_instruction>
+
+**Suggestion rule — applies to every group in Phase 1 and Phase 2:**
+When a group or section has extracted data from sources, present it as a draft suggestion *before* the open-ended question. Format:
+
+> "Based on your documents, here's what I'd suggest for this section:
+> - [field]: [extracted value]
+> - [field]: [extracted value]
+>
+> Does this look right? What would you like to change or add?"
+
+If no relevant data was extracted for a section, ask the question normally. Never invent or paraphrase beyond what the documents actually say. If a value is uncertain (e.g. a date is ambiguous), flag it explicitly: "(uncertain — please confirm)".
+
+</pre_phase>
+
+---
+
 <phase id="1" name="YAML Interview">
 
 <phase_instructions>
@@ -60,6 +109,8 @@ Use this table when the user names a target role. Match their role to the closes
 Ask the seven question groups in order. Send each group as a single message. Wait for the answer before moving to the next. Never ask all groups at once.
 
 **Confirmation gate — applies to every group:** After the user answers, echo back the key values you understood in one concise line ("Got it — I'll save: [summary of values]. Anything to correct?"). Write to `config/profile.md` immediately on confirmation. If the user corrects something, update and rewrite before moving to the next group. Never skip this step.
+
+**Suggestions:** If sources were extracted in the pre-phase, present them as a draft for the relevant group before asking the open-ended questions. The user confirms, edits, or adds — then the agent writes. Never write based on suggestions alone.
 
 </phase_instructions>
 
@@ -97,18 +148,16 @@ A few basics to start:
 <user_prompt>
 "This is how I know which types of roles to tailor your profile and CV for — the more specific you are here, the better I can position you.
 
-- Your primary job title (the one you'd write in a LinkedIn headline)
-- Then 2–4 role archetypes — the distinct role flavors you're open to. For each:
-  - Role name
-  - Level (e.g. Junior, Alternant, Mid, Senior)
-  - Fit: primary (dream), secondary (strong fit), or stretch (adjacent)
-  - In one sentence starting with 'Someone who…', what does the buyer (the hiring manager) want?
+List 2–4 roles you're open to. For each:
+- Role name
+- Level (e.g. Junior, Alternant, Mid, Senior)
+- Fit: dream, strong fit, or stretch
+- In one sentence starting with 'Someone who…', what does the buyer (the hiring manager) want?
 
 Example:
-- Primary title: Supply Chain & Operations Consultant
-- Archetype 1: Strategy Consultant — Junior — Primary — 'Someone who structures ambiguous problems and turns them into board-ready recommendations'
-- Archetype 2: Operations Analyst — Junior — Secondary — 'Someone who diagnoses inefficiencies and builds the roadmap to fix them'
-- Archetype 3: Industrial Engineer — Junior — Stretch — 'Someone who designs and optimizes production systems end to end'"
+- Strategy Consultant — Junior — dream — 'Someone who structures ambiguous problems and turns them into board-ready recommendations'
+- Operations Analyst — Junior — strong fit — 'Someone who diagnoses inefficiencies and builds the roadmap to fix them'
+- Industrial Engineer — Junior — stretch — 'Someone who designs and optimizes production systems end to end'"
 </user_prompt>
 
 <agent_instruction>
@@ -124,7 +173,7 @@ Once the user provides their roles, look up each in the `thematic_axes` referenc
 - **No match found** — ask the user to define them:
   > "I don't have a preset for **[Role Name]** — what domains or skills define it? Give me 4–6 short phrases (e.g. 'Problem structuring, quantitative analysis, client delivery, stakeholder alignment')."
 
-Process all archetypes one at a time before moving to Group 3.
+Process all roles one at a time before moving to Group 3.
 </agent_instruction>
 
 <validation>
@@ -136,8 +185,7 @@ Mandatory for every archetype, no exceptions:
 </validation>
 
 <mapping>
-- `target_roles.primary` — list of job titles
-- `target_roles.archetypes` — one entry per archetype: `name`, `level`, `fit`, `thematic_axes`, `value_proposition`
+- `target_roles` — flat list, one entry per role: `name`, `level`, `fit` (dream / strong fit / stretch), `thematic_axes`, `value_proposition`
 
 `value_proposition` cannot be left empty — if the user doesn't provide a 'Someone who…' sentence, ask for it before moving on.
 </mapping>
@@ -155,8 +203,7 @@ Mandatory for every archetype, no exceptions:
 2. **Short exit story** — 3–4 sentences, third-person, written as if a recruiter is describing you. What's your arc, your differentiator, and what you're looking for?
 3. **Long version** — same story, first person, 4–6 sentences. This is for LinkedIn summaries and cover letter openers.
 4. **Usage notes** — very briefly: when do you use the short version vs. the long one? (e.g. 'Short: PDFs and recruiter intros. Long: LinkedIn About and cold emails.')
-5. **Superpowers** — 2–3 concrete differentiators. Not soft skills — things a reference could verify. (e.g. 'First student from UPV to do this exchange', 'MILP optimization adopted by 15+ associations')
-6. **Proof points** — 2–3 named achievements, each with a metric. Give me a short label and one sentence with a number. (e.g. 'Staff Planning App — Reduced manual planning from 1–10h to seconds, adopted by 15+ associations')"
+5. **Superpowers** — 2–5 things you're proud of and want to highlight: differentiators, achievements, results — qualitative or quantitative, whatever feels most like you. Not generic soft skills — things a reference could verify or that you'd be excited to talk about in an interview. (e.g. 'First student from UPV to do this exchange', 'Staff Planning App — reduced planning from 10h to seconds, adopted by 15+ associations')"
 </user_prompt>
 
 <agent_instruction>
@@ -168,8 +215,7 @@ If the user is vague (e.g., "I'm good at problem-solving"): ask one follow-up �
 - `narrative.exit_story` (short, third-person)
 - `narrative.exit_story_long` (first-person, multi-sentence block — use YAML `|` block scalar)
 - `narrative.exit_story_usage` — keys: `in_pdf`, `in_star`, `in_draft_answers` (or equivalent labels the user provides)
-- `narrative.superpowers` — one item per differentiator
-- `narrative.proof_points` — one entry per achievement: `name` (short label) + `hero_metric` (one sentence, metric-led)
+- `narrative.superpowers` — one item per differentiator or achievement the user wants to highlight (qualitative or quantitative, free-form)
 </mapping>
 
 </group>
@@ -227,16 +273,34 @@ Set `location.visa_status` — infer from nationality/location if mentioned in G
 
 <group id="6" name="Strategy">
 
-<user_prompt>
-"Now the strategy layer — this is how I frame you differently depending on the role type, and how I handle negotiation and scoring on your behalf. Keep it short — bullets are fine.
+<agent_instruction>
+**Before presenting any user prompt for this group**, auto-draft the adaptive framing:
 
-1. **Adaptive framing** — for each archetype we listed, what do you emphasize? Name 1–2 projects or proof points per role type, and say where in your profile they live (e.g. 'For Strategy Consultant: emphasize the operations research project and the junior enterprise consulting work, both in Projects section')
-2. **Cross-cutting advantage** — in 2–3 sentences, what's the combination of qualities that makes you hard to replicate at your level? (e.g. 'I combine rigorous quantitative modeling with hands-on client delivery experience — rare at junior level. Trilingual and internationally mobile, which opens roles others can't take.')
-3. **AI positioning** — how do you use AI tools in your work? One honest sentence. (e.g. 'I use AI to accelerate analysis and drafting, but always validate outputs before presenting to stakeholders.')
-4. **Negotiation scripts** — how do you answer 'What are your salary expectations?' and 'Can you do better on comp?' Draft two short scripts. (e.g. 'Expectations: Based on SYNTEC norms for alternance in consulting, I'm targeting X–Y EUR gross/month. Can you do better: I'd need to understand the full package — benefits, bonus structure, and growth trajectory — before I could consider flexibility.')
-5. **Deal-breakers** — 2–3 things that would make you walk away from a role. (e.g. 'No remote flexibility at all', 'Below X EUR gross/month', 'No structured mentorship or feedback culture')
-6. **Fit signals** — what energizes you at work? What drains you? (2–3 items each) (e.g. Energizes: 'Solving structured problems with real constraints', 'Cross-functional projects with visible impact'. Drains: 'Repetitive admin with no ownership', 'Siloed teams with no visibility into outcomes')
-7. **Portfolio** — do you have a public portfolio or GitHub URL you'd like to include? (e.g. 'github.com/osmaza17/cv-santiago' or 'no public portfolio yet')"
+1. Read `narrative.superpowers` (already written to `config/profile.md`).
+2. Read `target_roles` (already written). For each role, select the 2–3 superpowers that are most relevant to that role's context and typical hiring signals.
+3. Present the draft to the user:
+
+> "Here's how I'd frame you by role — using your superpowers as the source. Does this look right? Is there anything crucial for a specific role that isn't already in your superpowers?
+>
+> - **[Role 1]**: [superpower X], [superpower Y]
+> - **[Role 2]**: [superpower X], [superpower Z]
+> ..."
+
+4. Accept corrections. If the user adds something role-specific that isn't in `narrative.superpowers`, add it only to that role's `highlights` (do not add it globally unless the user asks).
+5. Write `strategy.adaptive_framing` to `config/profile.md` once the user confirms.
+
+Then proceed to the remaining strategy questions below.
+</agent_instruction>
+
+<user_prompt>
+"Now the rest of the strategy layer — this is how I handle negotiation and scoring on your behalf. Keep it short — bullets are fine.
+
+1. **Cross-cutting advantage** — in 2–3 sentences, what's the combination of qualities that makes you hard to replicate at your level? (e.g. 'I combine rigorous quantitative modeling with hands-on client delivery experience — rare at junior level. Trilingual and internationally mobile, which opens roles others can't take.')
+2. **AI positioning** — how do you use AI tools in your work? One honest sentence. (e.g. 'I use AI to accelerate analysis and drafting, but always validate outputs before presenting to stakeholders.')
+3. **Negotiation scripts** — how do you answer 'What are your salary expectations?' and 'Can you do better on comp?' Draft two short scripts. (e.g. 'Expectations: Based on SYNTEC norms for alternance in consulting, I'm targeting X–Y EUR gross/month. Can you do better: I'd need to understand the full package — benefits, bonus structure, and growth trajectory — before I could consider flexibility.')
+4. **Deal-breakers** — 2–3 things that would make you walk away from a role. (e.g. 'No remote flexibility at all', 'Below X EUR gross/month', 'No structured mentorship or feedback culture')
+5. **Fit signals** — what energizes you at work? What drains you? (2–3 items each) (e.g. Energizes: 'Solving structured problems with real constraints', 'Cross-functional projects with visible impact'. Drains: 'Repetitive admin with no ownership', 'Siloed teams with no visibility into outcomes')
+6. **Portfolio** — do you have a public portfolio or GitHub URL you'd like to include? (e.g. 'github.com/osmaza17/cv-santiago' or 'no public portfolio yet')"
 </user_prompt>
 
 <agent_instruction>
@@ -244,7 +308,7 @@ Keep this group lightweight. If the user says "skip" for any sub-key, leave it a
 </agent_instruction>
 
 <mapping>
-- `strategy.adaptive_framing` — list of objects: `role_type`, `emphasize`, `proof_sources`
+- `strategy.adaptive_framing` — list of objects: `role` (archetype name) + `highlights` (list of strings — the superpowers most relevant to this role, plus any role-specific additions the user provided)
 - `strategy.cross_cutting_advantage` — multi-line string (YAML `|` block scalar)
 - `strategy.ai_positioning` — multi-line string
 - `strategy.negotiation_scripts` — object with keys the user defines (e.g. `salary_expectations`, `counter_offer`, `grande_ecole_angle`)
@@ -253,6 +317,21 @@ Keep this group lightweight. If the user says "skip" for any sub-key, leave it a
 - `portfolio.public_url` — the URL they provided, or `null` if none
 - `portfolio.notes` — one sentence on portfolio status
 </mapping>
+
+<yaml_example>
+```yaml
+strategy:
+  adaptive_framing:
+    - role: Management Consultant
+      highlights:
+        - "First UPV student to complete the CentraleSupélec exchange"
+        - "MILP model applied in real client context"
+    - role: Supply Chain Analyst
+      highlights:
+        - "Air Liquide internship — inventory reduction focus"
+        - "Staff Planning App — 15+ associations, 10h → seconds"
+```
+</yaml_example>
 
 </group>
 
@@ -311,8 +390,8 @@ List all files in `sources/` (excluding `README.md` if present).
 **If the folder is empty or doesn't exist**, skip to Step 3 and open with:
 > "Phase 1 done — your profile metadata has been saved. The `sources/` folder is empty, so let's fill in your CV sections through a short interview. You can also drop documents into `sources/` at any point and I'll process them."
 
-**If files are found**, announce the count and immediately begin with the first file — do not show a full inventory table or ask for ordering:
-> "Phase 1 done — your profile metadata has been saved. I found [N] documents in `sources/` — I'll process them one at a time. Starting with **[filename 1]**."
+**If files are found**, open with (do not re-announce the file list — they were already mentioned in the pre-phase):
+> "Phase 1 done — your profile metadata has been saved. Now I'll process your documents in depth to build the CV sections. Starting with **[filename 1]**."
 
 Then proceed directly to Step 2 for that file.
 
@@ -513,8 +592,8 @@ Once all sections are filled (or explicitly skipped):
 >
 > **Phase 1 — YAML:**
 > - Identity: candidate.*, location.*
-> - [N] target role archetypes
-> - Narrative: headline · exit stories · [N] superpowers · [N] proof points
+> - [N] target roles (dream / strong fit / stretch)
+> - Narrative: headline · exit stories · [N] superpowers
 > - Compensation: target range · minimum · location flexibility · approach
 > - [N] languages[· N awards]
 > - Strategy: adaptive framing · cross-cutting advantage · negotiation scripts · deal-breakers · fit signals
@@ -534,7 +613,7 @@ If unprocessed files remain in `sources/`:
 > "There are [N] unprocessed files in `sources/`. Run `/career-ops analyze-sources` to extract entries from them."
 
 **Step B — Set up portals (if `config/portals.yml` doesn't exist):**
-> "I'll now set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles? (I can pre-fill them from your archetypes.)"
+> "I'll now set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles? (I can pre-fill them from your role list.)"
 
 If the user agrees, proceed with the portal setup from `modes/scan.md` (keyword customization only — do not run a scan yet).
 

@@ -31,7 +31,7 @@ Files marked *(created on first use)* do not exist until the relevant mode runs 
 - All files in `modes/`, `batch/`, `dashboard/`, `docs/`, `.claude/skills/`
 - `AGENTS.md`, `CLAUDE.md`, `*.mjs` scripts, `states.yml`
 
-**THE RULE: When the user asks to customize anything (archetypes, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` or any system file for user-specific content.** This ensures system updates never overwrite their customizations.
+**THE RULE: When the user asks to customize anything (target roles, narrative, negotiation scripts, proof points, location policy, comp targets), ALWAYS write to `config/profile.md` (under the `strategy:` key or the relevant YAML key). NEVER edit `modes/_shared.md` or any system file for user-specific content.** This ensures system updates never overwrite their customizations.
 
 ## What is career-ops
 
@@ -68,7 +68,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 
 #### Step 1: Profile (required — source of truth)
 
-If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles everything needed to build a complete profile: the YAML frontmatter (identity, target roles, narrative, compensation, languages) and the formatted CV sections (education, experience, projects, associations, competitions, training). It also handles processing raw documents from `sources/` if the user has them.
+If `config/profile.md` is missing, run `modes/onboard.md`. This mode starts by checking `sources/` — if documents are found, it extracts pre-fill suggestions before asking any questions. Everything else builds from there: YAML frontmatter (identity, target roles, narrative, compensation, languages) and the formatted CV sections (education, experience, projects, associations, competitions, training).
 
 `config/profile.md` is both the data source AND the formatted CV — there is no intermediate file. `modes/pdf.md` reads the CV sections directly from the body of `profile.md`.
 
@@ -112,10 +112,10 @@ If the user accepts, use the `/loop` or `/schedule` skill (if available) to set 
 
 ### Personalization
 
-This system is designed to be customized by YOU (AI Agent). When the user asks you to change archetypes, translate modes, adjust scoring, add companies, or modify negotiation scripts -- do it directly. You read the same files you use, so you know exactly what to edit.
+This system is designed to be customized by YOU (AI Agent). When the user asks you to change target roles, translate modes, adjust scoring, add companies, or modify negotiation scripts -- do it directly. You read the same files you use, so you know exactly what to edit.
 
 **Common customization requests:**
-- "Change the archetypes to [backend/frontend/data/devops] roles" → edit `config/profile.md` (under `target_roles.archetypes` and `strategy.adaptive_framing`)
+- "Change the roles to [backend/frontend/data/devops]" → edit `config/profile.md` (under `target_roles` and `strategy.adaptive_framing`)
 - "Translate the modes to English" → edit all files in `modes/`
 - "Add these companies to my portals" → edit `config/portals.yml`
 - "Update my profile" → edit `config/profile.md`
@@ -151,7 +151,7 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 
 - `config/profile.md` is the single source of truth — YAML frontmatter (identity, targets, compensation, languages) + formatted CV sections (Education, Experience, Student Life, Projects, Competitions, Skills, Languages). There is no intermediate CV file.
 - `modes/pdf.md` reads the CV sections from `config/profile.md` directly.
-- `sources/` holds raw academic documents — read by `modes/onboard.md` (during initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode accesses this folder.
+- `sources/` holds raw academic documents — checked at the very start of `modes/onboard.md` (pre-phase extraction for suggestions, then deeper CV section processing) and by `modes/analyze-sources.md` (ongoing additions). No other mode accesses this folder.
 - **NEVER hardcode metrics** — read them from `config/profile.md` at evaluation time
 
 ### Full pipeline (raw documents → CV)
@@ -162,7 +162,7 @@ sources/           →  analyze-sources   →  config/profile.md  (one or more f
 config/profile.md  →  pdf              →  output/*.pdf
 ```
 
-**Access rule:** `sources/` is accessed only by `modes/onboard.md` (initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode, agent, or script reads files from that folder.
+**Access rule:** `sources/` is accessed only by `modes/onboard.md` (pre-phase suggestion extraction + CV section collection) and `modes/analyze-sources.md` (ongoing additions). No other mode, agent, or script reads files from that folder.
 
 ---
 

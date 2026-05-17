@@ -47,20 +47,20 @@ Read `config/profile.md` (CV sections in the body). Execute ALL blocks:
 
 #### Step 0 — Archetype Detection
 
-Read `target_roles.archetypes` from the YAML frontmatter of `config/profile.md`. This is the authoritative list of archetypes for this candidate — do not infer or invent others.
+Read `target_roles` from the YAML frontmatter of `config/profile.md`. This is the authoritative list of target roles for this candidate — do not infer or invent others.
 
-For each archetype entry:
+For each role entry:
 - `name` — the role type (e.g. "Operations Research Analyst", "Strategy Consultant")
-- `fit` — `primary` (dream role), `secondary` (strong fit), or `adjacent` (stretch)
+- `fit` — `dream`, `strong fit`, or `stretch`
 - `level` — seniority level
 
-Classify the offer against these archetypes. If it matches multiple, indicate the 2 closest. If it matches none, flag it as `adjacent` and explain the gap.
+Classify the offer against these roles. If it matches multiple, indicate the 2 closest. If it matches none, flag it as `adjacent` and explain the gap.
 
 **Adaptive framing:**
 
-> **Concrete metrics and proof points are read from `config/profile.md` at each evaluation. NEVER hardcode numbers here.**
+> **Candidate superpowers are read from `config/profile.md` at each evaluation. NEVER hardcode specifics here.**
 
-For each archetype match, emphasize the candidate's experience, skills, and proof points that are most relevant to that role type. Read `narrative.superpowers` and `narrative.proof_points` from `config/profile.md` to identify the strongest signals to lead with.
+For each role match, read `strategy.adaptive_framing` from `config/profile.md`. Find the entry whose `role` matches the detected archetype and use its `highlights` array to identify the strongest signals to lead with. If no entry matches, fall back to `narrative.superpowers` and select the most relevant items for the detected role.
 
 The framing changes per archetype — the underlying truth stays the same. Never invent capabilities the candidate doesn't have.
 
@@ -73,12 +73,8 @@ Table with: Detected archetype, Domain, Function, Seniority, Remote, Team size, 
 Read `config/profile.md` (CV sections). Table mapping each JD requirement to exact lines from the CV.
 
 **Adapted to archetype:**
-- Management Consultant → lead with hackathon win (1st/80 teams), structured problem-solving, MCDA/K-Means go-to-market; emphasize client deliverables and recommendation quality
-- Operations Research / Optimisation → lead with MILP staff planning app (adopted by 15+ associations, manual work to seconds); emphasize quantitative modelling and solver experience
-- Supply Chain / Logistics → emphasize S&OP coursework, demand planning, and any process/flow optimization deliverables; frame OR work as applied supply-chain decision-making
-- Process / Industrial Engineer → highlight industrial engineering double-degree (CentraleSupélec × UPV), capacity planning and process improvement projects, Lean/continuous improvement signals
-- Data / Quantitative Analyst → emphasize Python/Power BI/SQL skills, data-driven deliverables, KPI frameworks, and the quantitative modelling track from the OR specialization
-- Project / Programme Manager → emphasize team leadership in hackathon (team of 6), autonomous project delivery, stakeholder coordination, and cross-functional consulting projects
+
+Read `config/profile.md` key `strategy.adaptive_framing`. For the detected role, use the matching entry's `highlights` array to lead the CV match section. If multiple archetypes match, use the highlights from the closest one and note the overlap.
 
 **Gaps** section with mitigation strategy for each:
 1. Is it a hard blocker or nice-to-have?
