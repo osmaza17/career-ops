@@ -5,11 +5,12 @@ Generate a tailored PDF CV for a target role. Defaults to LaTeX (ATS-compliant, 
 </purpose>
 
 <rules>
+- **STOP CONDITION — the mode is NOT complete until the compiled PDF is exactly 1 A4 page.** `report.pdf.pages` from `generate-pdf.mjs` MUST equal `1`. If it is `2`, `null`, or any other value, apply §9 overflow fixes and recompile. Do NOT report success, do NOT flip the tracker PDF column to ✅, and do NOT return control to the user with a multi-page PDF.
 - NEVER invent metrics, keywords, or experience not present in `config/profile.md`
 - Canva text replacements MUST stay within ±15% of the original character count (fixed-size text boxes)
 - NEVER commit a Canva transaction without explicit user approval
 - Download the export URL immediately — pre-signed S3 links expire in ~2 hours
-- After generation, update the tracker: flip PDF column from ❌ to ✅ if the offer is already registered
+- After generation, update the tracker: flip PDF column from ❌ to ✅ if the offer is already registered (only after the 1-page gate passes)
 </rules>
 
 ---
@@ -47,14 +48,14 @@ Read `config/profile.md` as a single YAML document. CV content keys: `summary`, 
 </step>
 
 <step id="3" name="jd-analysis">
-Extract 15–20 keywords from the JD. Detect JD language → set CV language. Detect role archetype → adapt framing.
+Detect JD language → set CV language. Identify role archetype for section ordering decisions only — do NOT rewrite content.
 </step>
 
-<step id="4" name="tailor-content">
-- Rewrite Professional Summary injecting JD keywords (see §4b and `modes/writing.md §15`).
-- Select top 3–4 most relevant projects ordered by JD relevance.
-- Reorder experience bullets by JD relevance.
-- Inject keywords naturally into existing achievements.
+<step id="4" name="select-content">
+- Use `summary` from `config/profile.md` verbatim (translate to CV language if not EN).
+- Select top 3–4 most relevant projects by JD alignment — but keep their bullets in profile.md order.
+- Keep all experience bullets in profile.md order — do NOT reorder or rewrite.
+- Do NOT inject JD keywords into existing text.
 </step>
 
 <step id="5" name="generate-tex">
@@ -68,8 +69,29 @@ Run: `node generate-pdf.mjs output/CVs/cv-{candidate}-{company}-{YYYY-MM-DD}.tex
 **Requires:** `tectonic` (preferred — `brew install tectonic`) or `pdflatex` (MiKTeX / TeX Live) on PATH.
 </step>
 
+<step id="6b" name="enforce-one-page">
+<agent_instruction>
+**HARD GATE — do not proceed to Step 7 until this passes.**
+
+Parse the JSON report from Step 6. The PDF is acceptable ONLY if `report.pdf.pages === 1`.
+
+If `report.pdf.pages !== 1` (or `report.warning` is present):
+1. Apply §9 overflow fixes in order (columns → bullets → titles → spacing → student-life trim).
+2. Rewrite the `.tex` file with the fix applied.
+3. Re-run Step 6.
+4. Re-check `report.pdf.pages`.
+5. Repeat up to 4 attempts. Each attempt must apply a **different** §9 step than the previous one — do not loop on the same fix.
+
+If after 4 attempts the PDF still has more than 1 page: STOP, do NOT report success, do NOT update the tracker, and surface the issue to the user with the current `.tex` path, the page count, and which §9 steps you tried. Ask the user how to proceed (drop a project, drop a student-life entry, etc.) — never silently exceed 1 page.
+
+Never bypass this gate by editing §9's "Never" list (font < 10pt, margins, `\linespread`).
+</agent_instruction>
+</step>
+
 <step id="7" name="report">
-Report: `.tex` path, `.pdf` path, file sizes, section count, keyword coverage %.
+**Precondition:** Step 6b passed (`report.pdf.pages === 1`). If not, you are not in Step 7 yet.
+
+Report: `.tex` path, `.pdf` path, file sizes, **page count (must read "1 page")**, section count, keyword coverage %.
 </step>
 
 </process>
@@ -79,7 +101,7 @@ Report: `.tex` path, `.pdf` path, file sizes, section count, keyword coverage %.
 ### Writing Conventions
 
 <agent_instruction>
-Read `modes/writing.md` before generating any output. All bullet rules (R0–R9), bold, parentheses, colon, middle-dot, triple-dash, Specificity Standard, Headline, Hobbies, trim signals, vocabulary bans, deverbal nouns (§18), date format (§16), and project title/subtitle patterns (§19) are defined there. LaTeX-specific note: bold renders as `\textbf{}`; client names in `\cventryprojet` titles use `\textbf{Client}`.
+Read `modes/writing.md` before generating any output. All bullet rules (R0–R9), bold, parentheses, colon, middle-dot, triple-dash, Specificity Standard, Headline, Hobbies, trim signals, vocabulary bans, deverbal nouns (§18), date format (§16), and project title/subtitle patterns (§19) are defined there. LaTeX-specific note: bold renders as `\textbf{}`; client names in `\cventryprojet` titles use `\textbf{Client}`. Note: these rules apply to LaTeX formatting and translation only — bullet text must not be rewritten beyond translation.
 </agent_instruction>
 
 ---
@@ -349,17 +371,14 @@ If the title exceeds the limit → shorten `#1` and move extra context into `#2`
 
 ---
 
-### 4b. Keyword Injection Strategy
+### 4b. Fidelity to Profile
 
-<rules id="keyword-injection">
+<rules id="profile-fidelity">
 
-- NEVER add skills the candidate doesn't have.
-- Only reformulate existing experience using JD vocabulary. Examples:
-  - JD "gestion de projet" → reword "coordination d'équipe" to "gestion de projet transverse"
-  - JD "data-driven" → reword "analyse des résultats" to "décision data-driven"
-  - JD "supply chain" → reword "flux logistiques" to "chaîne logistique"
-- Inject into: first bullet of each experience entry, profile sentence 2, skills section.
-- Target: ≥ 60% of JD's top 15 keywords present in the final CV.
+- Use `config/profile.md` text verbatim. Do NOT paraphrase, reorder, or rewrite any bullet or the summary.
+- Permitted operations on text: translate to CV language, apply LaTeX escaping (§3c), shorten a title to meet the ≤45 char limit (§3d).
+- If the JD uses a different term for an identical concept already in the profile, do NOT substitute — the profile wording stands.
+- Structural decisions allowed: which projects to include (top 3–4 by JD relevance), which student_life entries to include (max 2–3).
 
 </rules>
 
@@ -432,8 +451,8 @@ Each section uses its own dedicated command — they are NOT interchangeable.
 <agent_instruction>
 Data source — `config/profile.md`:
 - `candidate.full_name` → `\cvname{}`
-- `narrative.headline` → `\cvheadline{}` (adapt to CV language and JD archetype; apply `modes/writing.md §9`)
-- `summary` → body of `\section*{Profile}`, rewritten with JD keywords per §4b (3 sentences: S1 Identity, S2 Track record, S3 Aspiration; see `modes/writing.md §15`)
+- `narrative.headline` → `\cvheadline{}` (translate to CV language; apply `modes/writing.md §9`)
+- `summary` → body of `\section*{Profile}`, used verbatim (translate to CV language only — no rewriting, no keyword injection)
 </agent_instruction>
 
 <format id="section-header">
@@ -441,7 +460,7 @@ Data source — `config/profile.md`:
 ```latex
 \begin{center}
     \cvname{<candidate.full_name>}\\[3pt]
-    \cvheadline{<headline — adapted to CV language and role archetype>}
+    \cvheadline{<headline — translated to CV language>}
 \end{center}
 \vspace{2pt}{\color{accent}\hrule height 0.8pt}\vspace{4pt}
 
@@ -505,7 +524,7 @@ Data source: `languages[]` array in `config/profile.md` (keys: `language`, `leve
 #### 7.4 Expérience Professionnelle
 
 <agent_instruction>
-Data source: `experience[]` array (keys: `company`, `post`, `country`, `date`, `bullets`). Reorder bullets by JD relevance; inject keywords per §4b. Escape all text per §3c.
+Data source: `experience[]` array (keys: `company`, `post`, `country`, `date`, `bullets`). Use bullets in profile.md order — do NOT reorder or rewrite. Translate to CV language. Escape all text per §3c.
 </agent_instruction>
 
 <format id="section-experience">
@@ -515,8 +534,8 @@ Data source: `experience[]` array (keys: `company`, `post`, `country`, `date`, `
 
 \cventry{<company>}{<post — translated>}{<country>}{<date>}
 \begin{cvbulletsexp}
-    \item{} <bullet — translated, keyword-injected, escaped>
-    % repeat per bullet; repeat \cventry block per entry
+    \item{} <bullet — translated verbatim, escaped>
+    % repeat per bullet in profile.md order; repeat \cventry block per entry
 \end{cvbulletsexp}
 ```
 
@@ -537,8 +556,8 @@ Data source: `student_life[]` array (keys: `title`, `date`, `bullets`). Select 2
 
 \cventryassociatif{<title — translated>}{<date>}
 \begin{cvbulletsassociatif}
-    \item{} <bullet — translated, keyword-injected, escaped>
-    % repeat per bullet; repeat block per entry (max 2–3 entries)
+    \item{} <bullet — translated verbatim, escaped>
+    % repeat per bullet in profile.md order; repeat block per entry (max 2–3 entries)
 \end{cvbulletsassociatif}
 ```
 
@@ -569,7 +588,7 @@ Data source: `skills[]` array (keys: `category`, `items`). Prioritise JD-relevan
 #### 7.7 Formation
 
 <agent_instruction>
-Data source: `education[]` array (keys: `title`, `subtitle`, `date`, `country`, `bullets`). Per entry: select 1–2 most relevant bullets. Emit in array order.
+Data source: `education[]` array (keys: `title`, `subtitle`, `date`, `country`, `bullets`). Per entry: use bullets verbatim in profile.md order; include 1–2 if space is tight. Emit entries in array order.
 </agent_instruction>
 
 <format id="section-education">
@@ -579,8 +598,8 @@ Data source: `education[]` array (keys: `title`, `subtitle`, `date`, `country`, 
 
 \cventryformation{<title — translated>}{<subtitle — institution>}{<date>}{<country — translated>}
 \begin{cvbulletsformation}
-    \item{} <bullet — translated, keyword-injected, escaped>
-    % 1–2 bullets per entry; repeat block per entry
+    \item{} <bullet — translated verbatim, escaped>
+    % 1–2 bullets per entry in profile.md order; repeat block per entry
 \end{cvbulletsformation}
 ```
 
@@ -591,7 +610,7 @@ Data source: `education[]` array (keys: `title`, `subtitle`, `date`, `country`, 
 #### 7.8 Projets & Innovation
 
 <agent_instruction>
-Data source: `projects[]` array (keys: `title`, `subtitle`, `date`, `bullets`). Select top 3–4 projects by JD relevance. Title ≤ 45 chars (§3d). No tool names in subtitle — tools go in bullets only. Per project: select 2–3 bullets ordered by JD relevance. Title/subtitle patterns: `modes/writing.md §19`.
+Data source: `projects[]` array (keys: `title`, `subtitle`, `date`, `bullets`). Select top 3–4 projects by JD relevance — this is the only JD-driven decision. Title ≤ 45 chars (§3d). No tool names in subtitle — tools go in bullets only. Per project: use 2–3 bullets verbatim in profile.md order — do NOT reorder or rewrite. Title/subtitle patterns: `modes/writing.md §19`.
 </agent_instruction>
 
 <format id="section-projects">
@@ -603,8 +622,8 @@ Data source: `projects[]` array (keys: `title`, `subtitle`, `date`, `bullets`). 
               {<subtitle — translated, escaped, no tool names>}
               {<date>}
 \begin{cvbullets}
-    \item{} <bullet — translated, keyword-injected, escaped>
-    % 2–3 bullets per project; repeat block per project (top 3–4)
+    \item{} <bullet — translated verbatim, escaped>
+    % 2–3 bullets per project in profile.md order; repeat block per project (top 3–4)
 \end{cvbullets}
 ```
 
@@ -615,7 +634,7 @@ Data source: `projects[]` array (keys: `title`, `subtitle`, `date`, `bullets`). 
 #### 7.9 Concours & Hackathons (optional)
 
 <agent_instruction>
-Include only if: (a) contest result directly reinforces a profile/experience claim, OR (b) CV has space and the award is verifiable. Data source: `competitions[]` array (keys: `title`, `subtitle`, `date`, `bullets`). Title ≤ 45 chars (§3d). Select 1–2 most JD-relevant bullets per entry.
+Include only if: (a) contest result directly reinforces a profile/experience claim, OR (b) CV has space and the award is verifiable. Data source: `competitions[]` array (keys: `title`, `subtitle`, `date`, `bullets`). Title ≤ 45 chars (§3d). Use 1–2 bullets verbatim in profile.md order — do NOT reorder or rewrite.
 </agent_instruction>
 
 <format id="section-competitions">
@@ -627,8 +646,8 @@ Include only if: (a) contest result directly reinforces a profile/experience cla
                {<subtitle — organizer/context, translated, escaped>}
                {<date>}
 \begin{cvbulletscontest}
-    \item{} <bullet — translated, keyword-injected, escaped>
-    % 1–2 bullets per entry
+    \item{} <bullet — translated verbatim, escaped>
+    % 1–2 bullets per entry in profile.md order
 \end{cvbulletscontest}
 ```
 
@@ -668,7 +687,7 @@ If any is not immediately visible → reorganise the visual hierarchy.
 
 #### 8.2 Full CV checklist
 
-1. Does it fit on 1 A4 page without reducing font size or margins?
+1. Does it fit on 1 A4 page without reducing font size or margins? (`report.pdf.pages === 1` — this is the Step 6b hard gate; do not declare the mode complete if it fails.)
 2. Do all dates follow `{mon. YYYY -- mon. YYYY}`?
 3. Do all `\cventry` commands have 4 arguments with location in `#3`?
 4. Are there any `---` or `·` in document content outside permitted uses? → replace with comma or rephrase.

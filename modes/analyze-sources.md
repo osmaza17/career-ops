@@ -254,6 +254,7 @@ After extraction, identify gaps and classify each as blocking (cannot draft with
 ```yaml
 - company: "[Company name]"
   post: "[Role in X domain — e.g., 'Operations Research Intern, Supply Chain']"
+  sector: "[Industry sector — e.g., Consulting, Manufacturing, Technology, Healthcare, Finance, Energy, Retail, Logistics, Public Sector]"
   country: "[Country only, no city]"
   date: "[mon. YYYY] -- [mon. YYYY]"
   bullets:
@@ -261,7 +262,7 @@ After extraction, identify gaps and classify each as blocking (cannot draft with
     - "[Bullet 2]"
     - "[Bullet 3 — max 3 total]"
 ```
-Rules: `post` = role and domain. Reverse chronological within array. Max 3 bullets, min 1 strong bullet.
+Rules: `post` = role and domain. `sector` = the industry the company operates in (not the role's function). Reverse chronological within array. Max 3 bullets, min 1 strong bullet.
 → LaTeX: `\cventry{Company}{Post}{Country}{Date}`
 
 ---
@@ -283,15 +284,17 @@ Rules: `title` ≤ 45 chars (see `modes/writing.md §19.1`). `subtitle` per `mod
 
 **Association → `student_life` array**
 ```yaml
-- title: "[Role, Organization]"
+- title: "[Role/Post]"
+  association: "[Organization name]"
+  country: "[Country]"
   date: "[mon. YYYY] -- [mon. YYYY]"
   bullets:
     - "[Bullet 1 — scale or concrete achievement]"
     - "[Bullet 2]"
     - "[Bullet 3 — max 3 total]"
 ```
-Rules: `title` = role and organization separated by comma (e.g., "Secretary General, BDI"). No subtitle, no country, no `·`.
-→ LaTeX: `\cventryassociatif{Title}{Date}`
+Rules: `title` = role/post only. `association` = organization name. `country` = country only, no city. No subtitle, no `·`.
+→ LaTeX: `\cventryassociatif{Title}{Association}{Country}{Date}`
 
 ---
 
@@ -312,6 +315,7 @@ Rules: Include only if result is externally verifiable (ranking, jury, prize). D
 **Training → `additional_training` array** (reverse chronological)
 ```yaml
 - title: "[Program Name] — [Organizer]"
+  subtitle: "[Context or differentiator — e.g. selective access, sponsoring institution, format]"
   date: "[mon. YYYY]"
   bullets:
     - "[Bullet 1 — access/selection signal or most differentiating content]"

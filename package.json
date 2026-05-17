@@ -10,7 +10,8 @@
     "merge": "node merge-tracker.mjs",
     "sync-check": "node cv-sync-check.mjs",
     "liveness": "node check-liveness.mjs",
-    "scan": "node scan.mjs"
+    "scan": "node scan.mjs",
+    "dashboard": "cd dashboard && go build -o career-dashboard.exe . && career-dashboard.exe --path .."
   },
   "keywords": [
     "ai",

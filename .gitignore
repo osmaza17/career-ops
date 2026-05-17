@@ -20,3 +20,15 @@ career-dashboard
 .update-dismissed
 .update-lock
 .resolved-prompt-*
+
+# Personal data and generated outputs (keep folder placeholders only)
+/data/*
+!/data/.gitkeep
+/batch/tracker-additions/*
+!/batch/tracker-additions/.gitkeep
+/output/CVs/*
+!/output/CVs/.gitkeep
+/output/interview-prep/*
+!/output/interview-prep/.gitkeep
+/output/reports/*
+!/output/reports/.gitkeep

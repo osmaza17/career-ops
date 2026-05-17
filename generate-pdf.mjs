@@ -157,10 +157,18 @@ async function main() {
       }
 
       const pdfStat = await stat(targetPdf);
+      const pdfBuf = await readFile(targetPdf);
+      const pdfText = pdfBuf.toString('latin1');
+      const pageMatches = pdfText.match(/\/Type\s*\/Page(?![a-zA-Z])/g);
+      const pages = pageMatches ? pageMatches.length : null;
       report.pdf = {
         path: targetPdf,
         sizeKB: parseFloat((pdfStat.size / 1024).toFixed(1)),
+        pages,
       };
+      if (pages !== 1) {
+        report.warning = `PDF has ${pages} page(s) — CV must be exactly 1. Agent: apply §9 overflow fixes and recompile before reporting success.`;
+      }
     } catch (err) {
       report.postCompileError = `Failed to finalize PDF: ${err.message}`;
     }

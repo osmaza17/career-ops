@@ -59,7 +59,40 @@ Use this table when the user names a target role. Match their role to the closes
 <agent_instruction>
 Before asking any question, silently check whether the `sources/` folder exists and contains files.
 
-**If `sources/` is empty or missing:** proceed directly to Phase 1, Group 1 with no mention of sources.
+**If `sources/` is empty or missing:** Before proceeding, tell the user:
+
+> "Before we start, I want to flag something that'll make this much easier: your `sources/` folder is empty.
+>
+> If you drop any of the following documents in there, I can read them and pre-fill most of your profile automatically — so you won't have to type everything from scratch:
+>
+> **Education**
+> - Degree certificates, transcripts, or diplomas
+> - Exchange program acceptance letters or completion certificates
+>
+> **Work Experience**
+> - Internship reports (rapport de stage) or end-of-mission summaries
+> - Reference letters or evaluation forms from managers
+> - Any document describing what you did, for whom, and what the results were
+>
+> **Projects**
+> - Academic project reports (any format — PDF, Word, LaTeX)
+> - Technical write-ups or project specifications
+>
+> **Student Life & Associations**
+> - Association activity files, bilan de mandat, or role descriptions
+> - Any document listing what you organized, led, or managed
+>
+> **Competitions & Awards**
+> - Competition briefs, result certificates, or prize announcements
+>
+> **Certifications & Training**
+> - Language certificates (TOEFL, IELTS, DELF, Cambridge, etc.)
+> - Course completion certificates (Coursera, edX, professional training)
+> - Selective program acceptance letters or completion proofs
+>
+> Drop anything you have into `sources/` and then let me know — I'll read everything before we start. If you'd rather fill things in manually, just say 'continue' and we'll go question by question."
+
+Wait for the user's response. If they add files, proceed to the `**If files are found:**` branch above. If they say "continue" or equivalent, proceed to Phase 1, Group 1.
 
 **If files are found:** read every file in `sources/`. Extract all information that could pre-fill the profile, organized by section:
 
@@ -253,7 +286,6 @@ If the user is in the French market, pre-fill `compensation.market_context` with
 <user_prompt>
 "A few more things — this is what appears in the languages and awards sections of your CV.
 - What languages do you speak? For each: name, level, and certificate if you have one (e.g. 'English — C1 Advanced, Cambridge certificate' or 'French — Native' or 'Spanish — B2, no certificate')
-- Any prizes or ranked competitive results? (e.g. '1st prize at National Supply Chain Case Competition, 80 teams' or '2nd place, HEC Paris Strategy Challenge, 35 schools') — skip if none"
 </user_prompt>
 
 <agent_instruction>
@@ -263,7 +295,6 @@ Set `location.visa_status` — infer from nationality/location if mentioned in G
 
 <mapping>
 - `languages` — one entry per language: `language` + `level` (include certificate in level string, e.g. `"C1 Advanced (Cambridge certificate)"`)
-- `awards_and_competitions` — for each prize: `name`, `category`, `date` (YYYY-MM), `result`, `context`. If none, set to `[]`.
 - `location.visa_status`
 </mapping>
 
@@ -388,7 +419,7 @@ After Phase 1 is complete, automatically inventory `sources/` before doing anyth
 List all files in `sources/` (excluding `README.md` if present).
 
 **If the folder is empty or doesn't exist**, skip to Step 3 and open with:
-> "Phase 1 done — your profile metadata has been saved. The `sources/` folder is empty, so let's fill in your CV sections through a short interview. You can also drop documents into `sources/` at any point and I'll process them."
+> "Phase 1 done — your profile metadata has been saved. The `sources/` folder is still empty, so we'll fill in the CV sections through a short interview. You can still drop documents into `sources/` at any point and I'll pause to process them."
 
 **If files are found**, open with (do not re-announce the file list — they were already mentioned in the pre-phase):
 > "Phase 1 done — your profile metadata has been saved. Now I'll process your documents in depth to build the CV sections. Starting with **[filename 1]**."
@@ -401,7 +432,7 @@ Then proceed directly to Step 2 for that file.
 
 <step id="2" name="Process Each Source File">
 
-Follow `modes/analyze-sources.md` for the full processing sequence — classification, reading strategy, recruiter lens, probing questions, YAML drafting, review loop, metadata update, and file transition. The logic is identical. After all source files are processed or skipped, move to Step 3.
+Follow `modes/analyze-sources.md` for the full processing sequence — classification, reading strategy, recruiter lens, YAML drafting, review loop, metadata update, and file transition. The logic is identical. After all source files are processed or skipped, move to Step 3.
 
 </step>
 
@@ -471,7 +502,9 @@ Example:
 
 <user_prompt>
 "Tell me about your professional experience — internships, jobs, placements — most recent first.
-For each: company, exact role/title, dates, country, and 2–3 bullets (deliverables, outcomes, metrics if you have them)."
+For each: company, exact role/title, sector (the industry the company operates in), dates, country, and 2–3 bullets (deliverables, outcomes, metrics if you have them).
+
+Example sectors: Consulting, Manufacturing, Technology, Healthcare, Finance, Energy, Retail, Logistics, Public Sector."
 </user_prompt>
 
 <agent_instruction>
@@ -493,7 +526,10 @@ If deliverables are vague, ask: "What's the one thing your manager would remembe
 For each: exact role title, organization name, dates, and what you actually did (members managed, events organized, budget, concrete achievement).
 
 Example:
-- Role: VP Operations, École Polytechnique Junior Enterprise — Sept. 2024 – Jun. 2025
+- Title (post): VP Operations
+- Association: École Polytechnique Junior Enterprise
+- Country: France
+- Dates: Sept. 2024 – Jun. 2025
 - Bullets: 'Coordinated 8-person team across 12 client consulting projects'; 'Managed €45,000 annual project budget'; 'Reduced average delivery time by 3 weeks by standardizing project reporting'"
 </user_prompt>
 
