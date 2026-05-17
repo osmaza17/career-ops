@@ -508,6 +508,7 @@ If no entries: omit the `additional_training` key entirely — do not write an e
 
 Once all sections are filled (or explicitly skipped):
 
+**Step A — Show profile summary:**
 > "Your profile is complete. Here's what was built:
 >
 > **Phase 1 — YAML:**
@@ -527,11 +528,41 @@ Once all sections are filled (or explicitly skipped):
 > - Projects: [N entries / empty]
 > - Competitions: [N entries / empty]
 > - Skills: [N categories / empty]
-> - Additional training: [N entries / not included]
->
-> Next step: run `/career-ops pdf` with a job description to generate a tailored `.tex` CV directly from this profile."
+> - Additional training: [N entries / not included]"
 
 If unprocessed files remain in `sources/`:
-> "There are [N] unprocessed files in sources/. Run `/career-ops analyze-sources` to extract entries from them."
+> "There are [N] unprocessed files in `sources/`. Run `/career-ops analyze-sources` to extract entries from them."
+
+**Step B — Set up portals (if `config/portals.yml` doesn't exist):**
+> "I'll now set up the job scanner with 45+ pre-configured companies. Want me to customize the search keywords for your target roles? (I can pre-fill them from your archetypes.)"
+
+If the user agrees, proceed with the portal setup from `modes/scan.md` (keyword customization only — do not run a scan yet).
+
+**Step C — Initialize tracker (if `data/applications.md` doesn't exist):**
+
+Create `data/applications.md` with this exact header and no data rows:
+
+```markdown
+# Applications Tracker
+
+| #   | Date | Company | Role | Score | Status | PDF | Report | Notes |
+| --- | ---- | ------- | ---- | ----- | ------ | --- | ------ | ----- |
+```
+
+**Step D — Show the ready message:**
+> "You're all set! You can now:
+> - Paste a job URL to evaluate it
+> - Run `/career-ops scan` to search portals
+> - Run `/career-ops pdf` with a job description to generate a tailored CV
+> - Run `/career-ops` to see all commands
+>
+> Everything is customizable — just ask me to change anything.
+>
+> Tip: Having a personal portfolio dramatically improves your job search. If you don't have one yet, there is one open-source: github.com/osmaza17/cv-santiago — feel free to fork it and make it yours."
+
+**Step E — Offer scan automation:**
+> "Want me to scan for new offers automatically? I can set up a recurring scan every few days so you don't miss anything. Just say 'scan every 3 days' and I'll configure it."
+
+If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring `/career-ops scan`. If those aren't available, suggest adding a cron job or remind them to run the scan periodically.
 
 </completion>

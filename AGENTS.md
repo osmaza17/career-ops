@@ -10,19 +10,22 @@ There are two layers:
 
 **User Layer (NEVER auto-updated — all personal data lives here):**
 
-| File/Path | What it holds |
-|---|---|
-| `config/profile.md` | Identity, target roles, compensation, narrative, strategy, and all formatted CV sections. The single source of truth. |
-| `config/portals.yml` | Customized company and portal list |
-| `data/applications.md` | Application tracker |
-| `data/pipeline.md` | URL inbox |
-| `data/scan-history.tsv` | Scanner dedup history |
-| `data/follow-ups.md` | Follow-up history |
-| `sources/*` | Raw academic documents (read only by `analyze-sources`) |
-| `output/reports/*` | Evaluation reports |
-| `output/interview-prep/*` | Interview intel reports |
-| `output/CVs/*` | Generated .tex and PDF files |
-| `jds/*` | Saved job descriptions |
+Files marked *(created on first use)* do not exist until the relevant mode runs for the first time — this is expected; treat a missing file as an empty state, not an error.
+
+| File/Path | What it holds | Created by |
+|---|---|---|
+| `config/profile.md` | Identity, target roles, compensation, narrative, strategy, and all formatted CV sections. The single source of truth. | `onboard` (required before anything else) |
+| `config/portals.yml` | Customized company and portal list | `scan` setup (recommended) |
+| `data/applications.md` | Application tracker | `onboard` Step C (created with empty header) |
+| `data/pipeline.md` | URL inbox | `scan` *(created on first use)* |
+| `data/scan-history.tsv` | Scanner dedup history | `scan` *(created on first use)* |
+| `data/follow-ups.md` | Follow-up history | `followup` *(created on first use)* |
+| `data/linkedin.md` | LinkedIn profile context (saved by `linkedin-optimizer`, read each session) | `linkedin-optimizer` *(created on first use)* |
+| `sources/*` | Raw academic documents (read only by `analyze-sources`) | User-provided |
+| `output/reports/*` | Evaluation reports | `offer-analysis` *(created on first use)* |
+| `output/interview-prep/*` | Interview intel reports | `interview-prep` *(created on first use)* |
+| `output/CVs/*` | Generated .tex and PDF files | `pdf` *(created on first use)* |
+| `jds/*` | Saved job descriptions | `scan` / user *(created on first use)* |
 
 **System Layer (safe to auto-update — no user data here):**
 - All files in `modes/`, `batch/`, `dashboard/`, `docs/`, `.claude/skills/`
@@ -197,6 +200,8 @@ When spawning headless workers for batch processing, use the appropriate command
 | Codex       | `codex exec "prompt"`   |
 | OpenCode    | `opencode run "prompt"` |
 | Qwen        | `qwen -p "prompt"`      |
+
+> **Note:** `batch/batch-runner.sh` is Claude Code-specific — it uses `--dangerously-skip-permissions` and `--append-system-prompt-file` flags not available in other CLIs. For other CLIs, spawn workers manually using the base command above with the contents of `batch/batch-prompt.md` as the prompt.
 
 ## Stack and Conventions
 

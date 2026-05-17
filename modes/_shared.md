@@ -134,7 +134,7 @@ After detecting archetype, read `config/profile.md` (key `strategy.adaptive_fram
 8. Concise professional English. Short sentences, action verbs, no passive voice.
 8b. Key proof points and metrics in PDF Professional Summary — recruiters may only read this section.
 9. **Tracker additions as TSV** -- NEVER edit applications.md directly. Write TSV in `batch/tracker-additions/`. For single evaluations: immediately run `node merge-tracker.mjs` after writing the TSV. For batch sessions: run once at the end (see `modes/batch.md`).
-9b. **Writing style** -- Before generating any candidate-facing text (cover letters, outreach messages, form answers, follow-up emails): read `config/profile.md` under `strategy.writing_style`. If that key is absent, follow Writing Style Calibration (below in this file) to extract and cache it first.
+9b. **Writing style** -- Before generating any candidate-facing text (cover letters, outreach messages, form answers, follow-up emails): read `config/profile.md` under `strategy.writing_style`. If that key is absent, apply the ATS Writing Rules defined below in this file (`<reference id="ats-writing-rules">`) and ask the user if they want to save a style preference to `config/profile.md`.
 10. **Include `**URL:**` in every report header.**
 
 ### Tools

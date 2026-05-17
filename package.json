@@ -9,9 +9,8 @@
     "dedup": "node dedup-tracker.mjs",
     "merge": "node merge-tracker.mjs",
     "sync-check": "node cv-sync-check.mjs",
-"liveness": "node check-liveness.mjs",
-    "scan": "node scan.mjs",
-    "gemini:eval": "node gemini-eval.mjs"
+    "liveness": "node check-liveness.mjs",
+    "scan": "node scan.mjs"
   },
   "keywords": [
     "ai",
@@ -28,8 +27,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
-    "dotenv": "^16.4.5",
     "js-yaml": "^4.1.1",
     "playwright": "^1.58.1"
   }
