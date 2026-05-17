@@ -29,7 +29,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `data/scan-history.tsv`              | Scanner dedup history                                                                                                                               |
 | `config/portals.yml`                 | Query and company config                                                                                                                            |
 | `generate-pdf.mjs`                   | LaTeX CV validator + pdflatex compiler                                                                                                              |
-| `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + formatted CV sections (education, experience, projects, skills, languages). Created by `onboard`, populated by `analyze-sources`, read by every mode and by `latex` to generate `.tex` CVs. |
+| `config/profile.md`           | Single source of truth — YAML frontmatter (identity, roles, narrative, compensation, languages) + formatted CV sections (education, experience, projects, skills, languages). Created by `onboard`, populated by `analyze-sources`, read by every mode and by `pdf` to generate `.tex` CVs. |
 | `interview-prep/story-bank.md`       | Accumulated STAR+R stories across evaluations                                                                                                       |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports                                                                                                            |
 | `analyze-patterns.mjs`               | Pattern analysis script (JSON output)                                                                                                               |
@@ -54,7 +54,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 
 If `config/profile.md` is missing, run `modes/onboard.md`. This mode handles everything needed to build a complete profile: the YAML frontmatter (identity, target roles, narrative, compensation, languages) and the formatted CV sections (education, experience, projects, associations, competitions, training). It also handles processing raw documents from `sources/` if the user has them.
 
-`config/profile.md` is both the data source AND the formatted CV — there is no intermediate file. `modes/latex.md` reads the CV sections directly from the body of `profile.md`.
+`config/profile.md` is both the data source AND the formatted CV — there is no intermediate file. `modes/pdf.md` reads the CV sections directly from the body of `profile.md`.
 
 **Do not proceed to Step 2 until `config/profile.md` is complete.**
 
@@ -118,11 +118,8 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 | Asks to compare offers                                      | `offers-comparison`                               |
 | Wants LinkedIn outreach (messages to recruiters/contacts)   | `contact`                                         |
 | Wants to optimize their LinkedIn profile                    | `linkedin-optimizer`                              |
-| Asks for company research on ONE company                    | `deep`                                            |
 | Preps for interview at specific company                     | `interview-prep`                                  |
 | Wants to generate CV/PDF                                    | `pdf`                                             |
-| Evaluates a course/cert                                     | `training`                                        |
-| Evaluates portfolio project                                 | `project`                                         |
 | Asks about application status                               | `tracker`                                         |
 | Fills out application form                                  | `apply`                                           |
 | Searches for new offers                                     | `scan`                                            |
@@ -132,27 +129,22 @@ All modes are in `modes/` (English). If the user is targeting French-language jo
 | Asks about follow-ups or application cadence                | `followup`                                        |
 | Has raw academic documents to digest (project reports, internship descriptions, association activity files) | `analyze-sources` |
 | Needs to create or complete config/profile.md              | `onboard`                                         |
-| Wants to update profile after initial setup (roles, comp, narrative, new entries) | `update-profile` |
-| Pastes 2+ job URLs, or says "evaluate these jobs / clear my pipeline / process all these URLs" | `parallel-eval` |
 | Names 2+ companies to research, compare, rank, or build a target list from | `intel-sweep`  |
-| Has multiple new files in sources/ to process, or says "process all my sources / I added N documents" | `parallel-sources` |
-| Has ONE new file in sources/ to add interactively          | `analyze-sources`                                 |
+| Has ONE or more new files in sources/ to process          | `analyze-sources`                                 |
 
 ### CV Source of Truth
 
 - `config/profile.md` is the single source of truth — YAML frontmatter (identity, targets, compensation, languages) + formatted CV sections (Education, Experience, Student Life, Projects, Competitions, Skills, Languages). There is no intermediate CV file.
-- `modes/latex.md` reads the CV sections from `config/profile.md` directly.
-- `sources/` holds raw academic documents — read by `modes/onboard.md` (during initial setup), `modes/analyze-sources.md` (interactive single-file processing), and `modes/parallel-sources.md` (parallel batch processing). No other mode accesses this folder.
+- `modes/pdf.md` reads the CV sections from `config/profile.md` directly.
+- `sources/` holds raw academic documents — read by `modes/onboard.md` (during initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode accesses this folder.
 - **NEVER hardcode metrics** — read them from `config/profile.md` at evaluation time
 
 ### Full pipeline (raw documents → CV)
 
 ```
 (first run)        →  onboard          →  config/profile.md  (YAML + formatted CV sections)
-sources/           →  analyze-sources   →  config/profile.md  (single file, interactive)
-sources/           →  parallel-sources  →  config/profile.md  (batch, agents draft in parallel)
-config/profile.md  →  update-profile   →  config/profile.md  (edits after first run)
-config/profile.md  →  pdf / latex      →  output/*.pdf
+sources/           →  analyze-sources   →  config/profile.md  (one or more files, interactive)
+config/profile.md  →  pdf              →  output/*.pdf
 ```
 
 **Access rule:** `sources/` is accessed only by `modes/onboard.md` (initial setup) and `modes/analyze-sources.md` (ongoing additions). No other mode, agent, or script reads files from that folder.

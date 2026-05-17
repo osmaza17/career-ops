@@ -1,7 +1,7 @@
 # Mode: intel-sweep — Parallel Company Intelligence Sweep
 
 <purpose>
-Research N companies simultaneously, one agent per company. Each agent executes the `deep` research axes (runs WebSearch and synthesizes findings — does not just emit a prompt). The conductor aggregates results into a ranked shortlist.
+Research N companies simultaneously, one agent per company. Each agent runs WebSearch across 7 research axes and synthesizes findings. The conductor aggregates results into a ranked shortlist.
 </purpose>
 
 <rules>
@@ -65,13 +65,23 @@ CANDIDATE CONTEXT:
     - {proof_point_1}
     - {proof_point_2}
 
-READ THIS FILE: modes/deep.md  (axis structure and sector-specific questions — use as a RESEARCH GUIDE, not as output to generate. Execute the research yourself using WebSearch.)
+RESEARCH AXES (answer from search results — do not output a prompt template):
+  1. Business model: What does the company do, revenue model, size, ownership, geographies?
+  2. Strategic direction: Stated priorities next 2–3 years, growth vs. consolidation, major bets?
+  3. Recent moves (last 6–12 months): Leadership hires, acquisitions, funding, restructuring?
+  4. Culture and environment: Glassdoor/LinkedIn reviews, remote/hybrid policy, career trajectory?
+  5. Challenges and pressures: Main business pressures, competitors, pain points, sector growth rate?
+  6. The role and team: Day-to-day work, why hiring now, success metrics in 6–12 months?
+  7. Candidate angle: What unique value does this candidate bring given the company's current priorities?
+
+  For Axis 1 and Axis 4, adapt questions to the detected sector (consulting, industrial/manufacturing,
+  logistics, finance, energy, engineering services, tech, or other) — focus on sector-specific
+  business model levers, staffing norms, and operational context.
 
 TASK:
 1. Detect {company}'s sector and company type (listed/private/PE-backed/startup/institution).
-2. Run WebSearch for each axis from modes/deep.md (business model, strategic direction, recent moves,
-   culture, challenges, the role, candidate angle). Use the sector-specific questions block that
-   matches the detected sector. Do NOT output the prompt template — answer from search results.
+2. Run WebSearch for each axis above. Use the sector-specific lens for Axis 1 and 4.
+   Do NOT output a prompt template — answer from search results.
 3. Write the full research doc to:
      reports/intel-{company-slug}-{YYYY-MM-DD}.md
 4. Return a JSON summary:
@@ -125,7 +135,7 @@ Full research docs saved to reports/intel-{slug}-{date}.md for each company.
 </output>
 
 <completion>
-Want me to run `parallel-eval` on the recommended companies? Paste the job URLs and I'll evaluate them all at once.
+Paste any of the recommended job URLs to run a full evaluation.
 </completion>
 
 </step>

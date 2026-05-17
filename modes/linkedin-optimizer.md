@@ -333,7 +333,7 @@ _Last updated: {YYYY-MM-DD}_
 <agent_instruction>
 When the user reports results (profile views, recruiter messages, connection quality), record them in `## Effectiveness Tracking`. Future sessions double down on what's working.
 
-When the user gets a new job or changes direction, update `data/linkedin.md` and offer to run `modes/update-profile.md` to sync `config/profile.md`.
+When the user gets a new job or changes direction, update `data/linkedin.md` and offer to update `config/profile.md` to reflect the new direction.
 </agent_instruction>
 
 </phase>
@@ -353,7 +353,7 @@ Handle these naturally without running the full 4-phase flow:
 | "Rewrite my About" | Read career-ops files for source material, draft from `narrative.exit_story` + proof_points, ask for current About text to compare |
 | "Audit my profile" | Run Phase 2 audit against Best Practices reference |
 | "Update my achievements" | Check `config/profile.md` for new proof_points first, then ask for anything not yet in the file |
-| "I got a new job" | Update `data/linkedin.md`, rewrite headline and current role, suggest running `update-profile` |
+| "I got a new job" | Update `data/linkedin.md`, rewrite headline and current role, offer to update `config/profile.md` |
 | "What changed since last time?" | Read `data/linkedin.md` Effectiveness Tracking and Optimization History, present summary |
 
 ---

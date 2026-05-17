@@ -57,9 +57,7 @@ Save the full evaluation to `reports/{###}-{company-slug}-{YYYY-MM-DD}.md` using
 
 <step id="3" name="Generate PDF">
 <agent_instruction>
-Read `config/profile.md` and check `cv.output_format`:
-- `"latex"` → execute `modes/latex.md`
-- anything else (default) → execute `modes/pdf.md`
+Execute `modes/pdf.md`. It defaults to the LaTeX pipeline; switches to Canva if `cv.canva_resume_design_id` is set in `config/profile.md`.
 </agent_instruction>
 <output>`output/` PDF file</output>
 </step>
@@ -99,8 +97,6 @@ Read `config/profile.md` and check `cv.output_format`:
 - **Relevant experience?** → One quantified proof point.
 - **Good fit?** → "I sit at the intersection of [A] and [B], which is exactly where this role lives."
 - **How did you hear?** → Honest — "Found through [portal/scan], evaluated against my criteria, and it scored highest."
-
-Apply `/tech-translate` for technical vocabulary.
 </step>
 
 ---

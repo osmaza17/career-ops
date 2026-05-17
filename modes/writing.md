@@ -1,7 +1,7 @@
 <purpose>
 # Writing Conventions — CV Output Quality
 
-All rules in this file govern **how the CV is written and formatted**. They apply to every mode that produces or edits CV content (`analyze-sources`, `latex`, `pdf`, `update-profile`). They are language-agnostic unless explicitly marked FR or EN.
+All rules in this file govern **how the CV is written and formatted**. They apply to every mode that produces or edits CV content (`analyze-sources`, `pdf`). They are language-agnostic unless explicitly marked FR or EN.
 </purpose>
 
 ---

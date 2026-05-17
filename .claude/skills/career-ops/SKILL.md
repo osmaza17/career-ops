@@ -3,7 +3,7 @@ name: career-ops
 description: AI job search command center -- evaluate offers, generate CVs, scan portals, track applications
 arguments: mode # Claude Code specific
 user-invocable: true
-argument-hint: "[scan | deep | pdf | offer-analysis | offers-comparison | apply | batch | tracker | pipeline | contact | training | project | interview-prep | onboard | analyze-sources | update-profile | parallel-eval | intel-sweep | parallel-sources | linkedin-optimizer]"
+argument-hint: "[scan | pdf | offer-analysis | offers-comparison | apply | batch | tracker | pipeline | contact | interview-prep | onboard | analyze-sources | intel-sweep | linkedin-optimizer]"
 license: MIT
 ---
 
@@ -20,11 +20,8 @@ Determine the mode from `$mode`:
 | `offer-analysis` | `offer-analysis` |
 | `offers-comparison` | `offers-comparison` |
 | `contact` | `contact` |
-| `deep` | `deep` |
 | `interview-prep` | `interview-prep` |
 | `pdf` | `pdf` |
-| `training` | `training` |
-| `project` | `project` |
 | `tracker` | `tracker` |
 | `pipeline` | `pipeline` |
 | `apply` | `apply` |
@@ -34,10 +31,7 @@ Determine the mode from `$mode`:
 | `followup` | `followup` |
 | `onboard` | `onboard` |
 | `analyze-sources` | `analyze-sources` |
-| `update-profile` | `update-profile` |
-| `parallel-eval` | `parallel-eval` |
 | `intel-sweep` | `intel-sweep` |
-| `parallel-sources` | `parallel-sources` |
 | `linkedin-optimizer` | `linkedin-optimizer` |
 
 **Auto-pipeline detection:** If `$mode` is not a known sub-command AND contains JD text (keywords: "responsibilities", "requirements", "qualifications", "about the role", "we're looking for", company name + role) or a URL to a JD, execute `auto-pipeline`.
@@ -59,11 +53,8 @@ Available commands:
   /career-ops offer-analysis    → Evaluation only A-F (no auto PDF)
   /career-ops offers-comparison → Compare and rank multiple offers
   /career-ops contact           → LinkedIn power move: find contacts + draft message
-  /career-ops deep      → Deep research prompt about company
   /career-ops interview-prep → Generate company-specific interview prep doc
   /career-ops pdf       → PDF only, ATS-optimized CV
-  /career-ops training  → Evaluate course/cert against North Star
-  /career-ops project   → Evaluate portfolio project idea
   /career-ops tracker   → Application status overview
   /career-ops apply     → Live application assistant (reads form + generates answers)
   /career-ops scan      → Scan portals and discover new offers
@@ -72,10 +63,7 @@ Available commands:
   /career-ops followup  → Follow-up cadence tracker: flag overdue, generate drafts
   /career-ops onboard   → Initial profile setup (YAML + CV sections)
   /career-ops analyze-sources → Process single document and add to profile
-  /career-ops update-profile  → Update profile after initial setup
-  /career-ops parallel-eval   → Batch evaluate 2+ job URLs in parallel
   /career-ops intel-sweep     → Research 2+ companies in parallel
-  /career-ops parallel-sources → Batch process 2+ documents in parallel
   /career-ops linkedin-optimizer → Optimize LinkedIn profile
 
 Inbox: add URLs to data/pipeline.md → /career-ops pipeline
@@ -91,12 +79,12 @@ After determining the mode, load the necessary files before executing:
 ### Modes that require `_shared.md` + their mode file:
 Read `modes/_shared.md` + `modes/{mode}.md`
 
-Applies to: `auto-pipeline`, `offer-analysis`, `offers-comparison`, `pdf`, `contact`, `apply`, `pipeline`, `scan`, `batch`, `onboard`, `analyze-sources`, `parallel-sources`
+Applies to: `auto-pipeline`, `offer-analysis`, `offers-comparison`, `pdf`, `contact`, `apply`, `pipeline`, `scan`, `batch`, `onboard`, `analyze-sources`
 
 ### Standalone modes (only their mode file):
 Read `modes/{mode}.md`
 
-Applies to: `tracker`, `deep`, `interview-prep`, `training`, `project`, `patterns`, `followup`, `update-profile`, `parallel-eval`, `intel-sweep`, `linkedin-optimizer`
+Applies to: `tracker`, `interview-prep`, `patterns`, `followup`, `intel-sweep`, `linkedin-optimizer`
 
 ### Modes delegated to subagent:
 For `scan`, `apply` (with Playwright), and `pipeline` (3+ URLs): launch as Agent with the content of `_shared.md` + `modes/{mode}.md` injected into the subagent prompt.

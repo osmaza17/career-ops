@@ -177,5 +177,5 @@ Followed by all sections from Steps 2–7.
 After delivering the report:
 1. Ask if the user wants to draft stories for any gaps found in Step 5.
 2. If they have a scheduled interview date, say: "Your interview is in {X} days. Want me to set a reminder to review this prep?"
-3. If company research in Step 1 was thin, suggest: "Want me to run `deep` mode for a fuller picture of their strategy, culture, and competitive landscape?"
+3. If company research in Step 1 was thin, suggest: "Want me to run `intel-sweep` for a fuller picture of their strategy, culture, and competitive landscape?"
 </completion>

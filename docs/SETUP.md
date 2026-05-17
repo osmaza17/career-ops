@@ -31,7 +31,7 @@ Once `config/profile.md` is complete, it IS your CV — there is no intermediate
 /career-ops pdf
 ```
 
-`config/profile.md` is the single source of truth. The formatted CV sections in its body are read directly by `modes/latex.md` to produce the `.tex` output.
+`config/profile.md` is the single source of truth. The formatted CV sections in its body are read directly by `modes/pdf.md` to produce the `.tex` output.
 
 (Optional) Drop raw academic documents (internship reports, project briefs) into `sources/` at any time. Use `analyze-sources` to extract and add formatted CV entries directly to `config/profile.md`.
 

@@ -4,6 +4,24 @@ Two phases: **Phase 1** collects identity, roles, narrative, compensation, langu
 
 ---
 
+<rules>
+
+- **If `config/profile.md` already exists:** do not overwrite — ask to continue or start fresh. If fresh, rename to `.bak` first.
+- Write to `config/profile.md` immediately after each user confirmation — after each Phase 1 group and after each Phase 2 CV entry. Never batch. Never write without explicit approval.
+- Always include at least one concrete example answer after every question. Never ask a bare question without an example calibrated to the user's background.
+- Always open each group and section with one plain-English sentence explaining what the information will be used for. No YAML keys, no technical jargon.
+- Be collaborative on optional fields — ask what the user would *like* to include, explain trade-offs if they hesitate.
+- Never fabricate metrics, invent outcomes, or inflate contributions. No metric = omit the number.
+- If the user says "skip" for any section, move on without a placeholder — add it later via `analyze-sources`.
+- All CV section YAML entries follow the templates in `modes/analyze-sources.md` exactly: verb-first bullets, title ≤ 45 chars for `projects` and `competitions`, max bullets respected.
+- `additional_training`: omit the key entirely if empty; reverse chronological order when present.
+- `projects`: ordered by decreasing impressiveness to the interviewer, not by date.
+- `cv.output_format: "latex"` must always be present in the written file.
+
+</rules>
+
+---
+
 <reference id="thematic_axes">
 
 ## Predefined Thematic Axes
@@ -222,7 +240,7 @@ Set `location.visa_status` — infer from nationality/location if mentioned in G
 </user_prompt>
 
 <agent_instruction>
-Keep this group lightweight. If the user says "skip" for any sub-key, leave it as an empty placeholder — they can fill it later via `update-profile`.
+Keep this group lightweight. If the user says "skip" for any sub-key, leave it as an empty placeholder — they can fill it in later.
 </agent_instruction>
 
 <mapping>
@@ -315,6 +333,23 @@ Follow `modes/analyze-sources.md` for the full processing sequence — classific
 After processing all source files (or immediately if `sources/` was empty), check which CV sections are still missing. Ask about each missing section in order. Skip any section already filled by source documents.
 
 For YAML entry formats, follow the templates in `modes/analyze-sources.md`. Exceptions are noted below.
+
+<review_loop>
+
+After drafting each CV entry (from sources or from conversation), present it in full before writing:
+
+> "Here's the draft entry for [section] — tell me what to change, or say 'add it' to write it to profile.md."
+> ```yaml
+> [full entry]
+> ```
+
+Show the complete entry on every revision round — never just the diff. Write to `config/profile.md` only on explicit approval ("add it", "looks good", "yes", "go ahead", or any clear affirmative).
+
+**If the user drops new files into `sources/` mid-session:** pause, switch to Step 2 for those files, then resume where you left off.
+
+</review_loop>
+
+---
 
 <section name="Summary">
 
@@ -463,44 +498,9 @@ If no entries: omit the `additional_training` key entirely — do not write an e
 
 </section>
 
----
-
-<review_loop>
-
-After drafting each CV entry (from sources or from conversation), present it in full before writing:
-
-> "Here's the draft entry for [section] — tell me what to change, or say 'add it' to write it to profile.md."
-> ```yaml
-> [full entry]
-> ```
-
-Show the complete entry on every revision round — never just the diff. Write to `config/profile.md` only on explicit approval ("add it", "looks good", "yes", "go ahead", or any clear affirmative).
-
-**If the user drops new files into `sources/` mid-session:** pause, switch to Step 2 for those files, then resume where you left off.
-
-</review_loop>
-
 </step>
 
 </phase>
-
----
-
-<rules>
-
-- **If `config/profile.md` already exists:** do not overwrite — ask to continue or start fresh. If fresh, rename to `.bak` first.
-- Write to `config/profile.md` immediately after each user confirmation — after each Phase 1 group and after each Phase 2 CV entry. Never batch. Never write without explicit approval.
-- Always include at least one concrete example answer after every question. Never ask a bare question without an example calibrated to the user's background.
-- Always open each group and section with one plain-English sentence explaining what the information will be used for. No YAML keys, no technical jargon.
-- Be collaborative on optional fields — ask what the user would *like* to include, explain trade-offs if they hesitate.
-- Never fabricate metrics, invent outcomes, or inflate contributions. No metric = omit the number.
-- If the user says "skip" for any section, move on without a placeholder — add it later via `analyze-sources` or `update-profile`.
-- All CV section YAML entries follow the templates in `modes/analyze-sources.md` exactly: verb-first bullets, title ≤ 45 chars for `projects` and `competitions`, max bullets respected.
-- `additional_training`: omit the key entirely if empty; reverse chronological order when present.
-- `projects`: ordered by decreasing impressiveness to the interviewer, not by date.
-- `cv.output_format: "latex"` must always be present in the written file.
-
-</rules>
 
 ---
 

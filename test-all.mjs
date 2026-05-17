@@ -156,7 +156,7 @@ console.log('\n5. Data contract validation');
 
 // Check system files exist
 const systemFiles = [
-  'CLAUDE.md', 'VERSION', 'DATA_CONTRACT.md',
+  'CLAUDE.md', 'DATA_CONTRACT.md',
   'modes/_shared.md',
   'modes/offer-analysis.md', 'modes/pdf.md', 'modes/scan.md',
   'states.yml',
@@ -251,9 +251,9 @@ console.log('\n8. Mode file integrity');
 
 const expectedModes = [
   '_shared.md', 'offer-analysis.md', 'pdf.md', 'scan.md',
-  'batch.md', 'apply.md', 'auto-pipeline.md', 'contact.md', 'deep.md',
-  'offers-comparison.md', 'pipeline.md', 'project.md', 'tracker.md', 'training.md',
-  'patterns.md', 'followup.md', 'latex.md', 'interview-prep.md', 'analyze-sources.md',
+  'batch.md', 'apply.md', 'auto-pipeline.md', 'contact.md',
+  'offers-comparison.md', 'pipeline.md', 'tracker.md',
+  'patterns.md', 'followup.md', 'interview-prep.md', 'analyze-sources.md',
 ];
 
 for (const mode of expectedModes) {
@@ -291,20 +291,6 @@ for (const section of requiredSections) {
   }
 }
 
-// ── 10. VERSION FILE ─────────────────────────────────────────────
-
-console.log('\n10. Version file');
-
-if (fileExists('VERSION')) {
-  const version = readFile('VERSION').trim();
-  if (/^\d+\.\d+\.\d+$/.test(version)) {
-    pass(`VERSION is valid semver: ${version}`);
-  } else {
-    fail(`VERSION is not valid semver: "${version}"`);
-  }
-} else {
-  fail('VERSION file missing');
-}
 
 // ── SUMMARY ─────────────────────────────────────────────────────
 

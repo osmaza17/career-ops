@@ -206,7 +206,7 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 8. Reorder experience bullets by JD relevance
 9. Build competency grid (6-8 keyword phrases)
 10. Inject keywords into existing achievements (**NEVER invent**)
-11. Generate the `.tex` file following the instructions in `modes/latex.md`
+11. Generate the `.tex` file following the instructions in `modes/pdf.md`
 12. Write to `output/cv-candidate-{company-slug}-{{DATE}}.tex`
 13. Run:
 ```bash
@@ -216,7 +216,7 @@ node generate-pdf.mjs \
 ```
 14. Report: PDF path, size, keyword coverage %
 
-**ATS Rules:** Follow `modes/latex.md` exactly — two-column layout via `paracol`, standard section headers in the language of the posting, no images or graphics, UTF-8 with `\pdfgentounicode=1`, keywords distributed in first bullet of each entry and Skills section.
+**ATS Rules:** Follow `modes/pdf.md` exactly — two-column layout via `paracol`, standard section headers in the language of the posting, no images or graphics, UTF-8 with `\pdfgentounicode=1`, keywords distributed in first bullet of each entry and Skills section.
 
 ### Step 5 — Tracker Line
 

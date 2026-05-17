@@ -8,7 +8,7 @@ Transform raw academic documents (project reports, internship descriptions, stud
 - Process **one document at a time**. Every entry goes through a review loop before writing.
 - Never write to `config/profile.md` without explicit user approval.
 - Never fabricate or inflate contribution to fill a template.
-- Only `modes/onboard.md`, `modes/analyze-sources.md`, and `modes/parallel-sources.md` may read from `sources/`. No other mode accesses that folder.
+- Only `modes/onboard.md` and `modes/analyze-sources.md` may read from `sources/`. No other mode accesses that folder.
 - Write all entries in **English**, matching the language of `config/profile.md`. Technical terms without a clean equivalent may remain in the original language in parentheses.
 - Apply writing rules from `modes/writing.md` (bullet ordering, Specificity Standard, vocabulary bans).
 </rules>

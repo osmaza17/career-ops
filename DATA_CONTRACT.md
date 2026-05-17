@@ -16,7 +16,6 @@ These files contain your personal data, customizations, and work product. Update
 | `data/scan-history.tsv` | Your scan history |
 | `data/follow-ups.md` | Your follow-up history |
 | `sources/*` | Your raw academic documents. Exclusively read by `modes/analyze-sources.md`, which appends entries to `config/profile.md`. |
-| `writing-samples/*` | Your personal writing samples for style calibration (except `writing-samples/README.md`, which is system-owned documentation delivered by updates) |
 | `reports/*` | Your evaluation reports |
 | `output/*` | Your generated PDFs |
 | `jds/*` | Your saved job descriptions |
@@ -29,21 +28,17 @@ These files contain system logic, scripts, templates, and instructions that impr
 |------|---------|
 | `modes/_shared.md` | Scoring system, global rules, tools |
 | `modes/offer-analysis.md` | Evaluation mode instructions |
-| `modes/pdf.md` | PDF generation instructions |
+| `modes/pdf.md` | PDF generation instructions (LaTeX pipeline + Canva flow) |
 | `modes/scan.md` | Portal scanner instructions |
 | `modes/batch.md` | Batch processing instructions |
 | `modes/apply.md` | Application assistant instructions |
 | `modes/auto-pipeline.md` | Auto-pipeline instructions |
 | `modes/contact.md` | LinkedIn outreach instructions |
-| `modes/deep.md` | Research prompt instructions |
 | `modes/offers-comparison.md` | Comparison instructions |
 | `modes/pipeline.md` | Pipeline processing instructions |
-| `modes/project.md` | Project evaluation instructions |
 | `modes/tracker.md` | Tracker instructions |
-| `modes/training.md` | Training evaluation instructions |
 | `modes/patterns.md` | Pattern analysis instructions |
 | `modes/followup.md` | Follow-up cadence instructions |
-| `modes/latex.md` | LaTeX CV formatting and PDF generation |
 | `modes/interview-prep.md` | Company-specific interview intelligence |
 | `modes/analyze-sources.md` | Academic document digest instructions (sole reader of `sources/`, appends to and updates `config/profile.md`) |
 | `modes/fr/*` | French language modes |
@@ -56,9 +51,7 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `states.yml` | Canonical application status values |
 | `.claude/skills/*` | Skill definitions |
 | `docs/*` | Documentation |
-| `VERSION` | Current version number |
 | `DATA_CONTRACT.md` | This file |
-| `writing-samples/README.md` | System-owned onboarding documentation for the writing-samples directory |
 
 ## The Rule
 
