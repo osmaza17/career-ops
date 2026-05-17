@@ -17,6 +17,13 @@ Draft targeted LinkedIn outreach messages (≤300 chars) for recruiters, hiring 
 
 <process>
 
+<step id="0" name="Load context">
+<agent_instruction>
+1. Read `config/profile.md` — extract `narrative.proof_points`, `narrative.superpowers`, and `candidate.linkedin` for use in S2 sentences.
+2. If a company name or role is provided, check `output/reports/` for an existing evaluation report. If found, extract company-specific context (team structure, challenges, JD highlights) to personalize the message.
+</agent_instruction>
+</step>
+
 <step id="1" name="Identify targets">
 <agent_instruction>
 Search for:
@@ -45,7 +52,10 @@ Search for:
 </step>
 
 <step id="4" name="Generate message">
-<agent_instruction>Apply the 3-sentence framework for the classified contact type.</agent_instruction>
+<agent_instruction>
+Apply the 3-sentence framework for the classified contact type (using proof points loaded in Step 0).
+After drafting, count characters. If the message exceeds 300 characters: prioritize S1 + S3 and trim S2 to one key metric only. Never exceed 300 characters — LinkedIn will truncate and the message will appear broken.
+</agent_instruction>
 
 <reference id="message-frameworks">
 

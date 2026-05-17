@@ -20,7 +20,7 @@ Research N companies simultaneously, one agent per company. Each agent runs WebS
 <step id="1" name="Collect companies">
 
 <agent_instruction>
-Accept company list from the user message (inline) or from the `companies` array in `config/portals.yml`.
+Accept company list from the user message (inline) or from the `tracked_companies` array in `config/portals.yml`.
 </agent_instruction>
 
 <user_prompt>

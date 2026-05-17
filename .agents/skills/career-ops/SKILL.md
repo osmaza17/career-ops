@@ -3,11 +3,13 @@ name: career-ops
 description: AI job search command center -- evaluate offers, generate CVs, scan portals, track applications
 arguments: mode # Claude Code specific
 user-invocable: true
-argument-hint: "[scan | pdf | offer-analysis | offers-comparison | apply | batch | tracker | pipeline | contact | interview-prep | onboard | analyze-sources | intel-sweep | linkedin-optimizer]"
+argument-hint: "[scan | pdf | offer-analysis | offers-comparison | apply | batch | tracker | pipeline | contact | interview-prep | onboard | analyze-sources | intel-sweep | linkedin-optimizer | patterns | followup]"
 license: MIT
 ---
 
 # career-ops -- Router
+
+> **Before executing any mode:** read `AGENTS.md` for the full system context — onboarding requirements, data contracts, ethical rules, pipeline integrity checks, and canonical status definitions. All modes depend on it.
 
 ## Mode Routing
 

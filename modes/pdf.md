@@ -39,7 +39,7 @@ Use this path unless the user explicitly requests Canva or `cv.canva_resume_desi
 <process>
 
 <step id="1" name="read-profile">
-Read `config/profile.md` as a single YAML document. CV content keys: `summary`, `education`, `experience`, `student_life`, `projects`, `competitions`, `skills`, `hobbies`. Identity/contact in `candidate.*`; location in `location.*`; languages in top-level `languages` array.
+Read `config/profile.md` as a single YAML document. CV content keys: `summary`, `education`, `experience`, `student_life`, `projects`, `competitions`, `skills`, `hobbies`. Identity/contact in `candidate.*`; headline in `narrative.headline` (used as the tagline under the candidate's name); location in `location.*`; languages in top-level `languages` array.
 </step>
 
 <step id="2" name="get-jd">
@@ -638,7 +638,20 @@ Include only if: (a) contest result directly reinforces a profile/experience cla
 
 #### 7.10 Hobbies (optional)
 
-<agent_instruction>Apply inclusion criteria and format from `modes/writing.md §10`.</agent_instruction>
+<agent_instruction>Apply inclusion criteria from `modes/writing.md §10`. Include only if (a) the hobby connects directly to the role or company culture, or (b) the CV does not fill the page. Specific and verifiable entries only — no generic lists.</agent_instruction>
+
+<format id="section-hobbies">
+
+```latex
+\section*{Centres d'intérêt}
+
+\begin{cvbullets}
+    \item{} <hobby — specific and verifiable, e.g. "Voile compétitive, classement régional.">
+    % 1–3 items; each must be specific enough to start a conversation
+\end{cvbullets}
+```
+
+</format>
 
 ---
 

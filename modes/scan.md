@@ -66,20 +66,8 @@ For each `tracked_companies` entry with `enabled: true` and a defined `api:`:
 | Provider | Endpoint pattern | Fields |
 |---|---|---|
 | Greenhouse | `https://boards-api.greenhouse.io/v1/boards/{company}/jobs` | `jobs[].title`, `jobs[].absolute_url` |
-| Ashby | POST `https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams` | `jobBoard.jobPostings[].title`, `.id` |
-| BambooHR | list `https://{co}.bamboohr.com/careers/list` → GET detail `https://{co}.bamboohr.com/careers/{id}/detail` | `result.jobOpening.*`, `jobOpeningShareUrl` as public URL |
+| Ashby | GET `https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` | `jobs[].title`, `jobs[].jobUrl` |
 | Lever | `https://api.lever.co/v0/postings/{company}?mode=json` | `[].text`, `[].hostedUrl` (fallback `applyUrl`) |
-| Teamtailor | `https://{company}.teamtailor.com/jobs.rss` (RSS) | `title`, `link` |
-| Workday | POST `https://{co}.{shard}.myworkdayjobs.com/wday/cxs/{co}/{site}/jobs` with `{"appliedFacets":{},"limit":20,"offset":0,"searchText":""}`, paginate by `offset` | `jobPostings[].title`, `.externalPath` |
-
-**Ashby POST body:**
-```json
-{
-  "operationName": "ApiJobBoardWithTeams",
-  "variables": { "organizationHostedJobsPageName": "{company}" },
-  "query": "{ jobBoardWithTeams { jobPostings { id title locationName employmentType compensationTierSummary } } }"
-}
-```
 </agent_instruction>
 
 ### Level 3 — WebSearch (BROAD DISCOVERY)
@@ -211,12 +199,9 @@ https://...	2026-02-10	WebSearch	Consultant Ops	ClosedCo		skipped_expired
 
 | Platform | Corporate/hosted URL | API/feed |
 |---|---|---|
-| Ashby | `https://jobs.ashbyhq.com/{slug}` | `https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams` |
+| Ashby | `https://jobs.ashbyhq.com/{slug}` | `https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` |
 | Greenhouse | `https://job-boards.greenhouse.io/{slug}` | `https://boards-api.greenhouse.io/v1/boards/{company}/jobs` |
 | Lever | `https://jobs.lever.co/{slug}` | `https://api.lever.co/v0/postings/{company}?mode=json` |
-| BambooHR | `https://{company}.bamboohr.com/careers/list` | same + detail `…/careers/{id}/detail` |
-| Teamtailor | `https://{company}.teamtailor.com/jobs` | `https://{company}.teamtailor.com/jobs.rss` |
-| Workday | `https://{company}.{shard}.myworkdayjobs.com/{site}` | `…/wday/cxs/{company}/{site}/jobs` |
 
 <agent_instruction>
 If `careers_url` is missing for a company:

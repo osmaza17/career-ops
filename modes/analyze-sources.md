@@ -22,7 +22,7 @@ Transform raw academic documents (project reports, internship descriptions, stud
 <agent_instruction>
 Run all three checks silently, then report once.
 
-**1a. List sources:** List all files in `sources/` (excluding `README.md`).
+**1a. List sources:** List all files in `sources/` (excluding `README.md` and `_preamble.md` — these are documentation files, not source documents to process).
 
 **1b. Deduplication — two-pass:**
 - Pass 1 (exact): Read `config/profile.md`. For each YAML array (`experience`, `student_life`, `projects`, `competitions`, `additional_training`), collect every `company:` or `title:` value. If a source file clearly maps to an existing entry, flag it `ALREADY ANALYZED`.

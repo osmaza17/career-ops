@@ -33,6 +33,10 @@ Track follow-up cadence for active applications. Flag overdue follow-ups, extrac
 
 Defaults can be overridden via `node followup-cadence.mjs --applied-days N`.
 
+**Data model limitation:** `data/applications.md` tracks only the initial application date — not the date the company responded. For `Responded` entries, urgency is calculated from the application date as a proxy. If a `Responded` entry has already been replied to, update the notes column with the reply date so future urgency calculations remain meaningful.
+
+**`Contact` status:** Not in the actionable statuses list. If an entry has status `Contact`, the follow-up mode will skip it — it is reserved for networking contacts, not active applications.
+
 </reference>
 
 <reference id="urgency-indicators">

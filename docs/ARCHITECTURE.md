@@ -24,7 +24,7 @@
      │                    Output Pipeline                     │
      │  ┌──────────┐  ┌────────────┐  ┌───────────────────┐   │
      │  │ Report.md│  │  PDF (LaTeX  │  │ Tracker TSV     │   │
-     │  │ (A-F eval)│  │  → pdflatex)│  │ (merge-tracker) │   │
+     │  │ (A-G eval)│  │  → pdflatex)│  │ (merge-tracker) │   │
      │  └──────────┘  └────────────┘  └───────────────────┘   │
      └────────────────────────────────────────────────────────┘
                                │
@@ -39,14 +39,15 @@
 1. **Input**: User pastes JD text or URL
 2. **Extract**: Playwright/WebFetch extracts JD from URL
 3. **Classify**: Detect archetype (1 of 6 types)
-4. **Evaluate**: 6 blocks (A-F):
+4. **Evaluate**: 7 blocks (A-G):
    - A: Role summary
    - B: CV match (gaps + mitigation)
    - C: Level strategy
    - D: Comp research (WebSearch)
    - E: CV personalization plan
-   - F: Interview prep (STAR stories)
-5. **Score**: Weighted average across 10 dimensions (1-5)
+   - F: Red flags (blockers, deal-breakers)
+   - G: Posting legitimacy (separate tier, does not affect score)
+5. **Score**: Weighted average of blocks B–E, adjusted by F (1-5)
 6. **Report**: Save as `output/reports/{num}-{company}-{date}.md`
 7. **PDF**: Generate ATS-optimized CV (`generate-pdf.mjs`)
 8. **Track**: Write TSV to `batch/tracker-additions/`, auto-merged

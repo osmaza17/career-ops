@@ -93,6 +93,30 @@ Top 5 CV changes + Top 5 LinkedIn changes to maximize match.
 
 ---
 
+## Block F — Red Flags
+
+<agent_instruction>
+Identify blockers, deal-breakers, and concerns not already surfaced in Blocks B-E. Read `config/profile.md` (key `strategy.deal_breakers`) for the user's hard stops.
+
+**Check for:**
+1. **Hard deal-breakers** — anything that matches `strategy.deal_breakers` in profile.md (relocation required, visa sponsorship unavailable, comp below minimum, etc.)
+2. **Contract red flags** — unusual non-competes, IP assignment clauses, forced arbitration, probation unusually long
+3. **Role red flags** — responsibilities that contradict the title, scope seems understaffed, "wearing many hats" language in a senior role
+4. **Company red flags** — recent mass layoffs in the relevant department, leadership instability, funding concerns for startups, Glassdoor patterns
+5. **Process red flags** — extreme urgency ("start immediately"), refusal to share salary range in regulated jurisdictions, ghosting patterns from public Glassdoor reviews
+
+**Scoring impact:** Severe red flags (hard deal-breakers) cap the global score at 2.5 max. Moderate red flags apply a −0.3 to −0.5 adjustment. Minor flags are noted but do not affect the score.
+</agent_instruction>
+
+<format>
+| Flag | Severity (Hard / Moderate / Minor) | Impact on score | Source |
+|------|-------------------------------------|-----------------|--------|
+
+If no significant red flags: "No significant red flags identified."
+</format>
+
+---
+
 ## Block G — Posting Legitimacy
 
 <agent_instruction>
@@ -165,6 +189,7 @@ Save full evaluation to `output/reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 ## C) Level and Strategy
 ## D) Comp and Demand
 ## E) Personalization Plan
+## F) Red Flags
 ## G) Posting Legitimacy
 ## H) Draft Application Answers
 (only if score >= 4.5)

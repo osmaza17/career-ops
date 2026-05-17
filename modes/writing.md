@@ -348,7 +348,7 @@ Designed a proprietary dispatch heuristic with a multi-component cost function (
 
 ### 14.3 Globally banned vocabulary
 
-`passionate about` · `results-driven` · `team player` · `leveraged` · `spearheaded` · `synergy` · `go-getter` · `in order to` · `so as to`
+`passionate about` · `results-driven` · `results-oriented` · `proven track record` · `team player` · `leveraged` · `spearheaded` · `facilitated` · `synergy` · `go-getter` · `in order to` · `so as to` · `robust` · `seamless` · `cutting-edge` · `innovative` · `demonstrated ability to` · `best practices`
 
 ### 14.4 Banned grandiose verbs
 
@@ -459,7 +459,6 @@ When the CV is in French, replace the English past-tense verb with its deverbal 
 | Élaboré | Élaboration de |
 | Comparé | Comparaison de |
 | Conduit | Conduite de |
-| Identifié | Identification de |
 | Réalisé | Réalisation de |
 
 </format>

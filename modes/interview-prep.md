@@ -154,7 +154,7 @@ Followed by all sections from Steps 2–7.
 
 <completion>
 After delivering the report:
-1. Ask if the user wants to draft stories for any gaps found in Step 5.
+1. If Step 4 surfaced background questions or experience gaps, ask: "Want me to help you frame a concise narrative for [gap]?" and draft a 2-3 sentence response on request.
 2. If they have a scheduled interview date, say: "Your interview is in {X} days. Want me to set a reminder to review this prep?"
 3. If company research in Step 1 was thin, suggest: "Want me to run `intel-sweep` for a fuller picture of their strategy, culture, and competitive landscape?"
 </completion>

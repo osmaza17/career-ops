@@ -42,7 +42,7 @@ Score each dimension 1–5, multiply by weight, sum for a weighted total out of 
 
 <step id="2" name="Load existing scores">
 <agent_instruction>
-For each offer already in `output/reports/`, read the existing report and extract Block A scores rather than re-scoring from scratch. For new offers, score all 10 dimensions inline.
+For each offer already in `output/reports/`, read the existing report and extract the global score plus per-block breakdown (Blocks B–F) to inform the 10-dimension matrix — do not re-evaluate from scratch. For new offers, score all 10 dimensions inline using the JD text.
 </agent_instruction>
 </step>
 

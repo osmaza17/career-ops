@@ -9,6 +9,7 @@ Interactive mode for filling out a live application form. Reads the active page,
 - If no existing report is found, offer to run auto-pipeline before proceeding.
 - Read compensation targets from `config/profile.md` — never invent figures.
 - If the role on screen differs from the evaluated role, notify the candidate before generating responses.
+- Cover letter: if the form has a cover letter field or upload, always generate one. Max 1 page. Use the same visual design as the CV (same LaTeX template). Structure: hook using something specific from the JD or company → 2-3 sentences matching the strongest proof points to the role's core requirements → forward-looking close referencing the company name. Never use "I am writing to apply" or "I am passionate about." JD quotes → proof points, never the reverse.
 </rules>
 
 ## Requirements
@@ -128,8 +129,8 @@ Present all responses and STOP. Do not click Apply, Submit, or Send. The candida
 <step id="7" name="Post-apply (after candidate confirms submission)">
 
 <agent_instruction>
-1. Update status in `applications.md` from `Evaluated` → `Applied`.
-2. Save final responses into Section G of the report.
+1. Write a TSV line to `batch/tracker-additions/{num}-{slug}.tsv` with status `Applied`, then run `node merge-tracker.mjs` to update the tracker.
+2. Append final form responses as an addendum to the evaluation report in `output/reports/`.
 3. Suggest next step.
 </agent_instruction>
 

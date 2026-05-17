@@ -18,6 +18,12 @@ When the user pastes one or more JDs (text or URLs) without an explicit sub-comm
 
 <process>
 
+<step id="0" name="Pre-flight">
+<agent_instruction>
+First evaluation of the session: run `node cv-sync-check.mjs`. Notify user if any warnings are returned. If score falls below `strategy.score_threshold` in `config/profile.md` (default 3.5), surface a warning after evaluation — do not block the pipeline, but make the recommendation explicit.
+</agent_instruction>
+</step>
+
 <step id="1" name="Collect inputs">
 <agent_instruction>
 Detect all URLs and/or JD text blocks in the user's message. Each distinct URL or pasted JD block = one job. Note the count.

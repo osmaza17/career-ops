@@ -172,6 +172,9 @@ Where `{company-slug}` is the company name in lowercase, no spaces, with hyphens
 ## E) Personalization Plan
 (full content)
 
+## F) Red Flags
+(full content)
+
 ## G) Posting Legitimacy
 (full content)
 
