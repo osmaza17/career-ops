@@ -1,0 +1,1287 @@
+# Portal Scanner Configuration — Óscar Martínez Zamora
+# CentraleSupélec / UPV · Operations Research & Risk Analytics
+# Target: Stage or Alternance · Sept 2026 · Paris area
+# Focus: Operations Consulting · Supply Chain Optimisation · OR Engineering
+#
+# Strategy (3 levels):
+#   1. Playwright → careers_url of each company (real-time, reliable)
+#   2. Greenhouse API → structured JSON (fast, Greenhouse-only)
+#   3. WebSearch with site: filters (broad discovery, may be stale)
+#
+# IMPORTANT: Each company in tracked_companies MUST have careers_url.
+#   Prefer the BRANDED company careers URL whenever available; use ATS-hosted URL only as fallback.
+#   ✅ https://careers.totalenergies.com   ⚠️ https://totalenergies.wd3.myworkdayjobs.com (fallback only)
+#   Exception: ATS-hosted careers_url is acceptable when no branded careers page exists.
+#
+# HOW TO CUSTOMIZE:
+#   1. Copy this file to config/portals.yml
+#   2. Edit title_filter.positive with YOUR target role keywords
+#   3. Add/remove companies in tracked_companies
+#   4. Adjust search_queries for your preferred job boards
+#   5. Set enabled: false on companies you don't care about
+
+# -- Location filter --
+# Uncomment to restrict to Paris area + France only.
+#
+# location_filter:
+#   allow:
+#     - "Paris"
+#     - "Île-de-France"
+#     - "Saclay"
+#     - "France"
+#     - "Remote"
+#   block:
+#     - "London"
+#     - "Germany"
+#     - "Singapore"
+#     - "USA"
+#     - "India"
+#     - "Morocco"      # unless you'd consider Casablanca for alternance
+
+# -- Title filter --
+# Tailored for Óscar: operations consulting, supply chain, OR, industrial engineering.
+# Stage and alternance are WANTED — not filtered out.
+
+title_filter:
+  positive:
+    # -- Core target roles (EN) --
+    - "Operations"
+    - "Supply Chain"
+    - "Logistics"
+    - "Operations Research"
+    - "Optimization"
+    - "Optimisation"
+    - "Industrial Engineering"
+    - "Process Improvement"
+    - "Operational Excellence"
+    - "Lean"
+    - "Continuous Improvement"
+    # -- Core target roles (FR) --
+    - "Consultant"
+    - "Consultante"
+    - "Stage"
+    - "Stagiaire"
+    - "Alternance"
+    - "Ingénieur"
+    - "Supply Chain"
+    - "Logistique"
+    - "Flux"
+    - "Gestion de la production"
+    - "Recherche Opérationnelle"
+    - "Amélioration continue"
+    - "Excellence opérationnelle"
+    - "Planification"
+    - "Ordonnancement"
+    - "Simulation"
+    # -- Strategy & consulting --
+    - "Strategy"
+    - "Stratégie"
+    - "Transformation"
+    - "Analyst"
+    - "Analyste"
+    - "Business Analyst"
+    - "Management Consultant"
+    # -- Data & quantitative (aligned with Gurobi/OR skills) --
+    - "Data Analyst"
+    - "Data Scientist"
+    - "Quantitative"
+    - "Modelling"
+    - "Modélisation"
+    - "Decision Science"
+    - "Planning"
+    # -- Project & industrial --
+    - "Project"
+    - "Projet"
+    - "Industrial"
+    - "Industriel"
+    - "Procurement"
+    - "Achat"
+    - "Demand Planning"
+    - "Forecasting"
+    - "Inventory"
+    - "Entreposage"
+    - "Distribution"
+  negative:
+    # Keep role-type negatives only — NOT stage/alternance/junior
+    # (Óscar IS targeting entry-level/trainee positions)
+    - "iOS"
+    - "Android"
+    - "PHP"
+    - "Ruby"
+    - "Embedded"
+    - "Firmware"
+    - "COBOL"
+    - "Mainframe"
+    - "DevOps"          # not his target
+    - "Cybersecurity"   # not his target
+    - "Marketing"       # exclude pure marketing roles
+    - "Commercial"      # exclude pure sales roles
+    - "Comptable"       # exclude pure accounting
+    - "Juridique"       # exclude legal
+    - "RH"              # exclude pure HR
+  seniority_boost:
+    # These prefixes add relevance — internship/alternance titles often don't include them,
+    # but senior postings at target firms are worth tracking too (future reference).
+    - "Senior"
+    - "Lead"
+    - "Manager"
+    - "Expert"
+    - "Principal"
+    - "Head"
+    - "Directeur"
+
+# -- Search queries --
+# Targeted at French grandes écoles job boards and consulting/industry career portals.
+# All queries explicitly target stage or alternance from Sept 2026.
+
+search_queries:
+
+  # -- French grandes écoles job boards --
+  - name: Forum des Grandes Écoles — Stage opérations/supply chain
+    query: 'site:jobteaser.com "supply chain" OR "opérations" OR "logistique" OR "consultant" stage "CentraleSupélec" OR "grande école" 2026'
+    enabled: true
+
+  - name: JobTeaser — Stage conseil opérations Paris
+    query: 'site:jobteaser.com stage "consultant" OR "supply chain" OR "optimisation" Paris "septembre 2026" OR "2026-2027"'
+    enabled: true
+
+  - name: APEC — Ingénieur supply chain / consultant opérations
+    query: 'site:apec.fr "supply chain" OR "logistique" OR "recherche opérationnelle" "stage" OR "alternance" Paris 2026'
+    enabled: true
+
+  # -- Operations & consulting specific --
+  - name: Welcome to the Jungle — Stage conseil stratégie/opérations
+    query: 'site:welcometothejungle.com stage "consultant" OR "opérations" OR "supply chain" OR "stratégie" Paris 2026'
+    enabled: true
+
+  - name: Welcome to the Jungle — Alternance ingénieur opérations
+    query: 'site:welcometothejungle.com alternance "ingénieur" OR "supply chain" OR "logistique" OR "planification" Paris'
+    enabled: true
+
+  - name: LinkedIn — Stage/alternance operations consulting Paris
+    query: 'site:linkedin.com/jobs "stage" OR "alternance" "consultant" OR "supply chain" OR "operations" Paris France "septembre 2026"'
+    enabled: true
+
+  # -- Consulting-specific boards --
+  - name: Consulting.fr — Stage grandes cabinets
+    query: 'site:consulting.fr stage "supply chain" OR "opérations" OR "stratégie" Paris 2026'
+    enabled: true
+
+  - name: Greenhouse — Stage consulting France
+    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io stage OR internship "supply chain" OR "operations" OR "consultant" France OR Paris 2026'
+    enabled: true
+
+  - name: Lever — Stage opérations/supply chain Paris
+    query: 'site:jobs.lever.co stage OR internship "supply chain" OR "operations" OR "logistics" Paris France'
+    enabled: true
+
+  # -- Industry-specific --
+  - name: Indeed France — Stage/alternance ingénieur supply chain
+    query: 'site:indeed.fr "ingénieur supply chain" OR "consultant opérations" OR "analyste logistique" stage OR alternance Paris Île-de-France 2026'
+    enabled: true
+
+  - name: Cadremploi — Alternance/stage grandes entreprises
+    query: 'site:cadremploi.fr stage OR alternance "supply chain" OR "logistique" OR "consultant" OR "opérations" Paris Île-de-France'
+    enabled: true
+
+  - name: Hellowork — Stage OR ingénieur opérations Paris
+    query: 'site:hellowork.com stage alternance "supply chain" OR "consultant" OR "opérations" OR "logistique" Paris 2026'
+    enabled: true
+
+# -- Tracked companies --
+# Organized by sector. Scan queries tailored to Óscar's profile:
+#   · Stage or alternance from Sept 2026
+#   · Operations consulting / supply chain / OR / industrial engineering
+#   · Paris area preferred
+#   · Language: English or French (both fine for him)
+#
+# Relevance tags in notes:
+#   ⭐⭐⭐ = direct match to his target role/sector
+#   ⭐⭐   = strong fit (adjacent sector or mixed roles)
+#   ⭐     = worth monitoring (brand name, possible fit)
+#   🔗    = direct personal connection (project, partnership)
+
+tracked_companies:
+
+  # ============================================================
+  # ÉNERGIE, ENVIRONNEMENT
+  # ============================================================
+
+  - name: Air Liquide
+    careers_url: https://careers.airliquide.com
+    scan_method: websearch
+    scan_query: 'site:careers.airliquide.com stage OR alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐⭐ 🔗 Paris FR. Direct H₂ supply chain project delivered for this client at CentraleSupélec (Apr 2026). Strong fit for supply chain / logistics stage. Prioritise."
+    enabled: true
+
+  - name: Altarea Groupe
+    careers_url: https://www.altarea.com/nous-rejoindre/
+    scan_method: websearch
+    scan_query: 'Altarea stage alternance "ingénieur" OR "opérations" OR "projet" 2026 Paris'
+    notes: "⭐ Paris FR. Real estate. Limited OR/supply chain fit; monitor for project/industrial roles."
+    enabled: true
+
+  - name: CEA
+    careers_url: https://www.cea.fr/emplois
+    scan_method: websearch
+    scan_query: 'site:cea.fr stage alternance "recherche opérationnelle" OR "optimisation" OR "supply chain" OR "ingénieur" 2026 Île-de-France'
+    notes: "⭐⭐ Île-de-France FR. Applied R&D — modelling and optimisation roles possible. Proximity to Gif-sur-Yvette campus is a plus."
+    enabled: true
+
+  - name: DNV
+    careers_url: https://www.dnv.com/careers/
+    scan_method: websearch
+    scan_query: 'site:dnv.com careers stage internship "risk" OR "operations" OR "supply chain" France 2026'
+    notes: "⭐ France. Risk management and quality assurance. Risk Analytics specialisation is a potential fit."
+    enabled: true
+
+  - name: EDF
+    careers_url: https://recrutement.edf.fr
+    scan_method: websearch
+    scan_query: 'site:recrutement.edf.fr stage alternance "supply chain" OR "logistique" OR "optimisation" OR "opérations" 2026 Paris Île-de-France'
+    notes: "⭐⭐ Paris FR. Large industrial operations and logistics functions. Stage opportunities in supply chain and project management."
+    enabled: true
+
+  - name: Enedis
+    careers_url: https://recrutement.enedis.fr
+    scan_method: websearch
+    scan_query: 'site:recrutement.enedis.fr stage alternance "ingénieur" OR "supply chain" OR "logistique" OR "opérations" 2026'
+    notes: "⭐⭐ Paris FR. Network operations and logistics roles. Industrial engineering fit."
+    enabled: true
+
+  - name: Eurofins
+    careers_url: https://jobs.eurofins.com
+    scan_method: websearch
+    scan_query: 'site:jobs.eurofins.com stage internship "opérations" OR "supply chain" OR "logistique" France 2026'
+    notes: "⭐ France. Testing services. Limited direct fit but operational roles exist."
+    enabled: false
+
+  - name: Fives Groupe
+    careers_url: https://www.fivesgroup.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:fivesgroup.com stage alternance "ingénieur" OR "opérations" OR "supply chain" OR "amélioration continue" 2026 France'
+    notes: "⭐⭐ Paris FR. Industrial engineering group — automation, Lean, operational excellence. Good fit for industrial ops stage."
+    enabled: true
+
+  - name: Framatome
+    careers_url: https://jobs.framatome.com
+    scan_method: websearch
+    scan_query: 'site:framatome.com stage alternance "ingénieur" OR "supply chain" OR "logistique" OR "projet" 2026'
+    notes: "⭐⭐ Paris FR. Nuclear energy — supply chain, project management, and industrial engineering roles."
+    enabled: true
+
+  - name: Neoen
+    careers_url: https://www.neoen.com/fr/rejoindre-neoen/
+    scan_method: websearch
+    scan_query: 'Neoen stage alternance "ingénieur" OR "opérations" OR "projet" 2026 France'
+    notes: "⭐ Paris FR. Renewable energy. Limited supply chain fit; project management roles possible."
+    enabled: false
+
+  - name: Nexans France
+    careers_url: https://www.nexans.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:nexans.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" France 2026'
+    notes: "⭐⭐ Paris FR. Manufacturing — supply chain, procurement, and industrial operations roles."
+    enabled: true
+
+  - name: Orano
+    careers_url: https://careers.orano.group
+    scan_method: websearch
+    scan_query: 'site:careers.orano.group stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026'
+    notes: "⭐⭐ Paris FR. Nuclear fuel cycle — complex supply chain and logistics operations. Good fit."
+    enabled: true
+
+  - name: RTE
+    careers_url: https://www.rte-france.com/recrutement
+    scan_method: websearch
+    scan_query: 'site:rte-france.com stage alternance "ingénieur" OR "optimisation" OR "opérations" OR "supply chain" 2026'
+    notes: "⭐⭐ Paris FR. Grid optimisation and energy flows — strong OR/optimisation fit."
+    enabled: true
+
+  - name: Schneider Electric
+    careers_url: https://careers.se.com
+    scan_method: websearch
+    scan_query: 'site:careers.se.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France Paris 2026'
+    notes: "⭐⭐⭐ Rueil-Malmaison FR. Global supply chain and operations. Major stage programme for grandes écoles — high priority."
+    enabled: true
+
+  - name: TotalEnergies
+    careers_url: https://careers.totalenergies.com
+    scan_method: websearch
+    scan_query: 'site:careers.totalenergies.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Courbevoie FR. Massive supply chain and operations division. Well-known stage programme for CentraleSupélec students."
+    enabled: true
+
+  - name: Veolia
+    careers_url: https://www.veolia.com/fr/carrieres
+    scan_method: websearch
+    scan_query: 'site:veolia.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" France 2026'
+    notes: "⭐⭐ Aubervilliers FR. Environmental services with complex operational logistics. Industrial engineering fit."
+    enabled: true
+
+  - name: Vinci
+    careers_url: https://recrutement.vinci.com
+    scan_method: websearch
+    scan_query: 'site:recrutement.vinci.com stage alternance "ingénieur" OR "supply chain" OR "logistique" OR "projet" 2026 Paris'
+    notes: "⭐⭐ Rueil-Malmaison FR. Construction — project management and supply chain stage opportunities."
+    enabled: true
+
+  - name: Viridien
+    careers_url: https://www.viridiengroup.com/careers/
+    scan_method: websearch
+    scan_query: 'site:viridiengroup.com stage internship "opérations" OR "supply chain" OR "ingénieur" 2026'
+    notes: "⭐ Paris FR. Geoscience — data and optimisation roles possible but niche."
+    enabled: false
+
+  # ============================================================
+  # PRODUCTION
+  # ============================================================
+
+  - name: Carrefour
+    careers_url: https://www.carrefour.com/fr/talent
+    scan_method: websearch
+    scan_query: 'site:carrefour.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐⭐ Massy FR. One of the largest supply chain operations in French retail. Very strong fit — direct proximity to Gif-sur-Yvette."
+    enabled: true
+
+  - name: Cartier
+    careers_url: https://www.cartier.com/fr-fr/carrieres.html
+    scan_method: websearch
+    scan_query: 'Cartier stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Luxury supply chain and operations. Richemont group programmes for grandes écoles."
+    enabled: true
+
+  - name: SEB
+    careers_url: https://jobs.groupeseb.com
+    scan_method: websearch
+    scan_query: 'site:jobs.groupeseb.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur industriel" 2026'
+    notes: "⭐⭐⭐ Écully FR. Manufacturing and supply chain — operational excellence and industrial engineering roles. Strong stage programme."
+    enabled: true
+
+  - name: Hermès
+    careers_url: https://carrieres.hermes.com
+    scan_method: websearch
+    scan_query: 'site:carrieres.hermes.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Luxury supply chain — artisan logistics and distribution operations."
+    enabled: true
+
+  - name: L'Oréal
+    careers_url: https://jobs.loreal.com
+    scan_method: websearch
+    scan_query: 'site:jobs.loreal.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Clichy FR. Very structured grande école stage programme. Strong supply chain and industrial operations division."
+    enabled: true
+
+  - name: LVMH
+    careers_url: https://jobs.lvmh.com
+    scan_method: websearch
+    scan_query: 'site:jobs.lvmh.com stage OR internship "supply chain" OR "operations" OR "logistique" OR "industriel" France 2026'
+    notes: "⭐⭐ Paris FR. Luxury supply chain and operations across brands. Structured internship programme."
+    enabled: true
+
+  - name: OCP
+    careers_url: https://www.ocpgroup.ma/careers
+    scan_method: websearch
+    scan_query: 'OCP Group stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 France Maroc'
+    notes: "⭐ Morocco / France. Interesting if open to Casablanca. Supply chain and industrial operations."
+    enabled: false
+
+  - name: Saint Gobain
+    careers_url: https://careers.saint-gobain.com
+    scan_method: websearch
+    scan_query: 'site:careers.saint-gobain.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Courbevoie FR. Building materials — large supply chain and industrial operations. Well-known CentraleSupélec partner. High priority."
+    enabled: true
+
+  # ============================================================
+  # PUBLIC
+  # ============================================================
+
+  - name: DGSE
+    careers_url: https://www.dgse-recrute.fr
+    scan_method: websearch
+    scan_query: 'site:dgse-recrute.fr stage alternance "ingénieur" OR "analyste" OR "opérations" 2026'
+    notes: "⭐ Paris FR. Intelligence service — analyst and engineering roles for grandes écoles. Monitor but niche fit."
+    enabled: false
+
+  - name: Marine Nationale
+    careers_url: https://www.marine.defense.gouv.fr/recrutement
+    scan_method: websearch
+    scan_query: 'marine nationale stage alternance "ingénieur" OR "logistique" OR "opérations" 2026'
+    notes: "⭐ France. Naval — logistics and operations roles but limited stage programme."
+    enabled: false
+
+  - name: Direction du Renseignement Militaire
+    careers_url: https://www.defense.gouv.fr/drm/recrutement
+    scan_method: websearch
+    scan_query: 'DRM recrutement stage "ingénieur" OR "analyste" 2026'
+    notes: "⭐ Low fit. Monitor only."
+    enabled: false
+
+  - name: Service Public
+    careers_url: https://www.place-de-lemploi-public.fr
+    scan_method: websearch
+    scan_query: 'site:place-de-lemploi-public.fr stage alternance "supply chain" OR "logistique" OR "optimisation" OR "ingénieur" 2026'
+    notes: "⭐ Low fit for stage. Disable unless interested in public sector."
+    enabled: false
+
+  # ============================================================
+  # FORMATION
+  # ============================================================
+
+  - name: Collège des Ingénieurs
+    careers_url: https://www.cdi.eu/recrutement
+    scan_method: websearch
+    scan_query: 'Collège des Ingénieurs stage alternance programme 2026'
+    notes: "⭐ Paris FR. Listed as partner — monitor for any collaboration programme."
+    enabled: false
+
+  - name: CS Alumni
+    careers_url: https://www.centralesupelec.fr/recrutement
+    scan_method: websearch
+    scan_query: 'CentraleSupélec alumni stage offres partenaires 2026'
+    notes: "⭐ Gif-sur-Yvette. Oscar's own school alumni network — use for connections, not job postings directly."
+    enabled: false
+
+  # ============================================================
+  # CONSTRUCTION, TRANSPORT
+  # ============================================================
+
+  - name: Aéroports de Paris
+    careers_url: https://www.parisaeroport.fr/groupe/ressources-humaines/emplois-et-stages
+    scan_method: websearch
+    scan_query: 'site:parisaeroport.fr stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026'
+    notes: "⭐⭐ Paris FR. Airport operations and logistics — strong operational fit. Close to Gif-sur-Yvette."
+    enabled: true
+
+  - name: Air France
+    careers_url: https://careers.airfranceklm.com
+    scan_method: websearch
+    scan_query: 'site:careers.airfranceklm.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "planning" France 2026'
+    notes: "⭐⭐⭐ Tremblay-en-France FR. Complex airline supply chain and operations planning — very strong fit. Major stage programme."
+    enabled: true
+
+  - name: Alstom
+    careers_url: https://www.alstomgroup.com/careers/
+    scan_method: websearch
+    scan_query: 'site:alstomgroup.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "ingénieur" France 2026'
+    notes: "⭐⭐⭐ Saint-Ouen FR. Rail supply chain and industrial operations. Strong fit. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Arianegroup
+    careers_url: https://www.arianegroup.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:arianegroup.com stage alternance "ingénieur" OR "supply chain" OR "logistique" OR "projet" 2026'
+    notes: "⭐⭐ Paris FR. Aerospace supply chain and project management. Defence clearance may apply."
+    enabled: true
+
+  - name: Artelia
+    careers_url: https://www.arteliagroup.com/fr/nous-rejoindre/
+    scan_method: websearch
+    scan_query: 'site:arteliagroup.com stage alternance "ingénieur" OR "opérations" OR "projet" 2026'
+    notes: "⭐⭐ Grenoble / Paris FR. Engineering and project management consultancy. Operations and project roles."
+    enabled: true
+
+  - name: Bouygues Construction
+    careers_url: https://www.bouygues-construction.com/fr/recrutement/
+    scan_method: websearch
+    scan_query: 'site:bouygues-construction.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026'
+    notes: "⭐⭐ Guyancourt FR. Construction supply chain and project operations."
+    enabled: true
+
+  - name: Chantiers de l'Atlantique
+    careers_url: https://www.chantiers-atlantique.com/fr/nous-rejoindre/
+    scan_method: websearch
+    scan_query: 'Chantiers Atlantique stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026'
+    notes: "⭐⭐ Saint-Nazaire FR. Shipbuilding — industrial supply chain and production planning."
+    enabled: true
+
+  - name: CMA CGM
+    careers_url: https://www.cmacgm-group.com/fr/emploi/
+    scan_method: websearch
+    scan_query: 'site:cmacgm-group.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "transport" 2026 Paris'
+    notes: "⭐⭐⭐ Marseille / Paris FR. Global shipping and logistics leader — ideal supply chain stage. Note: HQ in Marseille."
+    enabled: true
+
+  - name: Colas Groupe
+    careers_url: https://www.colas.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:colas.com stage alternance "supply chain" OR "logistique" OR "ingénieur" OR "opérations" 2026'
+    notes: "⭐⭐ Boulogne-Billancourt FR. Road construction — logistics and industrial engineering roles."
+    enabled: true
+
+  - name: Constellium
+    careers_url: https://careers.constellium.com
+    scan_method: websearch
+    scan_query: 'site:careers.constellium.com stage OR internship "supply chain" OR "operations" OR "industrial" OR "logistics" France 2026'
+    notes: "⭐⭐ Paris FR. Aluminium manufacturing — industrial operations and supply chain."
+    enabled: true
+
+  - name: Dassault Aviation Groupe
+    careers_url: https://www.dassault-aviation.com/fr/passion/recrutement/
+    scan_method: websearch
+    scan_query: 'site:dassault-aviation.com stage alternance "supply chain" OR "logistique" OR "ingénieur" OR "opérations" 2026'
+    notes: "⭐⭐⭐ Paris FR. Aerospace supply chain and industrial operations — strong fit. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Eiffage
+    careers_url: https://www.eiffage.com/recrutement
+    scan_method: websearch
+    scan_query: 'site:eiffage.com stage alternance "supply chain" OR "logistique" OR "ingénieur" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Vélizy-Villacoublay FR. Infrastructure — operations, logistics, and project engineering roles."
+    enabled: true
+
+  - name: Equans
+    careers_url: https://careers.equans.com
+    scan_method: websearch
+    scan_query: 'site:careers.equans.com stage OR internship "operations" OR "supply chain" OR "logistics" OR "ingénieur" France 2026'
+    notes: "⭐⭐ Paris FR. Technical services — operational and industrial engineering roles."
+    enabled: true
+
+  - name: Exail
+    careers_url: https://www.exail.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:exail.com stage alternance "ingénieur" OR "opérations" OR "projet" 2026'
+    notes: "⭐ Saint-Germain-en-Laye FR. Advanced tech — limited supply chain fit; project engineering possible."
+    enabled: false
+
+  - name: Groupe RATP
+    careers_url: https://www.ratpgroup.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:ratp.fr OR site:ratpgroup.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "planification" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Urban transport operations — scheduling, fleet planning, OR optimisation. Very strong fit. Proximity to campus."
+    enabled: true
+
+  - name: ITP Interpipe
+    careers_url: https://www.itp-interpipe.com/carrieres/
+    scan_method: websearch
+    scan_query: 'ITP Interpipe stage alternance "ingénieur" OR "logistique" 2026'
+    notes: "⭐ Low fit. Disable unless interested in industrial pipe sector."
+    enabled: false
+
+  - name: L-Acoustics
+    careers_url: https://www.l-acoustics.com/fr/join-us/
+    scan_method: websearch
+    scan_query: 'site:l-acoustics.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026'
+    notes: "⭐⭐ Marcoussis FR. Audio tech — supply chain and industrial operations roles. Close to Gif-sur-Yvette."
+    enabled: true
+
+  - name: Lavoix
+    careers_url: https://www.lavoix.eu/fr/recrutement/
+    scan_method: websearch
+    scan_query: 'site:lavoix.eu stage alternance "ingénieur" OR "brevet" OR "propriété intellectuelle" 2026'
+    notes: "⭐ IP law — low fit for supply chain/OR profile."
+    enabled: false
+
+  - name: MBDA
+    careers_url: https://www.mbda-systems.com/careers/
+    scan_method: websearch
+    scan_query: 'site:mbda-systems.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Le Plessis-Robinson FR. Defence manufacturing — industrial supply chain, production planning, project management. Active grandes écoles programme."
+    enabled: true
+
+  - name: Melexis
+    careers_url: https://jobs.melexis.com
+    scan_method: websearch
+    scan_query: 'site:jobs.melexis.com stage internship "supply chain" OR "operations" OR "logistics" France 2026'
+    notes: "⭐ Semiconductor — limited fit. Disable unless interested in automotive supply chain."
+    enabled: false
+
+  - name: Michelin Groupe
+    careers_url: https://jobs.michelin.com
+    scan_method: websearch
+    scan_query: 'site:jobs.michelin.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Clermont-Ferrand FR. World-class supply chain — planning, distribution, operational excellence. Strong grandes écoles stage programme. Note: Clermont-Ferrand location."
+    enabled: true
+
+  - name: Naval Group
+    careers_url: https://www.naval-group.com/fr/rejoignez-nous/
+    scan_method: websearch
+    scan_query: 'site:naval-group.com stage alternance "supply chain" OR "logistique" OR "ingénieur" OR "opérations" 2026'
+    notes: "⭐⭐ Brest / Paris FR. Naval defence — industrial supply chain and project management. Defence clearance may apply."
+    enabled: true
+
+  - name: NGE
+    careers_url: https://www.nge.fr/recrutement/
+    scan_method: websearch
+    scan_query: 'site:nge.fr stage alternance "ingénieur" OR "logistique" OR "opérations" 2026'
+    notes: "⭐ Civil engineering — limited fit for OR/consulting profile."
+    enabled: false
+
+  - name: Razel Bec
+    careers_url: https://www.razel-bec.com/fr/recrutement/
+    scan_method: websearch
+    scan_query: 'Razel Bec stage alternance "ingénieur" OR "logistique" 2026'
+    notes: "⭐ Civil engineering — limited fit."
+    enabled: false
+
+  - name: Renault Group
+    careers_url: https://jobs.renaultgroup.com
+    scan_method: websearch
+    scan_query: 'site:jobs.renaultgroup.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" OR "planning" France 2026'
+    notes: "⭐⭐⭐ Boulogne-Billancourt FR. Automotive supply chain — planning, logistics, demand forecasting. Large grande école stage programme. High priority."
+    enabled: true
+
+  - name: Safran
+    careers_url: https://www.safran-group.com/hr/join-safran/
+    scan_method: websearch
+    scan_query: 'site:safran-group.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" France 2026'
+    notes: "⭐⭐⭐ Paris FR. Aerospace — supply chain, production planning, project management. Very active stage programme for grandes écoles. High priority."
+    enabled: true
+
+  - name: SETEC
+    careers_url: https://www.setec.fr/nous-rejoindre/
+    scan_method: websearch
+    scan_query: 'site:setec.fr stage alternance "ingénieur" OR "projet" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Engineering consultancy — project engineering and operations roles."
+    enabled: true
+
+  - name: SNCF
+    careers_url: https://www.sncf.com/fr/groupe/recrutement
+    scan_method: websearch
+    scan_query: 'site:sncf.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "planification" OR "optimisation" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. National railway — complex operations planning and OR optimisation. Very strong fit. Active stage programme."
+    enabled: true
+
+  - name: Spie Batignolles Groupe
+    careers_url: https://www.spiebatignolles.fr/talents/
+    scan_method: websearch
+    scan_query: 'site:spiebatignolles.fr stage alternance "ingénieur" OR "logistique" OR "opérations" 2026'
+    notes: "⭐ Construction — limited fit for OR/consulting profile."
+    enabled: false
+
+  - name: Sysnav
+    careers_url: https://www.sysnav.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:sysnav.fr stage alternance "ingénieur" OR "opérations" 2026'
+    notes: "⭐ Navigation tech — limited fit."
+    enabled: false
+
+  - name: Thales
+    careers_url: https://www.thalesgroup.com/en/careers
+    scan_method: websearch
+    scan_query: 'site:thalesgroup.com stage OR internship "supply chain" OR "operations" OR "logistics" OR "industrial" OR "project" France 2026'
+    notes: "⭐⭐⭐ Courbevoie FR. Defence and aerospace — supply chain, project management, industrial engineering. Large grandes écoles stage programme. High priority."
+    enabled: true
+
+  # ============================================================
+  # FINANCE, ASSURANCES
+  # ============================================================
+
+  - name: Amundi AM
+    careers_url: https://careers.amundi.com
+    scan_method: websearch
+    scan_query: 'site:careers.amundi.com stage alternance "analyste" OR "operations" OR "quant" OR "risk" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Asset management operations (middle/back office, risk). Quantitative and risk analytics fit."
+    enabled: true
+
+  - name: Attijariwafa Bank
+    careers_url: https://recrutement.attijariwafabank.com
+    scan_method: websearch
+    scan_query: 'Attijariwafa stage alternance "opérations" OR "analyste" OR "ingénieur" 2026'
+    notes: "⭐ Morocco / France. Limited fit unless interested in banking operations."
+    enabled: false
+
+  - name: AXA IM
+    careers_url: https://careers.axa-im.com
+    scan_method: websearch
+    scan_query: 'site:axa-im.com stage internship "operations" OR "risk" OR "quantitative" OR "analyst" France 2026'
+    notes: "⭐⭐ Paris FR. Investment management operations and risk. Quantitative / risk analytics fit."
+    enabled: true
+
+  - name: Banque de France
+    careers_url: https://www.banque-france.fr/nous-rejoindre/recrutement
+    scan_method: websearch
+    scan_query: 'site:banque-france.fr stage alternance "opérations" OR "analyste" OR "économiste" OR "risk" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Central bank — research and quantitative analysis roles. Risk analytics fit."
+    enabled: true
+
+  - name: BNP Paribas
+    careers_url: https://group.bnpparibas/carrieres
+    scan_method: websearch
+    scan_query: 'site:group.bnpparibas stage alternance "opérations" OR "supply chain" OR "quant" OR "analyste" OR "risk" 2026 Paris'
+    notes: "⭐⭐ 🔗 Paris FR. Large bank — operations, risk analytics, and quant roles. Personal connection: BDI partnership managed by Óscar."
+    enabled: true
+
+  - name: BPCE
+    careers_url: https://www.bpce.fr/nous-rejoindre/recrutement
+    scan_method: websearch
+    scan_query: 'site:bpce.fr stage alternance "opérations" OR "analyste" OR "risk" 2026 Paris'
+    notes: "⭐ Paris FR. Banking operations — limited fit vs consulting targets."
+    enabled: false
+
+  - name: BPI France
+    careers_url: https://www.bpifrance.fr/nous-rejoindre
+    scan_method: websearch
+    scan_query: 'site:bpifrance.fr stage alternance "analyste" OR "opérations" OR "investissement" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Public investment bank — strategy and investment analysis roles. Interesting for go-to-market / strategy fit."
+    enabled: true
+
+  - name: Centerview Partners
+    careers_url: https://www.centerviewpartners.com/careers/
+    scan_method: websearch
+    scan_query: 'Centerview Partners stage internship analyst Paris France 2026'
+    notes: "⭐ Elite M&A boutique — limited fit for OR/ops profile."
+    enabled: false
+
+  - name: Crédit Agricole CIB
+    careers_url: https://careers.ca-cib.com
+    scan_method: websearch
+    scan_query: 'site:ca-cib.com stage alternance "opérations" OR "risk" OR "analyste" OR "quant" 2026 Paris'
+    notes: "⭐⭐ Paris FR. CIB operations and risk roles. Quantitative analytics fit."
+    enabled: true
+
+  - name: Cubist Systematic Strategies
+    careers_url: https://www.cubistsystematic.com/careers/
+    scan_method: websearch
+    scan_query: 'Cubist Systematic stage internship "quant" OR "researcher" OR "operations" Paris 2026'
+    notes: "⭐ Quant hedge fund — strong quantitative fit but typically does not offer stages."
+    enabled: false
+
+  - name: GIE AXA France
+    careers_url: https://recrutement.axa.fr
+    scan_method: websearch
+    scan_query: 'site:recrutement.axa.fr stage alternance "opérations" OR "supply chain" OR "logistique" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Insurance operations and actuarial roles. Risk analytics fit."
+    enabled: true
+
+  - name: Groupama Asset Management
+    careers_url: https://www.groupama-am.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'Groupama Asset Management stage alternance "opérations" OR "analyste" OR "risk" 2026 Paris'
+    notes: "⭐ Limited fit vs consulting/supply chain targets."
+    enabled: false
+
+  - name: JP Morgan
+    careers_url: https://careers.jpmorgan.com
+    scan_method: websearch
+    scan_query: 'site:careers.jpmorgan.com stage OR internship "operations" OR "risk" OR "quantitative" Paris France 2026'
+    notes: "⭐⭐ Paris FR. Operations and risk management internships. Quantitative fit. Competitive grandes écoles programme."
+    enabled: true
+
+  - name: Lazard
+    careers_url: https://www.lazard.com/careers/
+    scan_method: websearch
+    scan_query: 'site:lazard.com stage internship "analyst" Paris France 2026'
+    notes: "⭐ M&A advisory — limited fit for OR/ops profile."
+    enabled: false
+
+  - name: Millenium
+    careers_url: https://www.mlp.com/careers/
+    scan_method: websearch
+    scan_query: 'Millennium Management stage internship "quant" OR "operations" OR "research" Paris 2026'
+    notes: "⭐ Quant hedge fund — limited stage programme. Low priority."
+    enabled: false
+
+  - name: Morgan Stanley
+    careers_url: https://www.morganstanley.com/people-opportunities/students-graduates
+    scan_method: websearch
+    scan_query: 'site:morganstanley.com stage OR internship "operations" OR "risk" OR "quantitative" Paris France 2026'
+    notes: "⭐⭐ Paris FR. Operations and risk internships. Quantitative analytics fit."
+    enabled: true
+
+  - name: Murex
+    careers_url: https://www.murex.com/en/careers/
+    scan_method: websearch
+    scan_query: 'site:murex.com stage alternance "ingénieur" OR "opérations" OR "consultant" OR "supply chain" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Financial software — functional consulting and operations roles for grandes écoles."
+    enabled: true
+
+  - name: Oddo BHF
+    careers_url: https://www.oddo-bhf.com/fr/recrutement/
+    scan_method: websearch
+    scan_query: 'Oddo BHF stage alternance "analyste" OR "opérations" 2026 Paris'
+    notes: "⭐ Limited fit vs consulting/supply chain targets."
+    enabled: false
+
+  - name: Société Générale
+    careers_url: https://careers.societegenerale.com
+    scan_method: websearch
+    scan_query: 'site:careers.societegenerale.com stage alternance "opérations" OR "supply chain" OR "risk" OR "analyste" OR "quant" 2026 Paris'
+    notes: "⭐⭐ 🔗 Paris FR. Banking operations and risk roles. Personal connection: BDI partnership managed by Óscar — direct entry point."
+    enabled: true
+
+  # ============================================================
+  # CONSEIL, AUDIT — HIGH PRIORITY SECTOR FOR ÓSCAR
+  # ============================================================
+
+  - name: Accenture
+    careers_url: https://www.accenture.com/fr-fr/careers
+    scan_method: websearch
+    scan_query: 'site:accenture.com/fr-fr careers stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Strategy & Consulting — supply chain and operations practice. Very active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Accuracy
+    careers_url: https://www.accuracy.com/fr/rejoindre-accuracy/
+    scan_method: websearch
+    scan_query: 'site:accuracy.com stage alternance "analyste" OR "consultant" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Financial and economic consulting. Quantitative and analytical fit."
+    enabled: true
+
+  - name: Advancy
+    careers_url: https://www.advancy.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:advancy.com stage alternance "consultant" OR "analyste" OR "stratégie" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Strategy boutique. Consumer and retail strategy — go-to-market and operations fit."
+    enabled: true
+
+  - name: Akkodis
+    careers_url: https://www.akkodis.com/fr/carrieres
+    scan_method: websearch
+    scan_query: 'site:akkodis.com stage alternance "supply chain" OR "opérations" OR "ingénieur" OR "consultant" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Engineering consulting — supply chain and operational excellence."
+    enabled: true
+
+  - name: Akoya
+    careers_url: https://www.akoya.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:akoya.fr stage alternance "consultant" OR "stratégie" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Luxury strategy boutique — small and selective. Monitor for strategy analyst roles."
+    enabled: true
+
+  - name: Alcimed
+    careers_url: https://www.alcimed.com/fr/rejoignez-nous/
+    scan_method: websearch
+    scan_query: 'site:alcimed.com stage alternance "consultant" OR "ingénieur" OR "innovation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Innovation consulting in deeptech and industry — strong fit for industrial engineering profile."
+    enabled: true
+
+  - name: Alten
+    careers_url: https://www.alten.fr/rejoignez-nous/offres-d-emploi/
+    scan_method: websearch
+    scan_query: 'site:alten.fr stage alternance "supply chain" OR "opérations" OR "ingénieur industriel" OR "logistique" 2026 Paris'
+    notes: "⭐⭐ Boulogne-Billancourt FR. Engineering consulting — supply chain and industrial engineering roles."
+    enabled: true
+
+  - name: Altman Solon
+    careers_url: https://www.altmansolon.com/careers/
+    scan_method: websearch
+    scan_query: 'site:altmansolon.com stage internship "analyst" OR "consultant" Paris 2026'
+    notes: "⭐⭐ Paris FR. TMT strategy boutique — analyst roles for grandes écoles. Less supply chain fit but strategy is aligned."
+    enabled: true
+
+  - name: Alvarez & Marsal
+    careers_url: https://www.alvarezandmarsal.com/careers
+    scan_method: websearch
+    scan_query: 'site:alvarezandmarsal.com stage internship "operations" OR "supply chain" OR "consultant" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Operational consulting and restructuring — supply chain and operations transformation. Strong fit."
+    enabled: true
+
+  - name: Archery Strategy Consulting
+    careers_url: https://www.archery-consulting.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:archery-consulting.com stage alternance "consultant" OR "stratégie" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Strategy and transformation — small boutique, selective. Monitor for analyst roles."
+    enabled: true
+
+  - name: Argon & Co
+    careers_url: https://www.argon-and-co.com/fr/rejoignez-nous/
+    scan_method: websearch
+    scan_query: 'site:argon-and-co.com stage alternance "consultant" OR "supply chain" OR "opérations" OR "logistique" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Operations and supply chain consulting boutique — perfect sector match. Prioritise."
+    enabled: true
+
+  - name: Arthur D. Little
+    careers_url: https://www.adlittle.com/fr-fr/join-us
+    scan_method: websearch
+    scan_query: 'site:adlittle.com stage internship "consultant" OR "operations" OR "supply chain" Paris 2026'
+    notes: "⭐⭐⭐ Paris FR. Innovation and technology strategy consulting — operations and industrial fit. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Bain & Company
+    careers_url: https://www.bain.com/careers/
+    scan_method: websearch
+    scan_query: 'site:bain.com stage internship "consultant" OR "associate" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Top-tier consulting firm. Associate Consultant Intern (ACI) programme — highly competitive. High priority."
+    enabled: true
+
+  - name: BCG
+    careers_url: https://careers.bcg.com
+    scan_method: websearch
+    scan_query: 'site:careers.bcg.com stage OR internship "consultant" OR "operations" OR "supply chain" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Top-tier consulting firm. BCG Practice Analyst — operations, supply chain practice. High priority."
+    enabled: true
+
+  - name: Capgemini
+    careers_url: https://www.capgemini.com/fr-fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:capgemini.com stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Management consulting and IT — supply chain and operations consulting practice. Very active stage programme."
+    enabled: true
+
+  - name: Colombus Consulting
+    careers_url: https://www.colombus-consulting.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:colombus-consulting.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Management consulting — supply chain and operations transformation."
+    enabled: true
+
+  - name: Corporate Value Associates
+    careers_url: https://www.cva.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:cva.fr stage alternance "consultant" OR "stratégie" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Industrial strategy consulting. Close fit with Óscar's industrial/ops profile."
+    enabled: true
+
+  - name: Deloitte
+    careers_url: https://careers2.deloitte.com/fr/fr/
+    scan_method: websearch
+    scan_query: 'site:deloitte.com/fr stage alternance "supply chain" OR "opérations" OR "consultant" OR "stratégie" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Large consulting arm — supply chain, operations, and strategy consulting. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Efeso
+    careers_url: https://www.efeso.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:efeso.com stage alternance "consultant" OR "supply chain" OR "opérations" OR "Lean" OR "excellence opérationnelle" 2026 France'
+    notes: "⭐⭐⭐ Paris FR. Operations excellence and Lean consulting — direct match with Óscar's Veganic diagnostic project and industrial background. Prioritise."
+    enabled: true
+
+  - name: Eight Advisory
+    careers_url: https://www.eight-advisory.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:eight-advisory.com stage alternance "consultant" OR "analyste" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Transaction and restructuring consulting. Analytical and operational fit."
+    enabled: true
+
+  - name: Eleven Strategy
+    careers_url: https://www.elevenstrategy.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:elevenstrategy.com stage alternance "consultant" OR "stratégie" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Digital and transformation strategy consulting. Monitor for strategy analyst roles."
+    enabled: true
+
+  - name: Eurogroup Consulting
+    careers_url: https://www.eurogroup-consulting.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:eurogroup-consulting.com stage alternance "consultant" OR "opérations" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Public and private sector consulting — operations and transformation."
+    enabled: true
+
+  - name: Exiom Partners
+    careers_url: https://www.exiom.fr/recrutement/
+    scan_method: websearch
+    scan_query: 'Exiom Partners stage alternance "consultant" OR "opérations" OR "stratégie" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Strategy and operational consulting boutique."
+    enabled: true
+
+  - name: EY Parthenon
+    careers_url: https://www.ey.com/fr_fr/careers/strategy-and-transactions
+    scan_method: websearch
+    scan_query: 'site:ey.com/fr_fr stage alternance "consultant" OR "stratégie" OR "opérations" OR "supply chain" parthenon 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. EY-Parthenon strategy consulting — corporate and operations strategy. Active stage programme."
+    enabled: true
+
+  - name: EY Services France
+    careers_url: https://www.ey.com/fr_fr/careers
+    scan_method: websearch
+    scan_query: 'site:ey.com/fr_fr stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. EY consulting — supply chain and operations advisory. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Forvis Mazars Conseil
+    careers_url: https://careers.forvismazars.com/fr/
+    scan_method: websearch
+    scan_query: 'site:forvismazars.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Consulting across operations, finance, and transformation."
+    enabled: true
+
+  - name: Headmind Partners
+    careers_url: https://www.headmind.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:headmind.com stage alternance "consultant" OR "opérations" OR "supply chain" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Digital and business consulting — operations and transformation roles."
+    enabled: true
+
+  - name: IBM Consulting
+    careers_url: https://www.ibm.com/fr-fr/employment/
+    scan_method: websearch
+    scan_query: 'site:ibm.com/fr-fr stage alternance "supply chain" OR "opérations" OR "consultant" OR "analyste" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. IBM Consulting — supply chain and operations transformation. GBS Supply Chain practice. Active stage programme."
+    enabled: true
+
+  - name: KEA & Partners
+    careers_url: https://www.kea-partners.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:kea-partners.com stage alternance "consultant" OR "stratégie" OR "supply chain" OR "retail" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Retail and distribution strategy — supply chain and operations in retail context."
+    enabled: true
+
+  - name: Kearney
+    careers_url: https://www.kearney.com/careers
+    scan_method: websearch
+    scan_query: 'site:kearney.com stage internship "consultant" OR "operations" OR "supply chain" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Kearney is particularly well known for its supply chain and operations consulting practice — perfect fit. High priority."
+    enabled: true
+
+  - name: KPMG
+    careers_url: https://home.kpmg/fr/fr/home/careers.html
+    scan_method: websearch
+    scan_query: 'site:kpmg.com/fr stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Big 4 consulting — operations and supply chain advisory."
+    enabled: true
+
+  - name: McKinsey & Company
+    careers_url: https://www.mckinsey.com/fr/careers
+    scan_method: websearch
+    scan_query: 'site:mckinsey.com/fr stage internship "consultant" OR "business analyst" OR "summer" OR "operations" Paris France 2026'
+    notes: "⭐⭐⭐ 🔗 Paris FR. Top-tier consulting — Óscar managed BDI partnership with McKinsey Paris AND Casablanca. Business Analyst Intern programme. Highest priority."
+    enabled: true
+
+  - name: Oliver Wyman SNC
+    careers_url: https://careers.oliverwyman.com
+    scan_method: websearch
+    scan_query: 'site:oliverwyman.com stage internship "consultant" OR "operations" OR "supply chain" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Operations and strategy consulting — active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Onehive
+    careers_url: https://www.onehive.com/carrieres/
+    scan_method: websearch
+    scan_query: 'Onehive stage alternance "consultant" OR "opérations" 2026 Paris'
+    notes: "⭐ Paris FR. Digital consulting — limited fit. Monitor."
+    enabled: true
+
+  - name: Onepoint
+    careers_url: https://www.groupeonepoint.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:groupeonepoint.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Technology and management consulting — operations and supply chain transformation."
+    enabled: true
+
+  - name: Oresys
+    careers_url: https://www.oresys.eu/recrutement/
+    scan_method: websearch
+    scan_query: 'site:oresys.eu stage alternance "consultant" OR "opérations" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. IT management consulting — operations and transformation roles."
+    enabled: true
+
+  - name: Plasseraud
+    careers_url: https://www.plasseraud.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'Plasseraud stage alternance "ingénieur" 2026 Paris'
+    notes: "⭐ IP law — low fit."
+    enabled: false
+
+  - name: Porsche Consulting
+    careers_url: https://www.porsche-consulting.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:porsche-consulting.com stage internship "consultant" OR "operations" OR "supply chain" OR "Lean" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. Porsche Consulting specialises in operations excellence and Lean — direct match with Óscar's industrial background. Active stage programme."
+    enabled: true
+
+  - name: PwC
+    careers_url: https://www.pwc.fr/fr/carrieres.html
+    scan_method: websearch
+    scan_query: 'site:pwc.fr stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Big 4 consulting — operations and supply chain advisory. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: Roland Berger
+    careers_url: https://www.rolandberger.com/fr/Careers/
+    scan_method: websearch
+    scan_query: 'site:rolandberger.com stage internship "consultant" OR "analyst" OR "operations" OR "supply chain" Paris France 2026'
+    notes: "⭐⭐⭐ Paris FR. European strategy consulting — strong operations and industrial practice. Active stage programme for grandes écoles."
+    enabled: true
+
+  - name: SIA Partners
+    careers_url: https://www.sia-partners.com/fr/carrieres
+    scan_method: websearch
+    scan_query: 'site:sia-partners.com stage alternance "consultant" OR "supply chain" OR "opérations" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Management consulting — supply chain, operations, and transformation with a strong quantitative / data angle."
+    enabled: true
+
+  - name: Sopra Steria Next
+    careers_url: https://www.soprasteria.com/fr/carrieres
+    scan_method: websearch
+    scan_query: 'site:soprasteria.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Digital and operational transformation consulting."
+    enabled: true
+
+  - name: Stanwell
+    careers_url: https://www.stanwell.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:stanwell.fr stage alternance "consultant" OR "opérations" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. IT strategy consulting — operations and transformation roles."
+    enabled: true
+
+  - name: Step Consulting
+    careers_url: https://www.stepconsulting.fr/recrutement/
+    scan_method: websearch
+    scan_query: 'site:stepconsulting.fr stage alternance "consultant" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Management consulting boutique."
+    enabled: true
+
+  - name: Talan Corporate
+    careers_url: https://www.talan.com/fr/offres-emploi/
+    scan_method: websearch
+    scan_query: 'site:talan.com stage alternance "supply chain" OR "opérations" OR "consultant" OR "transformation" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Technology and management consulting — operations and supply chain transformation."
+    enabled: true
+
+  - name: Talisker Consulting
+    careers_url: https://www.talisker-consulting.com/carrieres/
+    scan_method: websearch
+    scan_query: 'Talisker Consulting stage alternance "consultant" OR "opérations" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Strategy and operational boutique. Monitor for analyst roles."
+    enabled: true
+
+  - name: Wavestone
+    careers_url: https://careers.wavestone.com
+    scan_method: websearch
+    scan_query: 'site:wavestone.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "transformation" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Management and IT consulting — operations and digital transformation. Very active stage programme for grandes écoles."
+    enabled: true
+
+  # ============================================================
+  # SANTÉ, BIOTECH
+  # ============================================================
+
+  - name: Arkema
+    careers_url: https://www.arkema.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:arkema.com stage alternance "supply chain" OR "logistique" OR "opérations" OR "ingénieur" 2026 France'
+    notes: "⭐⭐ Colombes FR. Specialty chemicals — industrial supply chain and operations stage roles."
+    enabled: true
+
+  - name: Ipsen
+    careers_url: https://www.ipsen.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:ipsen.com stage alternance "supply chain" OR "opérations" OR "ingénieur" 2026 France'
+    notes: "⭐⭐ Boulogne-Billancourt FR. Pharma supply chain — manufacturing operations and logistics."
+    enabled: true
+
+  - name: Servier
+    careers_url: https://www.servier.fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:servier.fr stage alternance "supply chain" OR "opérations" OR "logistique" OR "ingénieur" 2026 France'
+    notes: "⭐⭐ Suresnes FR. Pharma — industrial operations and supply chain. Active grande école stage programme."
+    enabled: true
+
+  # ============================================================
+  # IT, DIGITAL  (lower priority — keep enabled only where OR/ops fit exists)
+  # ============================================================
+
+  - name: Capgemini
+    careers_url: https://www.capgemini.com/fr-fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:capgemini.com stage alternance "supply chain" OR "opérations" OR "consultant" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Already listed under Conseil — Capgemini Invent and Sogeti offer ops/supply chain stages."
+    enabled: false  # already tracked under Conseil, Audit
+
+  - name: Dassault Systèmes
+    careers_url: https://www.3ds.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:3ds.com stage alternance "supply chain" OR "consultant" OR "ingénieur" OR "opérations" 2026 France'
+    notes: "⭐⭐⭐ Vélizy-Villacoublay FR. PLM and digital manufacturing — supply chain simulation and consulting roles. Close to Gif-sur-Yvette. High potential."
+    enabled: true
+
+  - name: Exotec
+    careers_url: https://www.exotec.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:exotec.com stage alternance "supply chain" OR "opérations" OR "logistique" OR "ingénieur" 2026'
+    notes: "⭐⭐⭐ Croix FR. Warehouse robotics — supply chain and operations engineering. French unicorn. Very strong fit for industrial OR background."
+    enabled: true
+
+  - name: Sopra Steria Group
+    careers_url: https://www.soprasteria.com/fr/carrieres
+    scan_method: websearch
+    scan_query: 'site:soprasteria.com stage alternance "supply chain" OR "opérations" OR "consultant" 2026 Paris'
+    notes: "⭐⭐ Paris FR. IT consulting — supply chain and transformation roles."
+    enabled: true
+
+  - name: Theodo
+    careers_url: https://www.theodo.fr/recrutement/
+    scan_method: websearch
+    scan_query: 'site:theodo.fr stage alternance "ingénieur" OR "consultant" OR "développeur" 2026 Paris'
+    notes: "⭐ Paris FR. Software dev — limited OR/supply chain fit. Disable unless interested in tech consulting."
+    enabled: false
+
+  # ============================================================
+  # START-UP  (selected only — high relevance for ops/supply chain/OR)
+  # ============================================================
+
+  - name: Exotec
+    careers_url: https://www.exotec.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:exotec.com stage alternance "supply chain" OR "opérations" OR "logistique" 2026'
+    notes: "⭐⭐⭐ Already listed under IT/Digital. Warehouse robotics — top priority startup for Óscar."
+    enabled: false  # already tracked above
+
+  - name: Kayrros
+    careers_url: https://www.kayrros.com/careers/
+    scan_method: websearch
+    scan_query: 'site:kayrros.com stage internship "data" OR "operations" OR "analyst" OR "supply chain" 2026 Paris'
+    notes: "⭐⭐ Paris FR. Geospatial intelligence and energy analytics — quantitative and OR fit."
+    enabled: true
+
+  - name: GoJob
+    careers_url: https://www.gojob.com/recrutement/
+    scan_method: websearch
+    scan_query: 'site:gojob.com stage alternance "opérations" OR "supply chain" OR "ingénieur" 2026 Paris'
+    notes: "⭐⭐ Paris FR. AI staffing platform — operations and supply chain roles within the company."
+    enabled: true
+
+  - name: Pelico
+    careers_url: https://www.pelico.com/careers/
+    scan_method: websearch
+    scan_query: 'site:pelico.com stage internship "supply chain" OR "operations" OR "manufacturing" OR "analyst" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Factory operations management platform — direct fit with industrial engineering and Lean background. Prioritise."
+    enabled: true
+
+  - name: Nabla
+    careers_url: https://www.nabla.com/careers/
+    scan_method: websearch
+    scan_query: 'site:nabla.com stage internship "operations" OR "analyst" OR "supply chain" 2026 Paris'
+    notes: "⭐ Paris FR. Medical AI — limited supply chain fit."
+    enabled: false
+
+  - name: Quantum Surgical
+    careers_url: https://www.quantum-surgical.com/fr/carrieres/
+    scan_method: websearch
+    scan_query: 'site:quantum-surgical.com stage alternance "ingénieur" OR "opérations" OR "supply chain" 2026 France'
+    notes: "⭐⭐ Montpellier FR. Medical robotics — industrial operations and supply chain roles."
+    enabled: true
+
+  - name: Stockly
+    careers_url: https://www.stockly.ai/careers/
+    scan_method: websearch
+    scan_query: 'site:stockly.ai stage internship "supply chain" OR "operations" OR "logistics" OR "e-commerce" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. AI-powered out-of-stock e-commerce platform — inventory and supply chain at the core. Strong fit."
+    enabled: true
+
+  - name: Blockpulse
+    careers_url: https://www.blockpulse.io/careers/
+    scan_method: websearch
+    scan_query: 'Blockpulse stage alternance "opérations" OR "ingénieur" 2026 Paris'
+    notes: "⭐ Cap table management — low fit."
+    enabled: false
+
+  - name: Cylad
+    careers_url: https://www.cylad.com/carrieres/
+    scan_method: websearch
+    scan_query: 'site:cylad.com stage alternance "consultant" OR "opérations" OR "supply chain" OR "aérospatial" 2026 Paris'
+    notes: "⭐⭐⭐ Paris FR. Strategy and management consulting in aerospace and defence — very strong fit with Óscar's industrial engineering and defence-sector project experience."
+    enabled: true
+
+  - name: Galadrim
+    careers_url: https://www.galadrim.fr/recrutement/
+    scan_method: websearch
+    scan_query: 'Galadrim stage alternance "ingénieur" 2026 Paris'
+    notes: "⭐ Software dev studio — low fit."
+    enabled: false
+
+  - name: Nova in Silico
+    careers_url: https://www.novainsilico.ai/careers/
+    scan_method: websearch
+    scan_query: 'Nova in Silico stage internship "opérations" OR "analyste" 2026 Paris'
+    notes: "⭐ Drug discovery AI — low fit."
+    enabled: false
+
+  - name: MakiPeople
+    careers_url: https://www.makipeople.com/carrieres/
+    scan_method: websearch
+    scan_query: 'MakiPeople stage alternance "opérations" OR "consultant" 2026 Paris'
+    notes: "⭐ HR platform — low fit."
+    enabled: false

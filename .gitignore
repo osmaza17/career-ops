@@ -1,44 +1,11 @@
-# Personal data (user fills these)
-data/applications.md
-data/pipeline.md
-data/scan-history.tsv
-output/reports/**
-!output/reports/.gitkeep
-output/CVs/**
-!output/CVs/.gitkeep
-output/interview-prep/**
-!output/interview-prep/.gitkeep
-batch/logs/*
-!batch/logs/.gitkeep
-batch/batch-state.tsv
-batch/batch-input.tsv
-batch/tracker-additions/**/*.tsv
-!batch/tracker-additions/.gitkeep
-jds/*
-!jds/.gitkeep
-
-# Source documents (raw academic files — personal, never committed)
-sources/*
-!sources/README.md
-
-# Writing samples (user's personal files — never committed)
-writing-samples/*
-!writing-samples/README.md
-
-# User config and customization (never auto-updated)
-config/profile.md
-config/portals.yml
-config/strategy.md
-.update-dismissed
-.update-lock
-
-# Secrets (never commit — use .env.example as template)
+# Secrets (never commit real values — use .env.example as template)
 .env
 
-# Generated
-.resolved-prompt-*
+# Generated / large auto-installed
 node_modules/
 bun.lock
+package-lock.json
+career-dashboard
 
 # OS
 .DS_Store
@@ -48,5 +15,8 @@ bun.lock
 # Claude Code local
 .claude/settings.local.json
 .claude/memory/
-career-dashboard
-package-lock.json
+
+# Misc
+.update-dismissed
+.update-lock
+.resolved-prompt-*
